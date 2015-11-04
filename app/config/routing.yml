@@ -1,0 +1,7 @@
+kijho_mailer:
+    resource: "@KijhoMailerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

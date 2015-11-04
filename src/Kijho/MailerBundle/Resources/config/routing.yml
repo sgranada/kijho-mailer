@@ -1,0 +1,3 @@
+kijho_mailer_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: KijhoMailerBundle:Default:index }
