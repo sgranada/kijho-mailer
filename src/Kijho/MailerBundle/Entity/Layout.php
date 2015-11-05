@@ -3,18 +3,17 @@
 namespace Kijho\MailerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kijho\MailerBundle\Model\Email as KijhoEmail;
+use Kijho\MailerBundle\Model\Layout as LayoutBase;
 
 /**
- * Entidad para almacenar los correos electronicos
- * @ORM\Table(name="kijho_email")
+ * @ORM\Table(name="kijho_layout")
  * @ORM\Entity
  */
-class Email extends KijhoEmail {
+class Layout extends LayoutBase {
 
     /**
      * Identificador del email
-     * @ORM\Column(name="mail_id", type="integer")
+     * @ORM\Column(name="layo_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue
      */
@@ -25,6 +24,6 @@ class Email extends KijhoEmail {
     }
 
     public function __toString() {
-        return $this->getSubject();
+        return $this->getLanguageCode();
     }
 }

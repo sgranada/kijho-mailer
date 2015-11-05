@@ -1,20 +1,27 @@
 <?php
 namespace Kijho\MailerBundle\Model;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ */
 class Layout implements LayoutInterface {
 
     /**
+     * @ORM\Column(name="layo_header", type="integer")
      * @var string
      */
     protected $header;
 
     /**
      * @var string
+     * @ORM\Column(name="layo_footer", type="integer")
      */
     protected $footer;
 
     /**
      * @var string
+     * @ORM\Column(name="layo_language_code", type="integer")
      */
     protected $languageCode;
     
