@@ -1,0 +1,28 @@
+<h1>Layouts</h1>
+
+<table border='1'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Creation Date</th>
+            <th>Language</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for layout in layouts %}
+            <tr>
+                <td>{{layout.name}}</td>
+                <td>{{layout.creationDate|date('m/d/Y')}}</td>
+                <td>{{layout.languageCode}}</td>
+                <td><a href='#'>Show</a>
+                    &nbsp;<a href='#'>Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No layouts.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

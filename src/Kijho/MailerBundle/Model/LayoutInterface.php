@@ -8,6 +8,11 @@ interface LayoutInterface
     /**
      * @return string
      */
+    public function getName();
+    
+    /**
+     * @return string
+     */
     public function getHeader();
 
     /**
@@ -19,5 +24,10 @@ interface LayoutInterface
      * @return string
      */
     public function getLanguageCode();
+    
+    /**
+     * @return \DateTime
+     */
+    public function getCreationDate();
 
 }

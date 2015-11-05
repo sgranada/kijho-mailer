@@ -1,3 +1,8 @@
 kijho_mailer_homepage:
     path:     /hello/{name}
     defaults: { _controller: KijhoMailerBundle:Default:index }
+    
+kijho_mailer_layout:
+    resource: "@KijhoMailerBundle/Resources/config/routing/layout.yml"
+    prefix:   /layout
+
