@@ -11,9 +11,8 @@ class LayoutController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
-        var_dump($layoutStorage." este es");
         
-        $layouts = $em->getRepository('MasterUnlockBackendBundle:EmailLayout')->findAll();
+        $layouts = $em->getRepository($layoutStorage)->findAll();
         
         return $this->render('KijhoMailerBundle:Layout:index.html.twig', array('layouts' => $layouts));
     }
