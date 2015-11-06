@@ -21,9 +21,9 @@ class KijhoMailerExtension extends Extension {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-//        foreach ($config as $key => $value) {
-//            $container->setParameter('ewz_recaptcha.'.$key, $value);
-//        }
+        foreach ($config as $key => $value) {
+            $container->setParameter('kijho_mailer.'.$key, $value);
+        }
         
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
