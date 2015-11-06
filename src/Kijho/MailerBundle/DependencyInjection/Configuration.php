@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
         
         $rootNode
             ->children()
-                ->scalarNode('storage.layouts')->isRequired()->end()
+                ->scalarNode('layout_storage')->isRequired()->end()
             ->end()
         ;
         
