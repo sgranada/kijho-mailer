@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Kijho\MailerBundle\KijhoMailerBundle(),
+            new Fkr\CssURLRewriteBundle\FkrCssURLRewriteBundle(),//Reescritura de rutas en css
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
