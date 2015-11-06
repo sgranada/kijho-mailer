@@ -10,7 +10,7 @@ class LayoutController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $layouts = $em->getRepository('KijhoMailerBundle:Layout')->findAll();
+        $layouts = $em->getRepository('MasterUnlockBackendBundle:EmailLayout')->findAll();
         
         return $this->render('KijhoMailerBundle:Layout:index.html.twig', array('layouts' => $layouts));
     }
