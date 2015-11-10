@@ -28,7 +28,7 @@
                     <td>{{layout.creationDate|date('m/d/Y')}}</td>
                     <td>{{layout.languageCode}}</td>
                     <td><a href='#'>Show</a>
-                        &nbsp;<a href='#'>Edit</a>
+                        &nbsp;<a href='{{path('kijho_mailer_layout_edit',{'layoutId':layout.id})}}' title="Edit"><i class="fa fa-pencil fa-lg">Edit</i></a>
                     </td>
                 </tr>
             {% else %}

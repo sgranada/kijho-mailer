@@ -18,5 +18,9 @@ class EmailLayout extends BaseLayout {
      * @ORM\GeneratedValue
      */
     protected $id;
+    
+    function getId() {
+        return $this->id;
+    }
 
 }

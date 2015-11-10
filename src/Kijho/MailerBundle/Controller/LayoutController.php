@@ -55,7 +55,7 @@ class LayoutController extends Controller {
 
         $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
         $layout = new $layoutStorage;
-        $form = $this->createForm(new EmailLayoutType(), $layout);
+        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
 
         $form->handleRequest($request);
 
@@ -69,6 +69,62 @@ class LayoutController extends Controller {
         }
 
         return $this->render('KijhoMailerBundle:Layout:new.html.twig', array(
+                    'layout' => $layout,
+                    'form' => $form->createView(),
+                    'menu' => 'layouts'
+        ));
+    }
+    
+    /**
+     * Permite desplegar el formulario de edicion de layouts
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 10/11/2015
+     * @param integer $layoutId identificador del layout a editar
+     * @return Response formulario de edicion del layout
+     */
+    public function editAction($layoutId) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+
+        $layout = $em->getRepository($layoutStorage)->find($layoutId);
+        
+        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
+
+        return $this->render('KijhoMailerBundle:Layout:edit.html.twig', array(
+                    'layout' => $layout,
+                    'form' => $form->createView(),
+                    'menu' => 'layouts'
+        ));
+    }
+    
+    
+    /**
+     * Permite validar y almacenar los cambios en la informacion de un layout
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 10/11/2015
+     * @param Request $request datos de la solicitud
+     * @param integer $layoutId identificador del layout a editar
+     * @return Response en caso de exito redirecciona al listado de layouts, 
+     * en caso de error despliega nuevamente el formulario de creacion de layouts
+     */
+    public function updateAction(Request $request, $layoutId) {
+        $em = $this->getDoctrine()->getManager();
+
+        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layout = $em->getRepository($layoutStorage)->find($layoutId);
+        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($layout);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('messageSuccessLayout', 'Layout updated successfully');
+            return $this->redirect($this->generateUrl('kijho_mailer_layout'));
+        }
+
+        return $this->render('KijhoMailerBundle:Layout:edit.html.twig', array(
                     'layout' => $layout,
                     'form' => $form->createView(),
                     'menu' => 'layouts'

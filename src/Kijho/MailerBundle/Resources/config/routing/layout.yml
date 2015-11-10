@@ -9,3 +9,13 @@ kijho_mailer_layout_new:
 kijho_mailer_layout_save:
     path:     /save
     defaults: { _controller: KijhoMailerBundle:Layout:save }
+    methods: [POST]
+    
+kijho_mailer_layout_edit:
+    path:     /{layoutId}/edit
+    defaults: { _controller: KijhoMailerBundle:Layout:edit }
+    
+kijho_mailer_layout_update:
+    path:     /{layoutId}/update
+    defaults: { _controller: KijhoMailerBundle:Layout:update }
+    methods: [POST]
