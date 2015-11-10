@@ -19,3 +19,12 @@ kijho_mailer_layout_update:
     path:     /{layoutId}/update
     defaults: { _controller: KijhoMailerBundle:Layout:update }
     methods: [POST]
+    
+kijho_mailer_layout_preview:
+    path:     /{layoutId}/preview
+    defaults: { _controller: KijhoMailerBundle:Layout:preview }
+    
+kijho_mailer_layout_delete:
+    path:     /delete
+    defaults: { _controller: KijhoMailerBundle:Layout:delete }
+    methods: [POST]

@@ -9,9 +9,9 @@
         <li><a href="{{path('kijho_mailer_homepage')}}">Home</a></li>
         <li class="active">Layouts</li>
     </ol>
-        
+
     {{ macros.showSuccessMessage('messageSuccessLayout')}}  
-        
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -27,8 +27,10 @@
                     <td>{{layout.name}}</td>
                     <td>{{layout.creationDate|date('m/d/Y')}}</td>
                     <td>{{layout.languageCode}}</td>
-                    <td><a href='#'>Show</a>
+                    <td>
+                        <a href='{{path('kijho_mailer_layout_preview',{'layoutId':layout.id})}}'><i class="fa fa-eye fa-lg">Preview</i></a>
                         &nbsp;<a href='{{path('kijho_mailer_layout_edit',{'layoutId':layout.id})}}' title="Edit"><i class="fa fa-pencil fa-lg">Edit</i></a>
+                        &nbsp;<a href='javascript:' title="Delete" class="delete-layout" layout-id="{{layout.id}}"><i class="fa fa-close fa-lg">Delete</i></a>
                     </td>
                 </tr>
             {% else %}
@@ -38,4 +40,35 @@
             {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block scripts %}
+    $(".delete-layout").click(function () {
+        var object = $(this);
+        var layoutId = object.attr('layout-id');
+
+        bootbox.confirm('Are you sure you want to delete this layout ?', function (result) {
+
+            if (result == true)
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('kijho_mailer_layout_delete')}}",
+                    dataType: 'json',
+                    data: 'layoutId=' + layoutId,
+                    success: function (resp) {
+                        console.log(resp);
+                        if (resp.result == '__OK__') {
+                            object.parent().parent().remove();
+                        } else {
+                            bootbox.alert(resp.msg);
+                        }
+                    },
+                    error: function () {
+                        bootbox.alert('Error, try again')
+                    }
+                });
+            }
+        });
+    });
 {% endblock %}

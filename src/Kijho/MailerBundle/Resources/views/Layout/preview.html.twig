@@ -1,0 +1,44 @@
+{% extends 'KijhoMailerBundle:Default:main.html.twig' %}
+{% block title %}Layout Preview{% endblock %}
+{% block main_content %}
+    <h2 class="pull-left">Layout Preview</h2>
+    <div class="btn-group pull-right top-margin" role="group" aria-label="...">
+        <a href="{{path('kijho_mailer_layout')}}" class="btn btn-default">Back</a>
+    </div>
+    <ol class="col-lg-12 breadcrumb">
+        <li><a href="{{path('kijho_mailer_homepage')}}">Home</a></li>
+        <li><a href="{{path('kijho_mailer_layout')}}">Layouts</a></li>
+        <li class="active">Layout Preview</li>
+    </ol>
+        
+        <div class="col-lg-12">
+                <div class="col-lg-2">
+                    <strong>Header</strong>
+                </div>
+                <div class="col-lg-10 content-header">
+                    <div class="form-group">
+                        {{ layout.header | raw }}
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <strong>Content</strong>
+                </div>
+                <div class="col-lg-10">
+                    <div class="form-group">
+                        <i>Here goes the email content</i>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <strong>Footer</strong>
+                </div>
+                <div class="col-lg-10 content-footer">
+                    <div class="form-group">
+                        {{ layout.footer | raw }}
+                    </div>
+                </div>
+                </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

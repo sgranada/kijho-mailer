@@ -8,6 +8,7 @@ use Kijho\MailerBundle\Form\EmailLayoutType;
 use Symfony\Component\HttpFoundation\Request;
 use Kijho\MailerBundle\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class LayoutController extends Controller {
 
@@ -63,7 +64,7 @@ class LayoutController extends Controller {
             $layout->setCreationDate(Util::getCurrentDate());
             $em->persist($layout);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('messageSuccessLayout', 'Layout created successfully');
             return $this->redirect($this->generateUrl('kijho_mailer_layout'));
         }
@@ -74,7 +75,7 @@ class LayoutController extends Controller {
                     'menu' => 'layouts'
         ));
     }
-    
+
     /**
      * Permite desplegar el formulario de edicion de layouts
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 10/11/2015
@@ -88,7 +89,7 @@ class LayoutController extends Controller {
         $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
 
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
-        
+
         $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
 
         return $this->render('KijhoMailerBundle:Layout:edit.html.twig', array(
@@ -97,8 +98,7 @@ class LayoutController extends Controller {
                     'menu' => 'layouts'
         ));
     }
-    
-    
+
     /**
      * Permite validar y almacenar los cambios en la informacion de un layout
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 10/11/2015
@@ -119,7 +119,7 @@ class LayoutController extends Controller {
         if ($form->isValid()) {
             $em->persist($layout);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('messageSuccessLayout', 'Layout updated successfully');
             return $this->redirect($this->generateUrl('kijho_mailer_layout'));
         }
@@ -129,6 +129,52 @@ class LayoutController extends Controller {
                     'form' => $form->createView(),
                     'menu' => 'layouts'
         ));
+    }
+
+    /**
+     * Permite desplegar el preview de un layout
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 10/11/2015
+     * @param integer $layoutId identificador del layout
+     * @return Response pagina con el preview del layout
+     */
+    public function previewAction($layoutId) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+
+        $layout = $em->getRepository($layoutStorage)->find($layoutId);
+
+
+        return $this->render('KijhoMailerBundle:Layout:preview.html.twig', array(
+                    'layout' => $layout,
+                    'menu' => 'layouts'
+        ));
+    }
+
+    /**
+     * Permite eliminar un layout del sistema
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 10/11/2015
+     * @param Request $request datos de la solicitud
+     * @return Response Json con mensaje de respuesta
+     */
+    public function deleteAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $layoutId = $request->request->get('layoutId');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layout = $em->getRepository($layoutStorage)->find($layoutId);
+
+        $response['result'] = '__OK__';
+        $response['msg'] = '';
+
+        try {
+            $em->remove($layout);
+            $em->flush();
+        } catch (\Exception $exc) {
+            $response['result'] = '__KO__';
+            $response['msg'] = 'Unknown error, try again';
+        }
+        return new JsonResponse($response);
     }
 
 }
