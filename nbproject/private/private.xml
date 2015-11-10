@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Resources/views/Layout/index.html.twig</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Controller/LayoutController.php</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Resources/views/Default/home.html.twig</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Resources/public/css/style.css</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/app/config/config.yml</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Entity/EmailLayout.php</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/app/config/parameters.yml.dist</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Resources/config/routing.yml</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Resources/views/Default/menu.html.twig</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/app/config/parameters.yml</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Controller/DefaultController.php</file>
+            <file>file:/Library/WebServer/Documents/www/kijho-mailer/src/Kijho/MailerBundle/Resources/views/Default/main.html.twig</file>
+        </group>
+    </open-files>
+</project-private>

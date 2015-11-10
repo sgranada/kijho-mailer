@@ -1,3 +1,11 @@
 kijho_mailer_layout:
     path:     /
     defaults: { _controller: KijhoMailerBundle:Layout:index }
+
+kijho_mailer_layout_new:
+    path:     /new
+    defaults: { _controller: KijhoMailerBundle:Layout:new }
+    
+kijho_mailer_layout_save:
+    path:     /save
+    defaults: { _controller: KijhoMailerBundle:Layout:save }

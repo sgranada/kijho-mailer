@@ -1,5 +1,6 @@
 # Cache and logs (Symfony2)
 /app/cache/*
+/app/_cache/*
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
@@ -25,6 +26,8 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/css/
+/web/js
 
 # PHPUnit
 /app/phpunit.xml

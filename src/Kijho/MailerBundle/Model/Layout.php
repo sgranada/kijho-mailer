@@ -7,6 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Layout implements LayoutInterface {
 
+    
+    const LANG_ES = 'es';
+    const LANG_EN = 'en';
+    
     /**
      * @ORM\Column(name="layo_name", type="string")
      * @var string
