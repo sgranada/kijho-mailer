@@ -1,43 +1,48 @@
 <?php
 namespace Kijho\MailerBundle\Model;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  */
 class Layout implements LayoutInterface {
 
-    
     const LANG_ES = 'es';
     const LANG_EN = 'en';
     
     /**
-     * @ORM\Column(name="layo_name", type="string")
      * @var string
+     * @ORM\Column(name="layo_name", type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
     
     /**
-     * @ORM\Column(name="layo_header", type="text")
      * @var string
+     * @ORM\Column(name="layo_header", type="text")
+     * @Assert\NotBlank()
      */
     protected $header;
 
     /**
      * @var string
      * @ORM\Column(name="layo_footer", type="text")
+     * @Assert\NotBlank()
      */
     protected $footer;
 
     /**
      * @var string
      * @ORM\Column(name="layo_language_code", type="string")
+     * @Assert\NotBlank()
      */
     protected $languageCode;
     
     /**
      * @var \DateTime
      * @ORM\Column(name="layo_creation_date", type="datetime")
+     * @Assert\NotBlank()
      */
     protected $creationDate;
     
@@ -118,5 +123,9 @@ class Layout implements LayoutInterface {
      */
     function setCreationDate(\DateTime $creationDate) {
         $this->creationDate = $creationDate;
+    }
+    
+    public function __toString() {
+        return $this->getName()." (".strtoupper($this->getLanguageCode()).")";
     }
 }

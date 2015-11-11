@@ -5,4 +5,8 @@ kijho_mailer_homepage:
 kijho_mailer_layout:
     resource: "@KijhoMailerBundle/Resources/config/routing/layout.yml"
     prefix:   /layout
+    
+kijho_mailer_template:
+    resource: "@KijhoMailerBundle/Resources/config/routing/template.yml"
+    prefix:   /template
 

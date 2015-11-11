@@ -1,0 +1,30 @@
+kijho_mailer_template:
+    path:     /
+    defaults: { _controller: KijhoMailerBundle:Template:index }
+
+kijho_mailer_template_new:
+    path:     /new
+    defaults: { _controller: KijhoMailerBundle:Template:new }
+    
+kijho_mailer_template_save:
+    path:     /save
+    defaults: { _controller: KijhoMailerBundle:Template:save }
+    methods: [POST]
+    
+kijho_mailer_template_edit:
+    path:     /{templateId}/edit
+    defaults: { _controller: KijhoMailerBundle:Template:edit }
+    
+kijho_mailer_template_update:
+    path:     /{templateId}/update
+    defaults: { _controller: KijhoMailerBundle:Template:update }
+    methods: [POST]
+    
+kijho_mailer_template_preview:
+    path:     /{templateId}/preview
+    defaults: { _controller: KijhoMailerBundle:Template:preview }
+    
+kijho_mailer_template_delete:
+    path:     /delete
+    defaults: { _controller: KijhoMailerBundle:Template:delete }
+    methods: [POST]

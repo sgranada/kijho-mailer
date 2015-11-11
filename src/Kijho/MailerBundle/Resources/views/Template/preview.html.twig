@@ -1,0 +1,49 @@
+{% extends 'KijhoMailerBundle:Default:main.html.twig' %}
+{% block title %}{{'kijho_mailer.template.preview'|trans}}{% endblock %}
+{% block main_content %}
+    <h2 class="pull-left">{{'kijho_mailer.template.preview'|trans}}</h2>
+    <div class="btn-group pull-right top-margin" role="group" aria-label="...">
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default">{{'kijho_mailer.global.back'|trans}}</a>
+    </div>
+    <ol class="col-lg-12 breadcrumb">
+        <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
+        <li><a href="{{path('kijho_mailer_template')}}">{{'kijho_mailer.template.templates'|trans}}</a></li>
+        <li class="active">{{'kijho_mailer.template.preview'|trans}}</li>
+    </ol>
+
+    <div class="col-lg-12">
+        <div class="col-lg-2">
+            <strong>{{'kijho_mailer.layout.header'|trans}}</strong>
+        </div>
+        <div class="col-lg-10 content-header">
+            <div class="form-group">
+                {% if template.layout is not empty %}
+                    {{ template.layout.header | raw }}
+                {% else %}
+                    {{'kijho_mailer.layout.no_header'|trans}}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <strong>{{'kijho_mailer.template.content'|trans}}</strong>
+        </div>
+        <div class="col-lg-10">
+            <div class="form-group">
+                <i>{{ template.contentMessage |default('kijho_mailer.template.no_content'|trans)| raw}}</i>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <strong>{{'kijho_mailer.layout.footer'|trans}}</strong>
+        </div>
+        <div class="col-lg-10 content-footer">
+            <div class="form-group">
+                {% if template.layout is not empty %}
+                    {{ template.layout.footer | raw }}
+                {% else %}
+                    {{'kijho_mailer.layout.no_footer'|trans}}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
