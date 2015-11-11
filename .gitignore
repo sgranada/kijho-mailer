@@ -5,6 +5,10 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
+# Net Beans Settings
+/nbproject/
+/nbproject/*
+
 # Cache and logs (Symfony3)
 /var/cache/*
 /var/logs/*

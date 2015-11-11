@@ -1,19 +1,19 @@
 {% extends 'KijhoMailerBundle:Default:main.html.twig' %}
-{% block title %}Layout Preview{% endblock %}
+{% block title %}{{'kijho_mailer.layout.preview'|trans}}{% endblock %}
 {% block main_content %}
-    <h2 class="pull-left">Layout Preview</h2>
+    <h2 class="pull-left">{{'kijho_mailer.layout.preview'|trans}}</h2>
     <div class="btn-group pull-right top-margin" role="group" aria-label="...">
-        <a href="{{path('kijho_mailer_layout')}}" class="btn btn-default">Back</a>
+        <a href="{{path('kijho_mailer_layout')}}" class="btn btn-default">{{'kijho_mailer.global.back'|trans}}</a>
     </div>
     <ol class="col-lg-12 breadcrumb">
-        <li><a href="{{path('kijho_mailer_homepage')}}">Home</a></li>
-        <li><a href="{{path('kijho_mailer_layout')}}">Layouts</a></li>
-        <li class="active">Layout Preview</li>
+        <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
+        <li><a href="{{path('kijho_mailer_layout')}}">{{'kijho_mailer.layout.layouts'|trans}}</a></li>
+        <li class="active">{{'kijho_mailer.layout.preview'|trans}}</li>
     </ol>
         
         <div class="col-lg-12">
                 <div class="col-lg-2">
-                    <strong>Header</strong>
+                    <strong>{{'kijho_mailer.layout.header'|trans}}</strong>
                 </div>
                 <div class="col-lg-10 content-header">
                     <div class="form-group">
@@ -21,15 +21,15 @@
                     </div>
                 </div>
                 <div class="col-lg-2">
-                    <strong>Content</strong>
+                    <strong>{{'kijho_mailer.layout.content'|trans}}</strong>
                 </div>
                 <div class="col-lg-10">
                     <div class="form-group">
-                        <i>Here goes the email content</i>
+                        <i>{{'kijho_mailer.layout.content_help'|trans}}</i>
                     </div>
                 </div>
                 <div class="col-lg-2">
-                    <strong>Footer</strong>
+                    <strong>{{'kijho_mailer.layout.footer'|trans}}</strong>
                 </div>
                 <div class="col-lg-10 content-footer">
                     <div class="form-group">
@@ -38,7 +38,4 @@
                 </div>
                 </div>
         </div>
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}

@@ -10,29 +10,33 @@ use Kijho\MailerBundle\Entity\EmailLayout;
 class EmailLayoutType extends AbstractType {
 
     protected $storageEntity;
-    
-    public function __construct($storageEntity) {
+    protected $translator;
+
+    public function __construct($storageEntity, $translator) {
         $this->storageEntity = $storageEntity;
+        $this->translator = $translator;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
-
         $builder
-                ->add('name', 'text', array('required' => true, 'label' => 'Name',
+                ->add('name', 'text', array('required' => true,
+                    'label' => $this->translator->trans('kijho_mailer.global.name'),
                     'attr' => array('class' => 'form-control')))
-                ->add('header', 'textarea', array('required' => true, 'label' => 'Layout Header',
+                ->add('header', 'textarea', array('required' => true, 
+                    'label' => $this->translator->trans('kijho_mailer.layout.header'),
                     'attr' => array('class' => 'form-control')))
-                ->add('footer', 'textarea', array('required' => true, 'label' => 'Layout Footer',
+                ->add('footer', 'textarea', array('required' => true, 
+                    'label' => $this->translator->trans('kijho_mailer.layout.footer'),
                     'attr' => array('class' => 'form-control')))
                 ->add('languageCode', 'choice', array('required' => true,
                     'choices' => array(EmailLayout::LANG_EN => strtoupper(EmailLayout::LANG_EN),
                         EmailLayout::LANG_ES => strtoupper(EmailLayout::LANG_ES)),
-                    'label' => 'Language',
+                    'label' => $this->translator->trans('kijho_mailer.global.language'),
                     'attr' => array('class' => 'form-control')))
         ;
     }

@@ -8,14 +8,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{path('kijho_mailer_homepage')}}">Email Settings</a>
+            <a class="navbar-brand" href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.settings.email_settings'|trans}}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li {% if menu is defined and menu == 'layouts' %}class="active"{% endif %}><a href="{{path('kijho_mailer_layout')}}">Layouts <span class="sr-only">(current)</span></a></li>
-                <li {% if menu is defined and menu == 'templates' %}class="active"{% endif %}><a href="#">Templates</a></li>
+                <li {% if menu is defined and menu == 'home' %}class="active"{% endif %}><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}} <span class="sr-only">(current)</span></a></li>
+                <li {% if menu is defined and menu == 'layouts' %}class="active"{% endif %}><a href="{{path('kijho_mailer_layout')}}">{{'kijho_mailer.layout.layouts'|trans}} <span class="sr-only">(current)</span></a></li>
+                <li {% if menu is defined and menu == 'templates' %}class="active"{% endif %}><a href="#">{{'kijho_mailer.template.templates'|trans}}</a></li>
                 {#<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">

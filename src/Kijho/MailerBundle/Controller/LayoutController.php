@@ -3,7 +3,6 @@
 namespace Kijho\MailerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Kijho\MailerBundle\Entity\EmailLayout;
 use Kijho\MailerBundle\Form\EmailLayoutType;
 use Symfony\Component\HttpFoundation\Request;
 use Kijho\MailerBundle\Util\Util;
@@ -12,6 +11,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class LayoutController extends Controller {
 
+    /**
+     * Permite visualizar el listado de todos los layouts creados en el sistema
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 06/11/2015
+     * @return type
+     */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
@@ -35,7 +39,7 @@ class LayoutController extends Controller {
         $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
         $layout = new $layoutStorage;
 
-        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
+        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
 
         return $this->render('KijhoMailerBundle:Layout:new.html.twig', array(
                     'layout' => $layout,
@@ -56,7 +60,7 @@ class LayoutController extends Controller {
 
         $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
         $layout = new $layoutStorage;
-        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
+        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
 
         $form->handleRequest($request);
 
@@ -65,7 +69,7 @@ class LayoutController extends Controller {
             $em->persist($layout);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('messageSuccessLayout', 'Layout created successfully');
+            $this->get('session')->getFlashBag()->add('messageSuccessLayout', $this->get('translator')->trans('kijho_mailer.layout.creation_success_message'));
             return $this->redirect($this->generateUrl('kijho_mailer_layout'));
         }
 
@@ -90,7 +94,7 @@ class LayoutController extends Controller {
 
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
 
-        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
+        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
 
         return $this->render('KijhoMailerBundle:Layout:edit.html.twig', array(
                     'layout' => $layout,
@@ -112,7 +116,7 @@ class LayoutController extends Controller {
 
         $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
-        $form = $this->createForm(new EmailLayoutType($layoutStorage), $layout);
+        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
 
         $form->handleRequest($request);
 
@@ -120,7 +124,7 @@ class LayoutController extends Controller {
             $em->persist($layout);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('messageSuccessLayout', 'Layout updated successfully');
+            $this->get('session')->getFlashBag()->add('messageSuccessLayout', $this->get('translator')->trans('kijho_mailer.layout.update_success_message'));
             return $this->redirect($this->generateUrl('kijho_mailer_layout'));
         }
 

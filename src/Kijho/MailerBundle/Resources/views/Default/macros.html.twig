@@ -3,7 +3,7 @@
         <div class="alert alert-dismissable alert-danger col-lg-12">
             {% if loop.index == loop.first %}
                 <button data-dismiss="alert" class="close" type="button">x</button>
-                <h4><i class="fa fa-close"></i> Error</h4>
+                <h4><i class="fa fa-close"></i> {{'kijho_mailer.global.error'|trans}}</h4>
             {% endif %}
             {{ message|raw }}
         </div>
@@ -15,7 +15,7 @@
         <div class="alert alert-dismissable alert-warning col-lg-12">
             {% if loop.index == loop.first %}
                 <button data-dismiss="alert" class="close" type="button">x</button>
-                <h4><i class="fa fa-warning"></i> Warning</h4>
+                <h4><i class="fa fa-warning"></i> {{'kijho_mailer.global.warning'|trans}}</h4>
             {% endif %}
             {{ message|raw }}
         </div>
@@ -27,7 +27,7 @@
         <div class="alert alert-dismissable alert-success col-lg-12">
             {% if loop.index == loop.first %}
                 <button data-dismiss="alert" class="close" type="button">x</button>
-                <h4><i class="fa fa-check"></i> Success</h4>
+                <h4><i class="fa fa-check"></i> {{'kijho_mailer.global.success'|trans}}</h4>
             {% endif %}
             {{ message|raw }}
         </div>

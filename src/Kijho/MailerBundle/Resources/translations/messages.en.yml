@@ -1,0 +1,40 @@
+kijho_mailer:
+    global:
+        home: "Home"
+        home_message: "This module allow to customize layouts and templates for emails that can be sent from your web application"
+        welcome: "Welcome"
+        success: "Success"
+        warning: "Warning"
+        error: "Error"
+        preview: "Preview"
+        edit: "Edit"
+        delete: "Delete"
+        create: "Create"
+        update: "Update"
+        name: "Name"
+        creation_date: "Creation Date"
+        language: "Language"
+        options: "Options"
+        back: "Back"
+        
+    settings:
+        email_settings: "Email Settings"
+    
+    layout:
+        layouts: "Layouts"
+        new: "New Layout"
+        edit: "Edit Layout"
+        preview: "Layout Preview"
+        empty_list: "No layouts"
+        header: "Header"
+        header_help: "Edit the layout header"
+        content: "Content"
+        content_help: "Here goes the email content"
+        footer: "Footer"
+        footer_help: "Edit the layout footer"
+        delete_question: "Are you sure you want to delete this layout ?"
+        creation_success_message: "Layout created successfully"
+        update_success_message: "Layout updated successfully"
+        
+    template:
+        templates: "Templates"

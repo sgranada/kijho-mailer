@@ -1,0 +1,40 @@
+kijho_mailer:
+    global:
+        home: "Inicio"
+        home_message: "Este módulo permite personalizar diseños y plantillas para mensajes de correo electrónico que pueden enviarse desde la aplicación web"
+        welcome: "Bienvenido"
+        success: "Proceso Exitoso"
+        warning: "Alerta"
+        error:  "Error"
+        preview: "Vista Previa"
+        edit: "Editar"
+        delete: "Eliminar"
+        create: "Crear"
+        update: "Actualizar"
+        name: "Nombre"
+        creation_date: "Fecha de Creación"
+        language: "Lenguaje"
+        options: "Opciones"
+        back: "Volver"
+        
+    settings:
+        email_settings: "Configuración de Emails"
+    
+    layout:
+        layouts: "Diseños Base"
+        new: "Nuevo Diseño"
+        edit: "Editar Diseño"
+        preview: "Vista Previa"
+        empty_list: "Ningun diseño"
+        header: "Encabezado"
+        header_help: "Edite el encabezado del diseño"
+        content: "Contenido"
+        content_help: "Aqui va el contenido del mensaje"
+        footer: "Pie de Página"
+        footer_help: "Edite el pie de página del diseño"
+        delete_question: "Estas seguro que deseas eliminar este diseño ?"
+        creation_success_message: "Diseño creado exitosamente"
+        update_success_message: "Diseño actualizado exitosamente"
+        
+    template:
+        templates: "Plantillas"
