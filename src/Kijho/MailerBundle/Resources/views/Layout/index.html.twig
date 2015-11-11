@@ -28,9 +28,9 @@
                     <td>{{layout.creationDate|date('m/d/Y')}}</td>
                     <td>{{layout.languageCode}}</td>
                     <td>
-                        <a href='{{path('kijho_mailer_layout_preview',{'layoutId':layout.id})}}'><i class="fa fa-eye fa-lg">{{'kijho_mailer.global.preview'|trans}}</i></a>
-                        &nbsp;<a href='{{path('kijho_mailer_layout_edit',{'layoutId':layout.id})}}' title="Edit"><i class="fa fa-pencil fa-lg">{{'kijho_mailer.global.edit'|trans}}</i></a>
-                        &nbsp;<a href='javascript:' title="Delete" class="delete-layout" layout-id="{{layout.id}}"><i class="fa fa-close fa-lg">{{'kijho_mailer.global.delete'|trans}}</i></a>
+                              <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_layout_preview',{'layoutId':layout.id})}}'><i class="fa fa-eye fa-lg"></i></a>
+                        &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_layout_edit',{'layoutId':layout.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
+                        &nbsp;<a class="btn btn-default btn-sm delete-layout" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' layout-id="{{layout.id}}"><i class="fa fa-close fa-lg"></i></a>
                     </td>
                 </tr>
             {% else %}
