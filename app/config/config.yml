@@ -85,6 +85,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
     
-#kijho_mailer:
-#    layout_storage: "Kijho\MailerBundle\Entity\EmailLayout"
-#    template_storage: "Kijho\MailerBundle\Entity\EmailTemplate"
+kijho_mailer:
+    layout_storage: "Kijho\MailerBundle\Entity\EmailLayout"
+    template_storage: "Kijho\MailerBundle\Entity\EmailTemplate"

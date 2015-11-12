@@ -39,12 +39,14 @@ class Template implements TemplateInterface {
     /**
      * @var string
      * @ORM\Column(name="temp_from_mail", type="string", nullable=true)
+     * @Assert\Email()
      */
     protected $fromMail;
 
     /**
      * @var string
      * @ORM\Column(name="temp_copy_to", type="string", nullable=true)
+     * @Assert\Email()
      */
     protected $copyTo;
 

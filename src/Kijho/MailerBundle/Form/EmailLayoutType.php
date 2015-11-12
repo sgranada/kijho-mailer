@@ -33,9 +33,10 @@ class EmailLayoutType extends AbstractType {
                 ->add('footer', 'textarea', array('required' => true, 
                     'label' => $this->translator->trans('kijho_mailer.layout.footer'),
                     'attr' => array('class' => 'form-control')))
-                ->add('languageCode', 'choice', array('required' => true,
-                    'choices' => array(Layout::LANG_EN => strtoupper(Layout::LANG_EN),
-                        Layout::LANG_ES => strtoupper(Layout::LANG_ES)),
+                ->add('languageCode', 'language', array('required' => true,
+//                    'choices' => array(Layout::LANG_EN => strtoupper(Layout::LANG_EN),
+//                        Layout::LANG_ES => strtoupper(Layout::LANG_ES)),
+                    'empty_value'  => $this->translator->trans('kijho_mailer.global.select'),
                     'label' => $this->translator->trans('kijho_mailer.global.language'),
                     'attr' => array('class' => 'form-control')))
         ;

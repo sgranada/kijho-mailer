@@ -19,6 +19,7 @@ kijho_mailer:
         enabled: "Habilitado"
         disabled: "Deshabilitado"
         select: "Seleccione.."
+        email_example: "correo@ejemplo.com"
         
     settings:
         email_settings: "Configuración de Emails"
@@ -56,3 +57,8 @@ kijho_mailer:
         delete_question: "Estas seguro que deseas eliminar esta plantilla ?"
         creation_success_message: "Plantilla creada exitosamente"
         update_success_message: "Plantilla actualizada exitosamente"
+        name: "Nombre de la Plantilla"
+        from_name: "Nombre de Remitente"
+        from_mail: "Correo de Remitente"
+        copy_to: "Copia a"
+        subject: "Asunto"

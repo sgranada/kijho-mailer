@@ -13,7 +13,6 @@ class EmailTemplateType extends AbstractType {
     protected $storageEntity;
     protected $container;
     protected $translator;
-    protected $layoutClass;
 
     public function __construct($storageEntity, $container) {
         $this->storageEntity = $storageEntity;
@@ -40,7 +39,21 @@ class EmailTemplateType extends AbstractType {
                     'empty_value' => $this->translator->trans('kijho_mailer.template.no_layout'),
                     'attr' => array('class' => 'form-control')))
                 ->add('name', 'text', array('required' => true,
-                    'label' => $this->translator->trans('kijho_mailer.global.name'),
+                    'label' => $this->translator->trans('kijho_mailer.template.name'),
+                    'attr' => array('class' => 'form-control')))
+                ->add('fromName', 'text', array('required' => false,
+                    'label' => $this->translator->trans('kijho_mailer.template.from_name'),
+                    'attr' => array('class' => 'form-control')))
+                ->add('fromMail', 'email', array('required' => false,
+                    'label' => $this->translator->trans('kijho_mailer.template.from_mail'),
+                    'attr' => array('class' => 'form-control',
+                        'placeholder' => $this->translator->trans('kijho_mailer.global.email_example'))))
+                ->add('copyTo', 'email', array('required' => false,
+                    'label' => $this->translator->trans('kijho_mailer.template.copy_to'),
+                    'attr' => array('class' => 'form-control',
+                        'placeholder' => $this->translator->trans('kijho_mailer.global.email_example'))))
+                ->add('subject', 'text', array('required' => false,
+                    'label' => $this->translator->trans('kijho_mailer.template.subject'),
                     'attr' => array('class' => 'form-control')))
                 ->add('contentMessage', 'textarea', array('required' => false,
                     'label' => $this->translator->trans('kijho_mailer.layout.content'),
