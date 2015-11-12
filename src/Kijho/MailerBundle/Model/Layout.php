@@ -41,8 +41,7 @@ class Layout implements LayoutInterface {
     
     /**
      * @var \DateTime
-     * @ORM\Column(name="layo_creation_date", type="datetime")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="layo_creation_date", type="datetime", nullable=true)
      */
     protected $creationDate;
     

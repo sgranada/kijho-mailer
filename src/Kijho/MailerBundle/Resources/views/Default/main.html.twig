@@ -25,6 +25,11 @@
 <body>
     {% import 'KijhoMailerBundle:Default:macros.html.twig' as macros  %}
     {% include 'KijhoMailerBundle:Default:menu.html.twig' %}
+    <section class="container header">
+        {% block header_content %}
+        {% endblock %}
+    </section>
+    
     <section class="container">
         {% block main_content %}
         {% endblock %}

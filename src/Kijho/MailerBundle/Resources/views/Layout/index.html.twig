@@ -1,10 +1,13 @@
 {% extends 'KijhoMailerBundle:Default:main.html.twig' %}
 {% block title %}{{'kijho_mailer.layout.layouts'|trans}}{% endblock %}
-{% block main_content %}
+{% block header_content %}
     <h2 class="pull-left">{{'kijho_mailer.layout.layouts'|trans}}</h2>
     <div class="btn-group pull-right top-margin" role="group" aria-label="...">
         <a href="{{path('kijho_mailer_layout_new')}}" class="btn btn-default">{{'kijho_mailer.layout.new'|trans}}</a>
     </div>
+{% endblock %}
+{% block main_content %}
+    
     <ol class="col-lg-12 breadcrumb">
         <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
         <li class="active">{{ 'kijho_mailer.layout.layouts'|trans }}</li>
