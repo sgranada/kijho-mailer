@@ -1,0 +1,79 @@
+{% extends 'KijhoMailerBundle:Default:main.html.twig' %}
+{% block title %}{{'kijho_mailer.template_group.template_groups'|trans}}{% endblock %}
+{% block header_content %}
+    <h2 class="pull-left">{{'kijho_mailer.template_group.template_groups'|trans}}</h2>
+    <div class="btn-group pull-right top-margin" role="group" aria-label="...">
+        <a href="{{path('kijho_mailer_template_group_new')}}" class="btn btn-default">{{'kijho_mailer.template_group.new'|trans}}</a>
+    </div>
+{% endblock %}
+{% block main_content %}
+    
+    <ol class="col-lg-12 breadcrumb">
+        <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
+        <li class="active">{{ 'kijho_mailer.template_group.template_groups'|trans }}</li>
+    </ol>
+
+    {{ macros.showSuccessMessage('messageSuccessTemplateGroup')}}  
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{{'kijho_mailer.global.name'|trans}}</th>
+                <th>{{'kijho_mailer.global.creation_date'|trans}}</th>
+                <th>{{'kijho_mailer.global.slug'|trans}}</th>
+                <th>{{'kijho_mailer.global.options'|trans}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for templateGroup in templateGroups %}
+                <tr>
+                    <td>{{templateGroup.name}}</td>
+                    <td>{{templateGroup.creationDate|date('m/d/Y')}}</td>
+                    <td>{{templateGroup.slug}}</td>
+                    <td>
+                        <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_template_group_edit',{'templateGroupId':templateGroup.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
+                        &nbsp;<a class="btn btn-default btn-sm delete-template-group" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' template-group-id="{{templateGroup.id}}"><i class="fa fa-close fa-lg"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">{{'kijho_mailer.template_group.empty_list'|trans}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    /** 
+     * Codigo para la eliminacion de template groups mediante ajax 
+     */
+    $(".delete-template-group").click(function () {
+        var object = $(this);
+        var templateGroupId = object.attr('template-group-id');
+
+        bootbox.confirm('{{'kijho_mailer.template_group.delete_question'|trans}}', function (result) {
+
+            if (result == true)
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('kijho_mailer_template_group_delete')}}",
+                    dataType: 'json',
+                    data: 'templateGroupId=' + templateGroupId,
+                    success: function (resp) {
+                        console.log(resp);
+                        if (resp.result == '__OK__') {
+                            object.parent().parent().remove();
+                        } else {
+                            bootbox.alert(resp.msg);
+                        }
+                    },
+                    error: function () {
+                        bootbox.alert('Error, try again')
+                    }
+                });
+            }
+        });
+    });
+{% endblock %}

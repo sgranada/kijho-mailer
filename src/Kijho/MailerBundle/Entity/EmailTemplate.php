@@ -26,6 +26,13 @@ class EmailTemplate extends BaseTemplate {
      */
     protected $layout;
     
+    /**
+     * Grupo al que esta asociado el template
+     * @ORM\ManyToOne(targetEntity="EmailTemplateGroup")
+     * @ORM\JoinColumn(name="temp_group", referencedColumnName="tgro_id", nullable=true)
+     */
+    protected $group;
+    
     function getId() {
         return $this->id;
     }
@@ -37,5 +44,14 @@ class EmailTemplate extends BaseTemplate {
     function setLayout(EmailLayout $layout = null) {
         $this->layout = $layout;
     }
+    function getGroup() {
+        return $this->group;
+    }
+
+    function setGroup($group = null) {
+        $this->group = $group;
+    }
+
+
 
 }

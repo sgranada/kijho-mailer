@@ -27,6 +27,11 @@
                         {{ form_errors(form.layout) }}
                     </div>
                     <div class="form-group">
+                        {{ form_label(form.group) }}
+                        {{ form_widget(form.group) }}
+                        {{ form_errors(form.group) }}
+                    </div>
+                    <div class="form-group">
                         {{ form_label(form.fromName) }}
                         {{ form_widget(form.fromName) }}
                         {{ form_errors(form.fromName) }}
@@ -41,23 +46,24 @@
                         {{ form_widget(form.copyTo) }}
                         {{ form_errors(form.copyTo) }}
                     </div>
+                    
+                </div>
+                <div class="col-lg-6" style="padding-left: 30px;">
                     <div class="form-group">
                         {{ form_label(form.subject) }}
                         {{ form_widget(form.subject) }}
                         {{ form_errors(form.subject) }}
-                    </div>
-                </div>
-                <div class="col-lg-6" style="padding-left: 30px;">
-                    <div class="form-group">
-                        {{ form_label(form.status) }}
-                        {{ form_widget(form.status) }}
-                        {{ form_errors(form.status) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(form.contentMessage) }}
                         {{ form_widget(form.contentMessage, {'attr':{'style':'height:250px;'}}) }}
                         <p class="help-block">{{'kijho_mailer.template.content_help'|trans}}</p>
                         {{ form_errors(form.contentMessage) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.status) }}
+                        {{ form_widget(form.status) }}
+                        {{ form_errors(form.status) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(form._token) }} 

@@ -176,7 +176,7 @@ class LayoutController extends Controller {
             $em->flush();
         } catch (\Exception $exc) {
             $response['result'] = '__KO__';
-            $response['msg'] = 'Unknown error, try again';
+            $response['msg'] = $this->get('translator')->trans('kijho_mailer.global.cant_delete_message');
         }
         return new JsonResponse($response);
     }

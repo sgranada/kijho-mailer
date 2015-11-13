@@ -35,8 +35,19 @@ class EmailTemplateType extends AbstractType {
                         return $er->createQueryBuilder('l')
                                 ->orderBy('l.name', 'ASC');
                     },
+                    'label' => $this->translator->trans('kijho_mailer.template.layout'),
                     'required' => false,
                     'empty_value' => $this->translator->trans('kijho_mailer.template.no_layout'),
+                    'attr' => array('class' => 'form-control')))
+                ->add('group', 'entity', array(
+                    'class' => $this->container->getParameter('kijho_mailer.template_group_storage'),
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('g')
+                                ->orderBy('g.name', 'ASC');
+                    },
+                    'label' => $this->translator->trans('kijho_mailer.template.group'),
+                    'required' => false,
+                    'empty_value' => $this->translator->trans('kijho_mailer.template.no_group'),
                     'attr' => array('class' => 'form-control')))
                 ->add('name', 'text', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.template.name'),

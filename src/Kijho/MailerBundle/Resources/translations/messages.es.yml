@@ -20,6 +20,8 @@ kijho_mailer:
         disabled: "Deshabilitado"
         select: "Seleccione.."
         email_example: "correo@ejemplo.com"
+        slug: "Identificador"
+        cant_delete_message: "Este elemento no puede ser eliminado"
         
     settings:
         email_settings: "Configuración de Emails"
@@ -46,6 +48,8 @@ kijho_mailer:
         templates: "Plantillas"
         no_layout: "- Sin diseño base"
         layout: "Diseño de Plantilla"
+        group: "Grupo de Plantilla"
+        no_group: "- Sin grupo"
         new: "Nueva Plantilla"
         edit: "Editar Plantilla"
         preview: "Vista Previa"
@@ -62,3 +66,13 @@ kijho_mailer:
         from_mail: "Correo de Remitente"
         copy_to: "Copia a"
         subject: "Asunto"
+        
+    template_group:
+        template_groups: "Grupos de Plantillas"
+        new: "Nuevo Grupo"
+        edit: "Editar Grupo"
+        delete: "Eliminar Grupo"
+        empty_list: "Ningun Grupo"
+        delete_question: "Estas seguro que deseas eliminar este grupo de plantillas ?"
+        creation_success_message: "Grupo creado exitosamente"
+        update_success_message: "Grupo actualizado exitosamente"

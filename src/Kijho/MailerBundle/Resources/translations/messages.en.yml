@@ -20,6 +20,8 @@ kijho_mailer:
         disabled: "Disabled"
         select: "Select.."
         email_example: "email@example.com"
+        slug: "Slug"
+        cant_delete_message: "This item can't be deleted"
         
     settings:
         email_settings: "Email Settings"
@@ -46,6 +48,8 @@ kijho_mailer:
         templates: "Templates"
         no_layout: "- Without layout"
         layout: "Template Layout"
+        group: "Template Group"
+        no_group: "- Without group"
         new: "New Template"
         edit: "Edit Template"
         preview: "Template Preview"
@@ -62,3 +66,13 @@ kijho_mailer:
         from_mail: "From mail"
         copy_to: "Copy to"
         subject: "Subject"
+        
+    template_group:
+        template_groups: "Template Groups"
+        new: "New Group"
+        edit: "Edit Group"
+        delete: "Delete Group"
+        empty_list: "No groups"
+        delete_question: "Are you sure you want to delete this template group ?"
+        creation_success_message: "Template group created successfully"
+        update_success_message: "Template group updated successfully"

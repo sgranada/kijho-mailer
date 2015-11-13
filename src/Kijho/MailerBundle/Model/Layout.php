@@ -8,9 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Layout implements LayoutInterface {
 
-    const LANG_ES = 'es';
-    const LANG_EN = 'en';
-    
     /**
      * @var string
      * @ORM\Column(name="layo_name", type="string")

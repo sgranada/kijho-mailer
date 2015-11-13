@@ -5,9 +5,8 @@ namespace Kijho\MailerBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Kijho\MailerBundle\Model\Layout;
 
-class EmailLayoutType extends AbstractType {
+class EmailTemplateGroupType extends AbstractType {
 
     protected $storageEntity;
     protected $translator;
@@ -27,16 +26,6 @@ class EmailLayoutType extends AbstractType {
                 ->add('name', 'text', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.global.name'),
                     'attr' => array('class' => 'form-control')))
-                ->add('header', 'textarea', array('required' => true, 
-                    'label' => $this->translator->trans('kijho_mailer.layout.header'),
-                    'attr' => array('class' => 'form-control')))
-                ->add('footer', 'textarea', array('required' => true, 
-                    'label' => $this->translator->trans('kijho_mailer.layout.footer'),
-                    'attr' => array('class' => 'form-control')))
-                ->add('languageCode', 'language', array('required' => true,
-                    'empty_value'  => $this->translator->trans('kijho_mailer.global.select'),
-                    'label' => $this->translator->trans('kijho_mailer.global.language'),
-                    'attr' => array('class' => 'form-control')))
         ;
     }
 
@@ -53,7 +42,7 @@ class EmailLayoutType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'kijho_mailerbundle_layout_type';
+        return 'kijho_mailerbundle_template_group_type';
     }
 
 }

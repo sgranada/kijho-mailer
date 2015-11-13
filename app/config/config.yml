@@ -88,3 +88,4 @@ swiftmailer:
 kijho_mailer:
     layout_storage: "Kijho\MailerBundle\Entity\EmailLayout"
     template_storage: "Kijho\MailerBundle\Entity\EmailTemplate"
+    template_group_storage: "Kijho\MailerBundle\Entity\EmailTemplateGroup"

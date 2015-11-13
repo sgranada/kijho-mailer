@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('layout_storage')->isRequired()->end()
                 ->scalarNode('template_storage')->isRequired()->end()
+                ->scalarNode('template_group_storage')->isRequired()->end()
             ->end()
         ;
         
