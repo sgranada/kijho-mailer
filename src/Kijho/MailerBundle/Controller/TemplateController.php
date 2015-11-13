@@ -209,7 +209,11 @@ class TemplateController extends Controller {
         foreach ($files as $file) {
             $position = strpos($file, '.php');
             if ($position) {
-                array_push($entities, substr($file, 0, $position));
+                $fileName = substr($file, 0, $position);
+                $position = strpos($file, 'Repository');
+                if ($position === false) {
+                    array_push($entities, $fileName);
+                }
             }
         }
 
