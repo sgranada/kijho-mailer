@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         
         $rootNode
             ->children()
+                ->scalarNode('entity_directory')->isRequired()->end()
                 ->scalarNode('layout_storage')->isRequired()->end()
                 ->scalarNode('template_storage')->isRequired()->end()
                 ->scalarNode('template_group_storage')->isRequired()->end()

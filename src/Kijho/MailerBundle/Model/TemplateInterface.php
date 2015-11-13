@@ -24,6 +24,11 @@ interface TemplateInterface
      * @return Layout
      */
     public function getLayout();
+    
+    /**
+     * @return TemplateGroup
+     */
+    public function getGroup();
 
     /**
      * @return string

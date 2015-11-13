@@ -44,11 +44,12 @@ class EmailTemplate extends BaseTemplate {
     function setLayout(EmailLayout $layout = null) {
         $this->layout = $layout;
     }
+    
     function getGroup() {
         return $this->group;
     }
 
-    function setGroup($group = null) {
+    function setGroup(EmailTemplateGroup $group = null) {
         $this->group = $group;
     }
 

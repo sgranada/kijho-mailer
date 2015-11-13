@@ -169,6 +169,13 @@ class Template implements TemplateInterface {
     public function getLayout() {
         
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getGroup() {
+        
+    }
 
     /**
      * {@inheritDoc}

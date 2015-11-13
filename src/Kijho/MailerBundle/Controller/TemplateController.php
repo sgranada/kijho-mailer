@@ -41,9 +41,12 @@ class TemplateController extends Controller {
 
         $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container), $template);
 
+        $entities = $this->getReflectedProjectEntities();
+
         return $this->render('KijhoMailerBundle:Template:new.html.twig', array(
                     'template' => $template,
                     'form' => $form->createView(),
+                    'entities' => $entities,
                     'menu' => 'templates'
         ));
     }
@@ -73,9 +76,12 @@ class TemplateController extends Controller {
             return $this->redirect($this->generateUrl('kijho_mailer_template'));
         }
 
+        $entities = $this->getReflectedProjectEntities();
+
         return $this->render('KijhoMailerBundle:Template:new.html.twig', array(
                     'template' => $template,
                     'form' => $form->createView(),
+                    'entities' => $entities,
                     'menu' => 'templates'
         ));
     }
@@ -96,9 +102,12 @@ class TemplateController extends Controller {
 
         $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container), $template);
 
+        $entities = $this->getReflectedProjectEntities();
+
         return $this->render('KijhoMailerBundle:Template:edit.html.twig', array(
                     'template' => $template,
                     'form' => $form->createView(),
+                    'entities' => $entities,
                     'menu' => 'templates'
         ));
     }
@@ -128,9 +137,12 @@ class TemplateController extends Controller {
             return $this->redirect($this->generateUrl('kijho_mailer_template'));
         }
 
+        $entities = $this->getReflectedProjectEntities();
+
         return $this->render('KijhoMailerBundle:Template:edit.html.twig', array(
                     'template' => $template,
                     'form' => $form->createView(),
+                    'entities' => $entities,
                     'menu' => 'templates'
         ));
     }
@@ -179,6 +191,43 @@ class TemplateController extends Controller {
             $response['msg'] = $this->get('translator')->trans('kijho_mailer.global.cant_delete_message');
         }
         return new JsonResponse($response);
+    }
+
+    /**
+     * Esta funcion permite obtener la estructura de todas las entidades ubicadas 
+     * en el paquete de entidades del proyecto
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 12/11/2015
+     * @return array(\ReflectionClass)
+     */
+    public function getReflectedProjectEntities() {
+        //escaneamos el contenido de la carpeta que contiene las entidades del proyecto
+        $entityFolder = $this->container->getParameter('kijho_mailer.entity_directory');
+        $files = scandir($entityFolder, 2);
+
+        //guardamos en un arreglo los nombres de las entidades
+        $entities = array();
+        foreach ($files as $file) {
+            $position = strpos($file, '.php');
+            if ($position) {
+                array_push($entities, substr($file, 0, $position));
+            }
+        }
+
+        //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
+        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $search = 'Entity\\';
+        $position = strpos($layoutStorage, $search);
+        $entityNamespace = substr($layoutStorage, 0, $position) . $search;
+
+        //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
+        $instances = array();
+        foreach ($entities as $entity) {
+            $path = $entityNamespace . $entity;
+            $instance = new \ReflectionClass(new $path);
+            array_push($instances, $instance);
+        }
+
+        return $instances;
     }
 
 }

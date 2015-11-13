@@ -66,6 +66,7 @@ kijho_mailer:
         from_mail: "Correo de Remitente"
         copy_to: "Copia a"
         subject: "Asunto"
+        entity_attributes: "Atributos de Entidades" 
         
     template_group:
         template_groups: "Grupos de Plantillas"

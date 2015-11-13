@@ -66,6 +66,7 @@ kijho_mailer:
         from_mail: "From mail"
         copy_to: "Copy to"
         subject: "Subject"
+        entity_attributes: "Entity Attributes" 
         
     template_group:
         template_groups: "Template Groups"
