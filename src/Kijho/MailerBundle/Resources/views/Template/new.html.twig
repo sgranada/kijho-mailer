@@ -66,21 +66,18 @@
                 </div>
                 <div class="form-group">
                     <legend>{{'kijho_mailer.template.entity_attributes'|trans}}</legend>
-                    <div class="panel-group" id="accordion">
+                    <div class="form-group col-xs-6">
+                        {{ form_label(form.entityNames) }}
+                        {{ form_widget(form.entityNames) }}
+                        {{ form_errors(form.entityNames) }}
+                    </div>
+                    <div class="form-group col-xs-6" style="padding-left: 30px;">
+                        <label>{{'kijho_mailer.template.select_attributes'|trans}}</label>
                         {% for entity in entities %} 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{loop.index}}">{{entity.getShortName()}}</a>
-                                    </h4>
-                                </div>
-                                <div id="collapse{{loop.index}}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}">
-                                    <div class="panel-body">
-                                        {% for property in entity.getProperties() %}
-                                            <p><a class="attribute-name" href="javascript:" attr-name="entity.{{property.getName()}}">{{property.getName()}}</a></p>
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                            <div id="{{entity.getShortName()|lower}}" class="attr-group" style="display: none;">
+                                {% for property in entity.getProperties() %}
+                                    <p><a class="attribute-name" href="javascript:" attr-name="entity.{{property.getName()}}">{{property.getName()}}</a></p>
+                                {% endfor %}
                             </div>
                         {% endfor %}
                     </div>
@@ -98,6 +95,16 @@
 {% block scripts %}
     $('#kijho_mailerbundle_template_type_contentMessage').wysihtml5();
 
+   /**
+     * Codigo para desplegar los atributos de la entidad seleccionada en pantalla
+     */
+    $("#kijho_mailerbundle_template_type_entityNames").change(function(){
+        var entityName = $(this).val();
+        $('.attr-group').css('display','none');
+        $("#"+entityName).css('display','block');
+    });
+    $("#kijho_mailerbundle_template_type_entityNames").trigger('change');
+    
     /**
      * Codigo para añadir variables al contenido del template
      */

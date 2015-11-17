@@ -19,7 +19,7 @@ class TemplateGroupController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $templateGroupStorage = $this->container->getParameter('kijho_mailer.template_group_storage');
+        $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
 
         $templateGroups = $em->getRepository($templateGroupStorage)->findAll();
 
@@ -36,7 +36,7 @@ class TemplateGroupController extends Controller {
      */
     public function newAction() {
 
-        $templateGroupStorage = $this->container->getParameter('kijho_mailer.template_group_storage');
+        $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = new $templateGroupStorage;
 
         $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
@@ -58,7 +58,7 @@ class TemplateGroupController extends Controller {
     public function saveAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $templateGroupStorage = $this->container->getParameter('kijho_mailer.template_group_storage');
+        $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = new $templateGroupStorage;
         $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
 
@@ -96,7 +96,7 @@ class TemplateGroupController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $templateGroupStorage = $this->container->getParameter('kijho_mailer.template_group_storage');
+        $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
 
         $templateGroup = $em->getRepository($templateGroupStorage)->find($templateGroupId);
 
@@ -120,7 +120,7 @@ class TemplateGroupController extends Controller {
     public function updateAction(Request $request, $templateGroupId) {
         $em = $this->getDoctrine()->getManager();
 
-        $templateGroupStorage = $this->container->getParameter('kijho_mailer.template_group_storage');
+        $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = $em->getRepository($templateGroupStorage)->find($templateGroupId);
         $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
 
@@ -150,7 +150,7 @@ class TemplateGroupController extends Controller {
     public function deleteAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $templateGroupId = $request->request->get('templateGroupId');
-        $templateGroupStorage = $this->container->getParameter('kijho_mailer.template_group_storage');
+        $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = $em->getRepository($templateGroupStorage)->find($templateGroupId);
 
         $response['result'] = '__OK__';

@@ -13,11 +13,20 @@ class EmailTemplateType extends AbstractType {
     protected $storageEntity;
     protected $container;
     protected $translator;
+    protected $entityNames;
 
-    public function __construct($storageEntity, $container) {
+    public function __construct($storageEntity, $container, $entities = array()) {
         $this->storageEntity = $storageEntity;
         $this->container = $container;
         $this->translator = $this->container->get('translator');
+        
+        //incluimos en el formulario las entidades que se identificaron en el proyecto
+        if (!empty($entities)) {
+            $this->entityNames = array();
+            foreach ($entities as $entity) {
+                $this->entityNames[strtolower($entity->getShortName())] = $entity->getShortName();
+            }
+        }
     }
 
     /**
@@ -30,7 +39,7 @@ class EmailTemplateType extends AbstractType {
 
         $builder
                 ->add('layout', 'entity', array(
-                    'class' => $this->container->getParameter('kijho_mailer.layout_storage'),
+                    'class' => $this->container->getParameter('kijho_mailer.storage')['layout'],
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('l')
                                 ->orderBy('l.name', 'ASC');
@@ -40,7 +49,7 @@ class EmailTemplateType extends AbstractType {
                     'empty_value' => $this->translator->trans('kijho_mailer.template.no_layout'),
                     'attr' => array('class' => 'form-control')))
                 ->add('group', 'entity', array(
-                    'class' => $this->container->getParameter('kijho_mailer.template_group_storage'),
+                    'class' => $this->container->getParameter('kijho_mailer.storage')['template_group'],
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('g')
                                 ->orderBy('g.name', 'ASC');
@@ -73,6 +82,12 @@ class EmailTemplateType extends AbstractType {
                     'choices' => array(Template::STATUS_ENABLED => $this->translator->trans($template->getStatusDescription(Template::STATUS_ENABLED)),
                         Template::STATUS_DISABLED => $this->translator->trans($template->getStatusDescription(Template::STATUS_DISABLED))),
                     'label' => $this->translator->trans('kijho_mailer.template.status'),
+                    'attr' => array('class' => 'form-control')))
+                ->add('entityNames', 'choice', array('required' => false,
+                    'mapped' => false,
+                    'choices' => $this->entityNames,
+                    'label' => $this->translator->trans('kijho_mailer.template.select_entity'),
+                    'empty_value' => $this->translator->trans('kijho_mailer.global.select'),
                     'attr' => array('class' => 'form-control')))
         ;
     }

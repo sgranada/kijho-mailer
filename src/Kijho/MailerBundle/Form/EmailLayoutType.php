@@ -11,6 +11,7 @@ class EmailLayoutType extends AbstractType {
 
     protected $storageEntity;
     protected $translator;
+    
 
     public function __construct($storageEntity, $translator) {
         $this->storageEntity = $storageEntity;
@@ -27,14 +28,14 @@ class EmailLayoutType extends AbstractType {
                 ->add('name', 'text', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.global.name'),
                     'attr' => array('class' => 'form-control')))
-                ->add('header', 'textarea', array('required' => true, 
+                ->add('header', 'textarea', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.layout.header'),
                     'attr' => array('class' => 'form-control')))
-                ->add('footer', 'textarea', array('required' => true, 
+                ->add('footer', 'textarea', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.layout.footer'),
                     'attr' => array('class' => 'form-control')))
                 ->add('languageCode', 'language', array('required' => true,
-                    'empty_value'  => $this->translator->trans('kijho_mailer.global.select'),
+                    'empty_value' => $this->translator->trans('kijho_mailer.global.select'),
                     'label' => $this->translator->trans('kijho_mailer.global.language'),
                     'attr' => array('class' => 'form-control')))
         ;

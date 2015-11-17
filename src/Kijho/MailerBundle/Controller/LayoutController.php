@@ -19,7 +19,7 @@ class LayoutController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
 
         $layouts = $em->getRepository($layoutStorage)->findAll();
 
@@ -36,7 +36,7 @@ class LayoutController extends Controller {
      */
     public function newAction() {
 
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = new $layoutStorage;
 
         $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
@@ -58,7 +58,7 @@ class LayoutController extends Controller {
     public function saveAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = new $layoutStorage;
         $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
 
@@ -90,7 +90,7 @@ class LayoutController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
 
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
 
@@ -114,7 +114,7 @@ class LayoutController extends Controller {
     public function updateAction(Request $request, $layoutId) {
         $em = $this->getDoctrine()->getManager();
 
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
         $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
 
@@ -145,7 +145,7 @@ class LayoutController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
 
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
 
@@ -165,7 +165,7 @@ class LayoutController extends Controller {
     public function deleteAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $layoutId = $request->request->get('layoutId');
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
 
         $response['result'] = '__OK__';

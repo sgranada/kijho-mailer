@@ -86,7 +86,8 @@ swiftmailer:
     spool:     { type: memory }
     
 kijho_mailer:
-    entity_directory: "%kernel.root_dir%/../src/Kijho/MailerBundle/Entity/"
-    layout_storage: "Kijho\MailerBundle\Entity\EmailLayout"
-    template_storage: "Kijho\MailerBundle\Entity\EmailTemplate"
-    template_group_storage: "Kijho\MailerBundle\Entity\EmailTemplateGroup"
+    entity_directories: ["%kernel.root_dir%/../src/Kijho/MailerBundle/Entity/"]
+    storage:
+        layout:         "Kijho\MailerBundle\Entity\EmailLayout"
+        template_group: "Kijho\MailerBundle\Entity\EmailTemplateGroup"
+        template:       "Kijho\MailerBundle\Entity\EmailTemplate"

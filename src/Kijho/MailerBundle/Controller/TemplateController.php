@@ -19,7 +19,7 @@ class TemplateController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
 
         $templates = $em->getRepository($templateStorage)->findAll();
 
@@ -36,12 +36,12 @@ class TemplateController extends Controller {
      */
     public function newAction() {
 
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = new $templateStorage;
 
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container), $template);
-
         $entities = $this->getReflectedProjectEntities();
+
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
 
         return $this->render('KijhoMailerBundle:Template:new.html.twig', array(
                     'template' => $template,
@@ -61,9 +61,11 @@ class TemplateController extends Controller {
     public function saveAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = new $templateStorage;
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container), $template);
+
+        $entities = $this->getReflectedProjectEntities();
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
 
         $form->handleRequest($request);
 
@@ -75,8 +77,6 @@ class TemplateController extends Controller {
             $this->get('session')->getFlashBag()->add('messageSuccessTemplate', $this->get('translator')->trans('kijho_mailer.template.creation_success_message'));
             return $this->redirect($this->generateUrl('kijho_mailer_template'));
         }
-
-        $entities = $this->getReflectedProjectEntities();
 
         return $this->render('KijhoMailerBundle:Template:new.html.twig', array(
                     'template' => $template,
@@ -96,13 +96,13 @@ class TemplateController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
 
         $template = $em->getRepository($templateStorage)->find($templateId);
 
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container), $template);
-
         $entities = $this->getReflectedProjectEntities();
+
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
 
         return $this->render('KijhoMailerBundle:Template:edit.html.twig', array(
                     'template' => $template,
@@ -123,9 +123,10 @@ class TemplateController extends Controller {
     public function updateAction(Request $request, $templateId) {
         $em = $this->getDoctrine()->getManager();
 
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = $em->getRepository($templateStorage)->find($templateId);
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container), $template);
+        $entities = $this->getReflectedProjectEntities();
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
 
         $form->handleRequest($request);
 
@@ -136,8 +137,6 @@ class TemplateController extends Controller {
             $this->get('session')->getFlashBag()->add('messageSuccessTemplate', $this->get('translator')->trans('kijho_mailer.template.update_success_message'));
             return $this->redirect($this->generateUrl('kijho_mailer_template'));
         }
-
-        $entities = $this->getReflectedProjectEntities();
 
         return $this->render('KijhoMailerBundle:Template:edit.html.twig', array(
                     'template' => $template,
@@ -157,7 +156,7 @@ class TemplateController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
 
         $template = $em->getRepository($templateStorage)->find($templateId);
 
@@ -177,7 +176,7 @@ class TemplateController extends Controller {
     public function deleteAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $templateId = $request->request->get('templateId');
-        $templateStorage = $this->container->getParameter('kijho_mailer.template_storage');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = $em->getRepository($templateStorage)->find($templateId);
 
         $response['result'] = '__OK__';
@@ -200,37 +199,48 @@ class TemplateController extends Controller {
      * @return array(\ReflectionClass)
      */
     public function getReflectedProjectEntities() {
-        //escaneamos el contenido de la carpeta que contiene las entidades del proyecto
-        $entityFolder = $this->container->getParameter('kijho_mailer.entity_directory');
-        $files = scandir($entityFolder, 2);
+        //escaneamos el contenido de las carpetas que contienen las entidades del proyecto
+        $entityDirectories = $this->container->getParameter('kijho_mailer.entity_directories');
+        $instances = array();
 
-        //guardamos en un arreglo los nombres de las entidades
-        $entities = array();
-        foreach ($files as $file) {
-            $position = strpos($file, '.php');
-            if ($position) {
-                $fileName = substr($file, 0, $position);
-                $position = strpos($file, 'Repository');
-                if ($position === false) {
-                    array_push($entities, $fileName);
+        foreach ($entityDirectories as $entityDirectory) {
+
+            if (file_exists($entityDirectory)) {
+
+                $files = scandir($entityDirectory, 2);
+
+                //guardamos en un arreglo los nombres de las entidades
+                $entities = array();
+                foreach ($files as $file) {
+                    $position = strpos($file, '.php');
+                    if ($position) {
+                        $fileName = substr($file, 0, $position);
+                        $position = strpos($file, 'Repository');
+                        if ($position === false) {
+                            array_push($entities, $fileName);
+                        }
+                    }
+                }
+
+                //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
+                $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
+                $search = 'Entity\\';
+                $position = strpos($layoutStorage, $search);
+                $entityNamespace = substr($layoutStorage, 0, $position) . $search;
+
+                //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
+
+                foreach ($entities as $entity) {
+                    $path = $entityNamespace . $entity;
+                    try {
+                        $instance = new \ReflectionClass(new $path);
+                        array_push($instances, $instance);
+                    } catch (\Exception $exc) {
+                        //No era una clase PHP
+                    }
                 }
             }
         }
-
-        //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
-        $layoutStorage = $this->container->getParameter('kijho_mailer.layout_storage');
-        $search = 'Entity\\';
-        $position = strpos($layoutStorage, $search);
-        $entityNamespace = substr($layoutStorage, 0, $position) . $search;
-
-        //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
-        $instances = array();
-        foreach ($entities as $entity) {
-            $path = $entityNamespace . $entity;
-            $instance = new \ReflectionClass(new $path);
-            array_push($instances, $instance);
-        }
-
         return $instances;
     }
 
