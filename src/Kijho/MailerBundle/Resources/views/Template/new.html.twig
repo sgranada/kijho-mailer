@@ -126,7 +126,7 @@
         var object = $(this);
         var attribute = object.attr('attr-name');
         attribute = "{"+"{ "+attribute+" }"+"}";
-        $('.form-group iframe').contents().find('body').append(newContent)
+        $('.form-group iframe').contents().find('body').append(attribute)
     });
 
 {% endblock %}

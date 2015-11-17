@@ -223,11 +223,8 @@ class TemplateController extends Controller {
                 }
 
                 //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
-                $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
-                $search = 'Entity\\';
-                $position = strpos($layoutStorage, $search);
-                $entityNamespace = substr($layoutStorage, 0, $position) . $search;
-
+                $entityNamespace = $this->getEntityNamespace();
+                
                 //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
                 foreach ($entities as $entity) {
                     $path = $entityNamespace . $entity;
@@ -242,10 +239,18 @@ class TemplateController extends Controller {
         }
 
         $relationships = $this->getEntityRelationships($instances);
-        
+
         return array('instances' => $instances,
-                    'relationships' => $relationships);
-        
+            'relationships' => $relationships);
+    }
+
+    private function getEntityNamespace() {
+        //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
+        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
+        $search = 'Entity\\';
+        $position = strpos($layoutStorage, $search);
+        $entityNamespace = substr($layoutStorage, 0, $position) . $search;
+        return $entityNamespace;
     }
 
     /**
@@ -288,6 +293,12 @@ class TemplateController extends Controller {
                         $entityName = $this->getBetween($docComment, "targetEntity='", "'");
                     }
                     try {
+                        $entityNamespace = $this->getEntityNamespace();
+                        //verificamos que la entidad este escrita con el namespace completo
+                        $positionNamespace = strpos($entityName, $entityNamespace);
+                        if($positionNamespace === false){
+                            $entityName = $entityNamespace.$entityName;
+                        }
                         $object = new \ReflectionClass(new $entityName);
                         $relationships[$instance->getName()][$property->getName()] = $object;
                     } catch (\Exception $exc) {
