@@ -291,7 +291,8 @@ class TemplateController extends Controller {
                         $object = new \ReflectionClass(new $entityName);
                         $relationships[$instance->getName()][$property->getName()] = $object;
                     } catch (\Exception $exc) {
-                        echo $exc->getTraceAsString();
+                        // El namespace no esta escrito con ruta absoluta
+                        //echo $exc->getTraceAsString();
                     }
                 }
             }
