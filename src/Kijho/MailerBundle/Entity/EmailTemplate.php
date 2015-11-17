@@ -21,14 +21,14 @@ class EmailTemplate extends BaseTemplate {
     
     /**
      * Layout al que esta asociado el template
-     * @ORM\ManyToOne(targetEntity="EmailLayout")
+     * @ORM\ManyToOne(targetEntity="Kijho\MailerBundle\Entity\EmailLayout")
      * @ORM\JoinColumn(name="temp_layout", referencedColumnName="layo_id", nullable=true)
      */
     protected $layout;
     
     /**
      * Grupo al que esta asociado el template
-     * @ORM\ManyToOne(targetEntity="EmailTemplateGroup")
+     * @ORM\ManyToOne(targetEntity="Kijho\MailerBundle\Entity\EmailTemplateGroup")
      * @ORM\JoinColumn(name="temp_group", referencedColumnName="tgro_id", nullable=true)
      */
     protected $group;
@@ -41,7 +41,7 @@ class EmailTemplate extends BaseTemplate {
         return $this->layout;
     }
 
-    function setLayout(EmailLayout $layout = null) {
+    function setLayout($layout = null) {
         $this->layout = $layout;
     }
     
@@ -49,7 +49,7 @@ class EmailTemplate extends BaseTemplate {
         return $this->group;
     }
 
-    function setGroup(EmailTemplateGroup $group = null) {
+    function setGroup($group = null) {
         $this->group = $group;
     }
 

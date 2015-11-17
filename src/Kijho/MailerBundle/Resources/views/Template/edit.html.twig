@@ -72,15 +72,29 @@
                             {{ form_errors(form.entityNames) }}
                         </div>
                         <div class="form-group col-xs-6" style="padding-left: 30px;">
-                            <label>{{'kijho_mailer.template.select_attributes'|trans}}</label>
-                            {% for entity in entities %} 
-                                <div id="{{entity.getShortName()|lower}}" class="attr-group" style="display: none;">
-                                    {% for property in entity.getProperties() %}
-                                        <p><a class="attribute-name" href="javascript:" attr-name="entity.{{property.getName()}}">{{property.getName()}}</a></p>
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                        </div>
+                        <label>{{'kijho_mailer.template.select_attributes'|trans}}</label>
+                        {% set instances = entities.instances %}
+                        {% set relationships = entities.relationships %}
+                        
+                        {% for entity in instances %} 
+                            <div id="{{entity.getShortName()|lower}}" class="attr-group" style="display: none;">
+                                {% for property in entity.getProperties() %}
+                                    <p>
+                                        <a class="attribute-name" href="javascript:" attr-name="entity.{{property.getName()}}">{{property.getName()}}</a>
+                                        {% if relationships[entity.getName()] is defined and relationships[entity.getName()][property.getName()] is defined %}
+                                            {% set otherProperties = relationships[entity.getName()][property.getName()].getProperties() %}
+                                            {% for otherProperty in otherProperties %}
+                                            <p style="padding-left: 30px;">
+                                                <a class="attribute-name" href="javascript:" attr-name="entity.{{property.getName()}}.{{otherProperty.getName()}}">{{property.getName()}}.{{otherProperty.getName()}}</a>
+                                            </p>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </p>
+                                    
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
                     </div>
                     <div class="form-group">
                         {{ form_widget(form._token) }} 
@@ -111,8 +125,6 @@
         var object = $(this);
         var attribute = object.attr('attr-name');
         attribute = "{"+"{ "+attribute+" }"+"}";
-        var currentHtml = $('.form-group iframe').contents().find('body').html();
-        var newContent = currentHtml + attribute;
-        $('.form-group iframe').contents().find('body').html(newContent)
+        $('.form-group iframe').contents().find('body').append(attribute)
     });
 {% endblock %}

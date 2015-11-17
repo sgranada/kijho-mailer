@@ -41,7 +41,7 @@ class TemplateController extends Controller {
 
         $entities = $this->getReflectedProjectEntities();
 
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
 
         return $this->render('KijhoMailerBundle:Template:new.html.twig', array(
                     'template' => $template,
@@ -65,7 +65,7 @@ class TemplateController extends Controller {
         $template = new $templateStorage;
 
         $entities = $this->getReflectedProjectEntities();
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
 
         $form->handleRequest($request);
 
@@ -102,7 +102,7 @@ class TemplateController extends Controller {
 
         $entities = $this->getReflectedProjectEntities();
 
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
 
         return $this->render('KijhoMailerBundle:Template:edit.html.twig', array(
                     'template' => $template,
@@ -126,7 +126,7 @@ class TemplateController extends Controller {
         $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = $em->getRepository($templateStorage)->find($templateId);
         $entities = $this->getReflectedProjectEntities();
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities), $template);
+        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
 
         $form->handleRequest($request);
 
@@ -194,7 +194,7 @@ class TemplateController extends Controller {
 
     /**
      * Esta funcion permite obtener la estructura de todas las entidades ubicadas 
-     * en el paquete de entidades del proyecto
+     * en los paquetes de entidades del proyecto
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 12/11/2015
      * @return array(\ReflectionClass)
      */
@@ -229,7 +229,6 @@ class TemplateController extends Controller {
                 $entityNamespace = substr($layoutStorage, 0, $position) . $search;
 
                 //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
-
                 foreach ($entities as $entity) {
                     $path = $entityNamespace . $entity;
                     try {
@@ -241,7 +240,63 @@ class TemplateController extends Controller {
                 }
             }
         }
-        return $instances;
+
+        $relationships = $this->getEntityRelationships($instances);
+        
+        return array('instances' => $instances,
+                    'relationships' => $relationships);
+        
+    }
+
+    /**
+     * Permite encontrar el trozo de texto que esta entre dos palabras o caracteres
+     * indicados
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 17/11/2015
+     * @param string $content texto a analizar
+     * @param string $start deliminador de inicio
+     * @param string $end delimitador final
+     * @return string texto encontrado entre los dos delimitadores
+     */
+    function getBetween($content, $start, $end) {
+        $r = explode($start, $content);
+        if (isset($r[1])) {
+            $r = explode($end, $r[1]);
+            return $r[0];
+        }
+        return '';
+    }
+
+    /**
+     * Permite hallar las relaciones que tiene una entidad con otras entidades
+     * a partir de la informacion en las anotaciones de sus atributos
+     * Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 17/11/2015
+     * @param array[\ReflectionClass] $instances arreglo de instancias a analizar
+     * @return \ReflectionClass
+     */
+    function getEntityRelationships($instances) {
+        $relationships = array();
+        foreach ($instances as $instance) {
+            foreach ($instance->getProperties() as $property) {
+                //$property = new \ReflectionProperty;
+                $docComment = $property->getDocComment();
+                $position = strpos($docComment, "targetEntity=");
+                if ($position) {
+                    $docComment = substr($docComment, $position);
+
+                    $entityName = $this->getBetween($docComment, 'targetEntity="', '"');
+                    if (empty($entityName)) {
+                        $entityName = $this->getBetween($docComment, "targetEntity='", "'");
+                    }
+                    try {
+                        $object = new \ReflectionClass(new $entityName);
+                        $relationships[$instance->getName()][$property->getName()] = $object;
+                    } catch (\Exception $exc) {
+                        echo $exc->getTraceAsString();
+                    }
+                }
+            }
+        }
+        return $relationships;
     }
 
 }
