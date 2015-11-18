@@ -18,7 +18,7 @@ Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0:
 
 Colocar la siguiente linea en el archivo AppKernel para inicializar el Bundle:
 
-<p style="font-family: Courier New;">new Kijho\MailerBundle\KijhoMailerBundle()</p>
+<pre style="font-family: Courier New;">new Kijho\MailerBundle\KijhoMailerBundle()</pre>
 
 
 <h3>rounting.yml</h3>
@@ -66,7 +66,7 @@ kijho_mailer:
 
 <h4>EmailLayout</h4>
 
-<pre style="font-family: Courier New;">
+
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -92,11 +92,11 @@ class EmailLayout extends BaseLayout {
         return $this->id;
     }
 }
-</pre>
+
 
 <h4>EmailTemplateGroup</h4>
 
-<pre style="font-family: Courier New;">
+
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -122,11 +122,10 @@ class EmailTemplateGroup extends BaseTemplateGroup {
         return $this->id;
     }
 }
-</pre>
+
 
 <h4>EmailTemplate</h4>
 
-<pre style="font-family: Courier New;">
 <?php
 namespace MasterUnlock\BackendBundle\Entity;
 
@@ -181,13 +180,12 @@ class EmailTemplate extends BaseTemplate {
         $this->group = $group;
     }
 }
-</pre>
 
 <h4>composer update</h4>
-Ejecute el comando <pre style="font-family: Courier New;">composer update</pre> en su proyecto
+Ejecute en su proyecto el comando <pre style="font-family: Courier New;">composer update</pre> 
 
 <h4>schema update</h4>
-Ejecute el comando <pre style="font-family: Courier New;">php app/console d:s:u --force</pre> en su proyecto
+Ejecute en su proyecto el comando <pre style="font-family: Courier New;">php app/console d:s:u --force</pre> 
 
 <h4>Enlace</h4>
 Ahora coloque en cualquier parte de su proyecto un enlace con la ruta:
