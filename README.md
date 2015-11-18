@@ -64,10 +64,10 @@ kijho_mailer:
 
 <h3>Creacion de Entidades</h3>
 
-<h4>EmailLayout</h4>
+<h4>EmailLayout.php</h4>
 
 
-<?php
+<pre>
 
 namespace MasterUnlock\BackendBundle\Entity;
 
@@ -92,12 +92,12 @@ class EmailLayout extends BaseLayout {
         return $this->id;
     }
 }
+</pre>
+
+<h4>EmailTemplateGroup.php</h4>
 
 
-<h4>EmailTemplateGroup</h4>
-
-
-<?php
+<pre>
 
 namespace MasterUnlock\BackendBundle\Entity;
 
@@ -122,11 +122,11 @@ class EmailTemplateGroup extends BaseTemplateGroup {
         return $this->id;
     }
 }
+</pre>
 
+<h4>EmailTemplate.php</h4>
 
-<h4>EmailTemplate</h4>
-
-<?php
+<pre>
 namespace MasterUnlock\BackendBundle\Entity;
 
 use Kijho\MailerBundle\Model\Template as BaseTemplate;
@@ -180,6 +180,7 @@ class EmailTemplate extends BaseTemplate {
         $this->group = $group;
     }
 }
+</pre>
 
 <h4>composer update</h4>
 Ejecute en su proyecto el comando <pre style="font-family: Courier New;">composer update</pre> 
@@ -189,7 +190,7 @@ Ejecute en su proyecto el comando <pre style="font-family: Courier New;">php app
 
 <h4>Enlace</h4>
 Ahora coloque en cualquier parte de su proyecto un enlace con la ruta:
-<pre style="font-family: Courier New;">{{path(‘kijho_mailer_homepage’)}}</pre>
+<pre style="font-family: Courier New;">{{path('kijho_mailer_homepage')}}</pre>
 
 <script>
     $( function() { $("PRE").prettyPre(); } );
