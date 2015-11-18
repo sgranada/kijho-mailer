@@ -1,7 +1,7 @@
-# kijho-mailer
+<h1>Instalación</h1>
 
-Instalación
 
+<h3>composer.json</h3>
 
 Colocar esta linea en el archivo composer.json del proyecto:
 
@@ -12,17 +12,14 @@ Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0:
 
 "sensio/distribution-bundle": "~4.0"
 
+<h3>AppKernel.php</h3>
 
 Colocar la siguiente linea en el archivo AppKernel para inicialiar el Bundle:
 
 new Kijho\MailerBundle\KijhoMailerBundle()
 
 
-Habilitar la configuración del lenguaje en el archivo config.yml colocando  el lenguaje por defecto para el vendor (en, es)
-
-framework:
-    translator:      { fallbacks: [en] }
-
+<h3>rounting.yml</h3>
 
 Colocar la siguiente ruta en el archivo routing.yml del proyecto:
 
@@ -31,16 +28,23 @@ kijho_mailer:
     prefix:   /{_locale}/kijhoMailer
 
 
+<h3>config.yml</h3>
+
+Habilitar la configuración del lenguaje en el archivo config.yml colocando  el lenguaje por defecto para el vendor (en, es)
+
+framework:
+    translator:      { fallbacks: [en] }
+
+
 Kijho Mailer requiere el vendor de assets, una vez instalado colocar el bundle en los bundles que usan assets:
 
-# Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [FrontendBundle, MasterUnlockBackendBundle, KijhoMailerBundle]
 
 
-Poner en el arvhico config.yml las configuraciones propias de almacenamiento del vendor
+Poner en el archivo config.yml las configuraciones propias de almacenamiento del vendor
 kijho_mailer:
     entity_directories: ["%kernel.root_dir%/../src/MasterUnlock/BackendBundle/Entity/"]
     storage:
@@ -49,7 +53,9 @@ kijho_mailer:
         template:       "MasterUnlock\BackendBundle\Entity\EmailTemplate"
 
 
-Crear las entidades EmailLayout, EmailTemplateGroup y EmailTemplate en el paquete de entidades del proyecto así:
+<h3>Creacion de Entidades</h3>
+
+<h4>EmailLayout</h4>
 
 <?php
 
@@ -77,7 +83,7 @@ class EmailLayout extends BaseLayout {
     }
 }
 
-
+<h4>EmailTemplateGroup</h4>
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -103,6 +109,8 @@ class EmailTemplateGroup extends BaseTemplateGroup {
         return $this->id;
     }
 }
+
+<h4>EmailTemplate</h4>
 
 <?php
 namespace MasterUnlock\BackendBundle\Entity;
@@ -159,12 +167,14 @@ class EmailTemplate extends BaseTemplate {
     }
 }
 
-Run composer update in your project
+<h4>composer update</h4>
+Ejecute el comando "composer update" en su proyecto
 
-Update your the database schema
+<h4>schema update</h4>
+Ejecute el comando "php app/console d:s:u --force" en su proyecto
 
+<h4>Enlace</h4>
+Ahora coloque en cualquier parte de su proyecto un enlace como el siguiente:
 
-Ahora ponga en cualquier parte de su proyecto un enlace como el siguiente:
-
-<a href=“{{path(‘kijho_mailer_homepage’)}}”>Email Settings</a>
+<pre><a href=“{{path(‘kijho_mailer_homepage’)}}”>Email Settings</a></pre>
 
