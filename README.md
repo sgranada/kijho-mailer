@@ -5,58 +5,66 @@
 
 Colocar esta linea en el archivo composer.json del proyecto:
 
-"cesargiraldonaranjo/kijho.mailer": "dev-master"
+<p style="font-family: Courier New;">"cesargiraldonaranjo/kijho.mailer": "dev-master"</p>
 
 
 Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0:
 
-"sensio/distribution-bundle": "~4.0"
+<p style="font-family: Courier New;">"sensio/distribution-bundle": "~4.0"</p>
 
 <h3>AppKernel.php</h3>
 
 Colocar la siguiente linea en el archivo AppKernel para inicialiar el Bundle:
 
-new Kijho\MailerBundle\KijhoMailerBundle()
+<p style="font-family: Courier New;">new Kijho\MailerBundle\KijhoMailerBundle()</p>
 
 
 <h3>rounting.yml</h3>
 
 Colocar la siguiente ruta en el archivo routing.yml del proyecto:
 
+<p style="font-family: Courier New;">
 kijho_mailer:
     resource: "@KijhoMailerBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/kijhoMailer
+</p>
 
 
 <h3>config.yml</h3>
 
 Habilitar la configuración del lenguaje en el archivo config.yml colocando  el lenguaje por defecto para el vendor (en, es)
 
+<p style="font-family: Courier New;">
 framework:
     translator:      { fallbacks: [en] }
+</p>
 
 
 Kijho Mailer requiere el vendor de assets, una vez instalado colocar el bundle en los bundles que usan assets:
 
+<p style="font-family: Courier New;">
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [FrontendBundle, MasterUnlockBackendBundle, KijhoMailerBundle]
-
+</p>
 
 Poner en el archivo config.yml las configuraciones propias de almacenamiento del vendor
+<p style="font-family: Courier New;">
 kijho_mailer:
     entity_directories: ["%kernel.root_dir%/../src/MasterUnlock/BackendBundle/Entity/"]
     storage:
         layout:         "MasterUnlock\BackendBundle\Entity\EmailLayout"
         template_group: "MasterUnlock\BackendBundle\Entity\EmailTemplateGroup"
         template:       "MasterUnlock\BackendBundle\Entity\EmailTemplate"
+</p>
 
 
 <h3>Creacion de Entidades</h3>
 
 <h4>EmailLayout</h4>
 
+<p style="font-family: Courier New;">
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -82,8 +90,11 @@ class EmailLayout extends BaseLayout {
         return $this->id;
     }
 }
+</p>
 
 <h4>EmailTemplateGroup</h4>
+
+<p style="font-family: Courier New;">
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -109,9 +120,11 @@ class EmailTemplateGroup extends BaseTemplateGroup {
         return $this->id;
     }
 }
+</p>
 
 <h4>EmailTemplate</h4>
 
+<p style="font-family: Courier New;">
 <?php
 namespace MasterUnlock\BackendBundle\Entity;
 
@@ -166,15 +179,15 @@ class EmailTemplate extends BaseTemplate {
         $this->group = $group;
     }
 }
+</p>
 
 <h4>composer update</h4>
-Ejecute el comando "composer update" en su proyecto
+Ejecute el comando <span style="font-family: Courier New;">composer update</span> en su proyecto
 
 <h4>schema update</h4>
-Ejecute el comando "php app/console d:s:u --force" en su proyecto
+Ejecute el comando <span style="font-family: Courier New;">php app/console d:s:u --force</span> en su proyecto
 
 <h4>Enlace</h4>
-Ahora coloque en cualquier parte de su proyecto un enlace como el siguiente:
-
-<pre><a href=“{{path(‘kijho_mailer_homepage’)}}”>Email Settings</a></pre>
+Ahora coloque en cualquier parte de su proyecto un enlace con la ruta:
+<pre style="font-family: Courier New;">{{path(‘kijho_mailer_homepage’)}}</pre>
 
