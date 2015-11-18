@@ -1,3 +1,5 @@
+<html>
+ <body>
 <h1>Instalación</h1>
 
 
@@ -5,16 +7,16 @@
 
 Colocar esta linea en el archivo composer.json del proyecto:
 
-<p style="font-family: Courier New;">"cesargiraldonaranjo/kijho.mailer": "dev-master"</p>
+<pre style="font-family: Courier New;">"cesargiraldonaranjo/kijho.mailer": "dev-master"</pre>
 
 
 Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0:
 
-<p style="font-family: Courier New;">"sensio/distribution-bundle": "~4.0"</p>
+<pre style="font-family: Courier New;">"sensio/distribution-bundle": "~4.0"</pre>
 
 <h3>AppKernel.php</h3>
 
-Colocar la siguiente linea en el archivo AppKernel para inicialiar el Bundle:
+Colocar la siguiente linea en el archivo AppKernel para inicializar el Bundle:
 
 <p style="font-family: Courier New;">new Kijho\MailerBundle\KijhoMailerBundle()</p>
 
@@ -23,48 +25,48 @@ Colocar la siguiente linea en el archivo AppKernel para inicialiar el Bundle:
 
 Colocar la siguiente ruta en el archivo routing.yml del proyecto:
 
-<p style="font-family: Courier New;">
+<pre style="font-family: Courier New;">
 kijho_mailer:
     resource: "@KijhoMailerBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/kijhoMailer
-</p>
+</pre>
 
 
 <h3>config.yml</h3>
 
 Habilitar la configuración del lenguaje en el archivo config.yml colocando  el lenguaje por defecto para el vendor (en, es)
 
-<p style="font-family: Courier New;">
+<pre style="font-family: Courier New;">
 framework:
     translator:      { fallbacks: [en] }
-</p>
+</pre>
 
 
-Kijho Mailer requiere el vendor de assets, una vez instalado colocar el bundle en los bundles que usan assets:
+Kijho Mailer requiere el vendor de assets, una vez instalado colocar el nombre del bundle en los bundles que usan assets:
 
-<p style="font-family: Courier New;">
+<pre style="font-family: Courier New;">
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     bundles:        [FrontendBundle, MasterUnlockBackendBundle, KijhoMailerBundle]
-</p>
+</pre>
 
-Poner en el archivo config.yml las configuraciones propias de almacenamiento del vendor
-<p style="font-family: Courier New;">
+Poner en el archivo config.yml las configuraciones propias de almacenamiento del vendor:
+<pre style="font-family: Courier New;">
 kijho_mailer:
     entity_directories: ["%kernel.root_dir%/../src/MasterUnlock/BackendBundle/Entity/"]
     storage:
         layout:         "MasterUnlock\BackendBundle\Entity\EmailLayout"
         template_group: "MasterUnlock\BackendBundle\Entity\EmailTemplateGroup"
         template:       "MasterUnlock\BackendBundle\Entity\EmailTemplate"
-</p>
+</pre>
 
 
 <h3>Creacion de Entidades</h3>
 
 <h4>EmailLayout</h4>
 
-<p style="font-family: Courier New;">
+<pre style="font-family: Courier New;">
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -90,11 +92,11 @@ class EmailLayout extends BaseLayout {
         return $this->id;
     }
 }
-</p>
+</pre>
 
 <h4>EmailTemplateGroup</h4>
 
-<p style="font-family: Courier New;">
+<pre style="font-family: Courier New;">
 <?php
 
 namespace MasterUnlock\BackendBundle\Entity;
@@ -120,11 +122,11 @@ class EmailTemplateGroup extends BaseTemplateGroup {
         return $this->id;
     }
 }
-</p>
+</pre>
 
 <h4>EmailTemplate</h4>
 
-<p style="font-family: Courier New;">
+<pre style="font-family: Courier New;">
 <?php
 namespace MasterUnlock\BackendBundle\Entity;
 
@@ -179,15 +181,21 @@ class EmailTemplate extends BaseTemplate {
         $this->group = $group;
     }
 }
-</p>
+</pre>
 
 <h4>composer update</h4>
-Ejecute el comando <span style="font-family: Courier New;">composer update</span> en su proyecto
+Ejecute el comando <pre style="font-family: Courier New;">composer update</pre> en su proyecto
 
 <h4>schema update</h4>
-Ejecute el comando <span style="font-family: Courier New;">php app/console d:s:u --force</span> en su proyecto
+Ejecute el comando <pre style="font-family: Courier New;">php app/console d:s:u --force</pre> en su proyecto
 
 <h4>Enlace</h4>
 Ahora coloque en cualquier parte de su proyecto un enlace con la ruta:
 <pre style="font-family: Courier New;">{{path(‘kijho_mailer_homepage’)}}</pre>
 
+<script>
+    $( function() { $("PRE").prettyPre(); } );
+</script>
+
+</body>
+</html>
