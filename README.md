@@ -10,7 +10,7 @@ Colocar esta linea en el archivo composer.json del proyecto:
 <pre style="font-family: Courier New;">"cesargiraldonaranjo/kijho.mailer": "dev-master"</pre>
 
 
-Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0:
+Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0 o superior:
 
 <pre style="font-family: Courier New;">"sensio/distribution-bundle": "~4.0"</pre>
 
@@ -21,7 +21,7 @@ Colocar la siguiente linea en el archivo AppKernel para inicializar el Bundle:
 <pre style="font-family: Courier New;">new Kijho\MailerBundle\KijhoMailerBundle()</pre>
 
 
-<h3>rounting.yml</h3>
+<h3>routing.yml</h3>
 
 Colocar la siguiente ruta en el archivo routing.yml del proyecto:
 
@@ -34,7 +34,7 @@ kijho_mailer:
 
 <h3>config.yml</h3>
 
-Habilitar la configuración del lenguaje en el archivo config.yml colocando  el lenguaje por defecto para el vendor (en, es)
+Habilitar la configuración del lenguaje en el archivo config.yml colocando  el lenguaje por defecto para el vendor. De momento los lenguajes disponibles son ingles y español (en, es)
 
 <pre style="font-family: Courier New;">
 framework:
@@ -63,6 +63,8 @@ kijho_mailer:
 
 
 <h3>Creacion de Entidades</h3>
+
+Crear las siguientes entidades en el paquete "Entity" de uno de los bundles del proyecto:
 
 <h4>EmailLayout.php</h4>
 
@@ -189,7 +191,7 @@ Ejecute en su proyecto el comando <pre style="font-family: Courier New;">compose
 Ejecute en su proyecto el comando <pre style="font-family: Courier New;">php app/console d:s:u --force</pre> 
 
 <h4>Enlace</h4>
-Ahora coloque en cualquier parte de su proyecto un enlace con la ruta:
+Ahora para acceder a las funcionalidades del vendor instalado, coloque en cualquier parte de su proyecto un enlace con la ruta:
 <pre style="font-family: Courier New;">{{path('kijho_mailer_homepage')}}</pre>
 
 <script>
