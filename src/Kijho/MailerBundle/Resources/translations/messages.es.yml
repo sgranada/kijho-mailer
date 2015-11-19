@@ -79,3 +79,13 @@ kijho_mailer:
         delete_question: "Estas seguro que deseas eliminar este grupo de plantillas ?"
         creation_success_message: "Grupo creado exitosamente"
         update_success_message: "Grupo actualizado exitosamente"
+        
+    setting:
+        settings: "Configuraciones"
+        send_mode_instantaneus: "Enviar al instante"
+        send_mode_periodic: "Enviar periodicamente"
+        send_mode_email_amount: "Enviar cada cierta cantidad de correos"
+        send_mode: "Modo de envío"
+        limit_email_amount: "Numero limite de correos"
+        interval_to_send: "Intervalo para enviar (minutos)"
+        update_success_message: "Configuraciones actualizadas exitosamente"

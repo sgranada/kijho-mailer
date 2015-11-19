@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('layout')->end()
                         ->scalarNode('template_group')->end()
                         ->scalarNode('template')->end()
+                        ->scalarNode('settings')->end()
                     ->end()
                 ->end()
             ->end()

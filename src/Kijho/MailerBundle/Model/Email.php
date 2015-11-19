@@ -18,10 +18,6 @@ class Email implements EmailInterface {
      */
     protected $sentDate;
     
-    public function __construct() {
-        
-    }
-    
     /**
      * {@inheritDoc}
      */

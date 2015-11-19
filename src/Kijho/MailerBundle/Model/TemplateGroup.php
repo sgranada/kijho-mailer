@@ -28,10 +28,6 @@ class TemplateGroup implements TemplateGroupInterface {
      */
     protected $creationDate;
     
-    public function __construct() {
-        
-    }
-    
     /**
      * {@inheritDoc}
      */

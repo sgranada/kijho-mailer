@@ -13,3 +13,7 @@ kijho_mailer_template:
 kijho_mailer_template_group:
     resource: "@KijhoMailerBundle/Resources/config/routing/templateGroup.yml"
     prefix:   /templateGroups
+    
+kijho_mailer_settings:
+    resource: "@KijhoMailerBundle/Resources/config/routing/settings.yml"
+    prefix:   /settings

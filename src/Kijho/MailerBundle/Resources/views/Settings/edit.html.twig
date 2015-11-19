@@ -1,0 +1,67 @@
+{% extends 'KijhoMailerBundle:Default:main.html.twig' %}
+{% block title %}{{'kijho_mailer.setting.settings'|trans}}{% endblock %}
+{% block header_content %}
+    <h2 class="pull-left">{{'kijho_mailer.setting.settings'|trans}}</h2>
+    <div class="btn-group pull-right top-margin" role="group" aria-label="...">
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default">{{'kijho_mailer.global.back'|trans}}</a>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <ol class="col-lg-12 breadcrumb">
+        <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
+        <li class="active">{{'kijho_mailer.setting.settings'|trans}}</li>
+    </ol>  
+        <div class="col-lg-12">
+            <form role="form" action="{{path('kijho_mailer_settings_update')}}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        {{ form_label(form.sendMode) }}
+                        {{ form_widget(form.sendMode) }}
+                        {{ form_errors(form.sendMode) }}
+                    </div>
+                    <div class="form-group email-amount" style="display: none;">
+                        {{ form_label(form.limitEmailAmount) }}
+                        {{ form_widget(form.limitEmailAmount) }}
+                        {{ form_errors(form.limitEmailAmount) }}
+                    </div>
+                    <div class="form-group interval-send" style="display: none;">
+                        {{ form_label(form.intervalToSend) }}
+                        {{ form_widget(form.intervalToSend) }}
+                        {{ form_errors(form.intervalToSend) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form._token) }} 
+                        <button type="submit" class="btn btn-primary pull-right">{{'kijho_mailer.global.update'|trans}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+    /**
+     * 
+     */
+    $("#kijho_mailerbundle_settings_type_sendMode").change(function(){
+        var object = $(this);
+        var sendMode = object.val();
+        
+        if (sendMode == '' || sendMode == {{constant('Kijho\\MailerBundle\\Model\\Settings::SEND_MODE_INSTANTANEOUS')}}) {
+            $(".email-amount").css('display','none');
+            $("#kijho_mailerbundle_settings_type_limitEmailAmount").removeAttr('required');
+            $(".interval-send").css('display','none');
+            $("#kijho_mailerbundle_settings_type_intervalToSend").removeAttr('required');
+        } else if (sendMode == {{constant('Kijho\\MailerBundle\\Model\\Settings::SEND_MODE_PERIODIC')}}) {
+            $(".email-amount").css('display','none');
+            $("#kijho_mailerbundle_settings_type_limitEmailAmount").removeAttr('required');
+            $(".interval-send").css('display','');
+            $("#kijho_mailerbundle_settings_type_intervalToSend").attr('required', 'required');
+        } else if (sendMode == {{constant('Kijho\\MailerBundle\\Model\\Settings::SEND_MODE_BY_EMAIL_AMOUNT')}}) {
+            $(".email-amount").css('display','');
+            $("#kijho_mailerbundle_settings_type_limitEmailAmount").attr('required', 'required');
+            $(".interval-send").css('display','none');
+            $("#kijho_mailerbundle_settings_type_intervalToSend").removeAttr('required');
+        }
+    });
+    $("#kijho_mailerbundle_settings_type_sendMode").trigger('change');
+{% endblock %}

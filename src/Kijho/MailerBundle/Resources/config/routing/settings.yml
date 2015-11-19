@@ -1,0 +1,8 @@
+kijho_mailer_settings_edit:
+    path:     /edit
+    defaults: { _controller: KijhoMailerBundle:Settings:edit }
+
+kijho_mailer_settings_update:
+    path:     /update
+    defaults: { _controller: KijhoMailerBundle:Settings:update }
+    methods: [POST]

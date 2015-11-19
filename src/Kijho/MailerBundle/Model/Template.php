@@ -68,10 +68,6 @@ class Template implements TemplateInterface {
      */
     protected $creationDate;
 
-    public function __construct() {
-        
-    }
-
     /**
      * @param string $name
      */

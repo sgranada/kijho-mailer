@@ -91,3 +91,4 @@ kijho_mailer:
         layout:         "Kijho\MailerBundle\Entity\EmailLayout"
         template_group: "Kijho\MailerBundle\Entity\EmailTemplateGroup"
         template:       "Kijho\MailerBundle\Entity\EmailTemplate"
+        settings:       "Kijho\MailerBundle\Entity\EmailSettings"

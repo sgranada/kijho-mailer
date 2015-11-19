@@ -42,10 +42,6 @@ class Layout implements LayoutInterface {
      */
     protected $creationDate;
     
-    public function __construct() {
-        
-    }
-    
     /**
      * {@inheritDoc}
      */

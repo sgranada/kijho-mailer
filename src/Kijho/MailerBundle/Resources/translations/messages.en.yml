@@ -79,3 +79,13 @@ kijho_mailer:
         delete_question: "Are you sure you want to delete this template group ?"
         creation_success_message: "Template group created successfully"
         update_success_message: "Template group updated successfully"
+        
+    setting:
+        settings: "Settings"
+        send_mode_instantaneus: "Send Instantly"
+        send_mode_periodic: "Send Periodically"
+        send_mode_email_amount: "Send each email amount"
+        send_mode: "Send mode"
+        limit_email_amount: "Limit email amount"
+        interval_to_send: "Interval to send (minutes)"
+        update_success_message: "Settings updated successfully"
