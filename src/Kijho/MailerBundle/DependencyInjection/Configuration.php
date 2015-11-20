@@ -20,15 +20,11 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('kijho_mailer');
 
-        
         $rootNode
             ->children()
                 ->arrayNode('entity_directories')
                     ->prototype('scalar')->end()
                 ->end()
-                /*->scalarNode('layout_storage')->isRequired()->end()
-                ->scalarNode('template_storage')->isRequired()->end()
-                ->scalarNode('template_group_storage')->isRequired()->end()*/
             ->end()
             ->children()
                 ->arrayNode('storage')
@@ -37,14 +33,11 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template_group')->end()
                         ->scalarNode('template')->end()
                         ->scalarNode('settings')->end()
+                        ->scalarNode('email')->end()
                     ->end()
                 ->end()
             ->end()
         ;
-        
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
 
         return $treeBuilder;
     }

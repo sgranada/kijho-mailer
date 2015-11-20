@@ -59,6 +59,7 @@ kijho_mailer:
         layout:         "MasterUnlock\BackendBundle\Entity\EmailLayout"
         template_group: "MasterUnlock\BackendBundle\Entity\EmailTemplateGroup"
         template:       "MasterUnlock\BackendBundle\Entity\EmailTemplate"
+        settings:       "MasterUnlock\BackendBundle\Entity\EmailSettings"
 </pre>
 
 
@@ -181,6 +182,35 @@ class EmailTemplate extends BaseTemplate {
     function setGroup(EmailTemplateGroup $group = null) {
         $this->group = $group;
     }
+}
+</pre>
+
+<h4>EmailSettings.php</h4>
+
+<pre>
+namespace MasterUnlock\BackendBundle\Entity;
+
+use Kijho\MailerBundle\Model\Settings as BaseSettings;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Email Settings
+ * @ORM\Table(name="kijho_email_settings")
+ * @ORM\Entity
+ */
+class EmailSettings extends BaseSettings {
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="sett_id", type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+    
+    function getId() {
+        return $this->id;
+    }
+
 }
 </pre>
 

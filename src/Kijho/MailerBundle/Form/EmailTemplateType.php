@@ -27,7 +27,6 @@ class EmailTemplateType extends AbstractType {
                 $this->entityNames[strtolower($entity->getShortName())] = $entity->getShortName();
             }
         }
-        //var_dump($this->container->getParameter('kijho_mailer.storage')['layout']);die();
     }
 
     /**

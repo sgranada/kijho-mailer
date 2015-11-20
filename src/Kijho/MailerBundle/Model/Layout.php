@@ -94,7 +94,6 @@ class Layout implements LayoutInterface {
     }
 
     /**
-     * 
      * @param string $languageCode
      */
     function setLanguageCode($languageCode) {
