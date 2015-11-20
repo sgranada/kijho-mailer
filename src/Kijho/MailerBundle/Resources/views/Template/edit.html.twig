@@ -15,7 +15,7 @@
         
         <div class="col-lg-12">
             <form role="form" action="{{path('kijho_mailer_template_update',{'templateId':template.id})}}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         {{ form_label(form.name) }}
                         {{ form_widget(form.name) }}
@@ -52,7 +52,7 @@
                         {{ form_errors(form.status) }}
                     </div>
                 </div>
-                <div class="col-lg-6" style="padding-left: 30px;">
+                <div class="col-md-6" style="padding-left: 30px;">
                     <div class="form-group">
                         {{ form_label(form.subject) }}
                         {{ form_widget(form.subject) }}
