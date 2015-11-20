@@ -13,7 +13,7 @@
     </ol>  
         <div class="col-lg-12">
             <form role="form" action="{{path('kijho_mailer_settings_update')}}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
-                <div class="col-lg-6">
+                <div class="col-lg-4" style="padding-right: 30px;">
                     <div class="form-group">
                         {{ form_label(form.sendMode) }}
                         {{ form_widget(form.sendMode) }}
@@ -34,13 +34,62 @@
                         <button type="submit" class="btn btn-primary pull-right">{{'kijho_mailer.global.update'|trans}}</button>
                     </div>
                 </div>
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>{{'kijho_mailer.setting.parameter'|trans}}</th>
+                                    <th>{{'kijho_mailer.setting.value'|trans}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for parameter,key in swiftMailerSettings %}
+                                    <tr>
+                                        <td {% if key is iterable %}colspan="2"{% endif %}>
+                                            <label class="col-xs-6">{{parameter}}</label>
+                                        </td>
+                                        {% if key is not iterable %}
+                                            <td>
+                                                <span class="col-xs-6">{{key|raw|default(' ')}}</span>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                    {% if key is iterable %}
+                                        <tr>
+                                            <td colspan="2">
+                                                <table class="table table-striped">
+                                                    {% for key2,parameter2 in key %}
+                                                        <tr>
+                                                            <td style="padding-left: 50px;">
+                                                                <label class="col-xs-6">{{key2}}</label>
+                                                            </td>
+                                                            <td>
+                                                                {% if parameter2 is not iterable %}
+                                                                    <span class="col-xs-6">{{parameter2|raw|default(' ')}}</span>
+                                                                {% else %}
+                                                                    <span class="col-xs-6">&nbsp;</span>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </form>
         </div>
 {% endblock %}
 
 {% block scripts %}
     /**
-     * 
+     * Codigo para validar la dinamica de los campos de acuerdo al modo de envio
+     * seleccionado para los correos electronicos
      */
     $("#kijho_mailerbundle_settings_type_sendMode").change(function(){
         var object = $(this);

@@ -89,3 +89,5 @@ kijho_mailer:
         limit_email_amount: "Limit email amount"
         interval_to_send: "Interval to send (minutes)"
         update_success_message: "Settings updated successfully"
+        parameter: "Parameter"
+        value: "Value"
