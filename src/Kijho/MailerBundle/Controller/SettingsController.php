@@ -19,9 +19,7 @@ class SettingsController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $settingsStorage = $this->container->getParameter('kijho_mailer.storage')['settings'];
-
-
-
+        
         $settings = $em->getRepository($settingsStorage)->findAll();
         if (!$settings) {
             $settings = new $settingsStorage;
