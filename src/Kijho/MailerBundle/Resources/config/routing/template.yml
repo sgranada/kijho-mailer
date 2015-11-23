@@ -28,3 +28,8 @@ kijho_mailer_template_delete:
     path:     /delete
     defaults: { _controller: KijhoMailerBundle:Template:delete }
     methods: [POST]
+    
+kijho_mailer_template_send_example_email:
+    path:     /sendExampleEmail
+    defaults: { _controller: KijhoMailerBundle:Template:sendExampleEmail }
+    methods: [POST]

@@ -13,6 +13,11 @@ interface EmailInterface
     /**
      * @return string
      */
+    public function getRecipientName();
+    
+    /**
+     * @return string
+     */
     public function getMailTo();
     
     /**

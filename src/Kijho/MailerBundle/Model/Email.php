@@ -2,10 +2,22 @@
 
 namespace Kijho\MailerBundle\Model;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ */
 class Email implements EmailInterface {
 
     /**
-     * @var \DateTime
+     * Constantes para los posibles estados de un correo electronico
+     */
+    const STATUS_PENDING = 0;
+    const STATUS_SENT = 1;
+    const STATUS_FORWARDED = 2;
+
+    /**
+     * var \DateTime
      * @ORM\Column(name="emai_generated_date", type="datetime", nullable=true)
      */
     protected $generatedDate;
@@ -21,6 +33,12 @@ class Email implements EmailInterface {
      * @ORM\Column(name="emai_copy_to", type="string", nullable=true)
      */
     protected $mailCopyTo;
+
+    /**
+     * @var string
+     * @ORM\Column(name="emai_recipient_name", type="string", nullable=true)
+     */
+    protected $recipientName;
 
     /**
      * @var string
@@ -189,6 +207,14 @@ class Email implements EmailInterface {
      */
     function setStatus($status) {
         $this->status = $status;
+    }
+
+    function setRecipientName($recipientName) {
+        $this->recipientName = $recipientName;
+    }
+
+    public function getRecipientName() {
+        return $this->recipientName;
     }
 
 }

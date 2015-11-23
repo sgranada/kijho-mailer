@@ -33,6 +33,11 @@ interface TemplateInterface
     /**
      * @return string
      */
+    public function getRecipientName();
+    
+    /**
+     * @return string
+     */
     public function getFromName();
     
     /**

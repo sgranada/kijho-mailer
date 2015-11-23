@@ -32,6 +32,12 @@ class Template implements TemplateInterface {
 
     /**
      * @var string
+     * @ORM\Column(name="temp_recipient_name", type="string", nullable=true)
+     */
+    protected $recipientName;
+    
+    /**
+     * @var string
      * @ORM\Column(name="temp_from_name", type="string", nullable=true)
      */
     protected $fromName;
@@ -82,6 +88,13 @@ class Template implements TemplateInterface {
         $this->status = $status;
     }
 
+    /**
+     * @param string $recipientName
+     */
+    function setRecipientName($recipientName) {
+        $this->recipientName = $recipientName;
+    }
+    
     /**
      * @param string $fromName
      */
@@ -193,6 +206,13 @@ class Template implements TemplateInterface {
     public function getSubject() {
         return $this->subject;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getRecipientName() {
+        return $this->recipientName;
+    }
 
     /**
      * Permite obtener en modo texto el estado del template
@@ -221,5 +241,7 @@ class Template implements TemplateInterface {
     public function __toString() {
         return $this->getName();
     }
+
+    
 
 }

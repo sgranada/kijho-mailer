@@ -30,7 +30,7 @@ class SettingsController extends Controller {
         $form = $this->createForm(new EmailSettingsType($settingsStorage, $this->get('translator')), $settings);
 
         $swiftMailerSettings = $this->getSwiftMailerSettings();
-
+        
         return $this->render('KijhoMailerBundle:Settings:edit.html.twig', array(
                     'settings' => $settings,
                     'swiftMailerSettings' => $swiftMailerSettings,

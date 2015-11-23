@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Kijho\MailerBundle\Util\Util;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Kijho\MailerBundle\Model\Email;
 
 class TemplateController extends Controller {
 
@@ -224,7 +225,7 @@ class TemplateController extends Controller {
 
                 //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
                 $entityNamespace = $this->getEntityNamespace();
-                
+
                 //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
                 foreach ($entities as $entity) {
                     $path = $entityNamespace . $entity;
@@ -296,8 +297,8 @@ class TemplateController extends Controller {
                         $entityNamespace = $this->getEntityNamespace();
                         //verificamos que la entidad este escrita con el namespace completo
                         $positionNamespace = strpos($entityName, $entityNamespace);
-                        if($positionNamespace === false){
-                            $entityName = $entityNamespace.$entityName;
+                        if ($positionNamespace === false) {
+                            $entityName = $entityNamespace . $entityName;
                         }
                         $object = new \ReflectionClass(new $entityName);
                         $relationships[$instance->getName()][$property->getName()] = $object;
@@ -309,6 +310,46 @@ class TemplateController extends Controller {
             }
         }
         return $relationships;
+    }
+
+    /**
+     * Esta funcion permite realizar el envio de un correo electronico utilizando
+     * los datos encontrados en el template seleccionado por el usuario
+     * Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 17/11/2015
+     * @param Request $request datos de la solicitud
+     * @return JsonResponse Json con mensaje de respuesta
+     */
+    public function sendExampleEmailAction(Request $request) {
+
+        $templateId = (int) $request->request->get('templateId');
+        $emailAddress = trim($request->request->get('email'));
+
+        $em = $this->getDoctrine()->getManager();
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
+        $template = $em->getRepository($templateStorage)->find($templateId);
+
+        $response = array('result' => '__OK__',
+            'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_success'));
+
+        try {
+            //creamos el correo y lo almacenamos en base de datos
+            $email = $this->get('email_manager')->composeEmail($template, $emailAddress);
+            $em->persist($email);
+            $em->flush($email);
+
+            try {
+                //realizamos el envio del correo
+                $this->get('email_manager')->send($email);
+            } catch (\Exception $exc) {
+                $response = array('result' => '__KO__',
+                    'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_error'));
+            }
+        } catch (\Exception $exc) {
+            $response = array('result' => '__KO__',
+                'msg' => $this->get('translator')->trans('kijho_mailer.email.saving_error'));
+        }
+
+        return new JsonResponse($response);
     }
 
 }

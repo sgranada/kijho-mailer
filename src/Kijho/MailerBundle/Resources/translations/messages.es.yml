@@ -20,8 +20,12 @@ kijho_mailer:
         disabled: "Deshabilitado"
         select: "Seleccione.."
         email_example: "correo@ejemplo.com"
+        email_examples: "correo@ejemplo.com, correo2@ejemplo.com"
         slug: "Identificador"
         cant_delete_message: "Este elemento no puede ser eliminado"
+        send: "Enviar"
+        cancel: "Cancelar"
+        unknown_error: "Error desconocido, intentelo de nuevo"
         
     settings:
         email_settings: "Configuración de Emails"
@@ -69,6 +73,7 @@ kijho_mailer:
         entity_attributes: "Atributos de Entidades"
         select_entity: "Seleccione una entidad"
         select_attributes: "Seleccione los atributos"
+        send_example_email: "Enviar correo de ejemplo"
         
     template_group:
         template_groups: "Grupos de Plantillas"
@@ -91,3 +96,8 @@ kijho_mailer:
         update_success_message: "Configuraciones actualizadas exitosamente"
         parameter: "Parametro"
         value: "Valor"
+        
+    email:
+        sent_success: "Correo enviado exitosamente"
+        sent_error: "Error enviando el correo"
+        saving_error: "Error almacenando el correo"

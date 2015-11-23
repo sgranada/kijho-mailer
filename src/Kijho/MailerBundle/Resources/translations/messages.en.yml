@@ -20,8 +20,12 @@ kijho_mailer:
         disabled: "Disabled"
         select: "Select.."
         email_example: "email@example.com"
+        email_examples: "email@example.com, email2@example.com"
         slug: "Slug"
         cant_delete_message: "This item can't be deleted"
+        send: "Send"
+        cancel: "Cancel"
+        unknown_error: "Unknown error, try again"
         
     settings:
         email_settings: "Email Settings"
@@ -69,6 +73,7 @@ kijho_mailer:
         entity_attributes: "Entity Attributes" 
         select_entity: "Select entity"
         select_attributes: "Select attributes"
+        send_example_email: "Send example email"
         
     template_group:
         template_groups: "Template Groups"
@@ -91,3 +96,10 @@ kijho_mailer:
         update_success_message: "Settings updated successfully"
         parameter: "Parameter"
         value: "Value"
+        
+    email:
+        sent_success: "Email sent successfully"
+        sent_error: "Error sending email"
+        saving_error: "Error saving email"
+       
+        
