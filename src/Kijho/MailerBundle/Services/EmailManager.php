@@ -38,7 +38,7 @@ class EmailManager {
 
         $subject = $email->getSubject();
         $recipientName = $email->getRecipientName();
-        $recipientEmail = (array)json_decode($email->getMailTo());
+        $recipientEmail = (array) json_decode($email->getMailTo());
         $bodyHtml = $email->getTemplate()->getLayout()->getHeader() . $email->getContent() . $email->getTemplate()->getLayout()->getFooter();
         //$bodyText = 'body text..';
 
@@ -57,7 +57,7 @@ class EmailManager {
         if (!is_array($recipientEmail)) {
             $message->addTo($recipientEmail, $recipientName);
         } else {
-            
+
             foreach ($recipientEmail as $recipient) {
                 $message->addTo($recipient, $recipientName);
             }
@@ -66,7 +66,7 @@ class EmailManager {
 
         $this->mailer->send($message);
         $this->mailer->getTransport()->stop();
-        
+
         //marcamos el correo como enviado
         $email->setStatus(Email::STATUS_SENT);
         $email->setSentDate(Util::getCurrentDate());
@@ -93,9 +93,10 @@ class EmailManager {
 
             $emailText = array();
             foreach ($emails as $email) {
-                $emailText[trim($email)] = trim($email);
+                if (!empty($email)) {
+                    $emailText[trim($email)] = trim($email);
+                }
             }
-            //var_dump($emailText);die();
         }
         return $emailText;
     }
