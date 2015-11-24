@@ -22,7 +22,7 @@ class Email extends BaseEmail {
     /**
      * Template al que esta asociado el correo
      * @ORM\ManyToOne(targetEntity="Kijho\MailerBundle\Entity\EmailTemplate")
-     * @ORM\JoinColumn(name="emai_template", referencedColumnName="temp_id", nullable=true)
+     * @ORM\JoinColumn(name="emai_template", referencedColumnName="temp_id")
      */
     protected $template;
     

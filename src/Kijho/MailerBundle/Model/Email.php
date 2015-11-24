@@ -24,13 +24,13 @@ class Email implements EmailInterface {
 
     /**
      * @var string
-     * @ORM\Column(name="emai_mail_to", type="string")
+     * @ORM\Column(name="emai_mail_to", type="text")
      */
     protected $mailTo;
 
     /**
      * @var string
-     * @ORM\Column(name="emai_copy_to", type="string", nullable=true)
+     * @ORM\Column(name="emai_copy_to", type="text", nullable=true)
      */
     protected $mailCopyTo;
 
@@ -215,6 +215,15 @@ class Email implements EmailInterface {
 
     public function getRecipientName() {
         return $this->recipientName;
+    }
+
+    public function getTextMailTo() {
+        $mails = (array) json_decode($this->mailTo);
+        $text = "";
+        foreach ($mails as $mail) {
+            $text .= $mail . ", ";
+        }
+        return $text;
     }
 
 }

@@ -19,7 +19,7 @@ class EmailTemplateType extends AbstractType {
         $this->storageEntity = $storageEntity;
         $this->container = $container;
         $this->translator = $this->container->get('translator');
-        
+
         //incluimos en el formulario las entidades que se identificaron en el proyecto
         if (!empty($entities)) {
             $this->entityNames = array();
@@ -36,6 +36,10 @@ class EmailTemplateType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $template = new Template();
+
+        $mailers = $this->container->get('email_manager')->getMailers();
+
+        $defaultMailer = $this->container->getParameter('swiftmailer.default_mailer');
 
         $builder
                 ->add('layout', 'entity', array(
@@ -81,6 +85,11 @@ class EmailTemplateType extends AbstractType {
                 ->add('status', 'choice', array('required' => true,
                     'choices' => array(Template::STATUS_ENABLED => $this->translator->trans($template->getStatusDescription(Template::STATUS_ENABLED)),
                         Template::STATUS_DISABLED => $this->translator->trans($template->getStatusDescription(Template::STATUS_DISABLED))),
+                    'label' => $this->translator->trans('kijho_mailer.template.status'),
+                    'attr' => array('class' => 'form-control')))
+                ->add('mailerSettings', 'choice', array('required' => true,
+                    'choices' => $mailers,
+                    'preferred_choices' => array($defaultMailer),
                     'label' => $this->translator->trans('kijho_mailer.template.status'),
                     'attr' => array('class' => 'form-control')))
                 ->add('entityNames', 'choice', array('required' => false,

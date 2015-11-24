@@ -91,31 +91,28 @@ class SettingsController extends Controller {
         $bag = $this->container->getParameterBag();
         
         $basicParameters = array(
-            "swiftmailer.mailer.__replace__.transport.name",
-            "swiftmailer.mailer.__replace__.delivery.enabled",
-            "swiftmailer.mailer.__replace__.transport.smtp.encryption",
-            "swiftmailer.mailer.__replace__.transport.smtp.port",
-            "swiftmailer.mailer.__replace__.transport.smtp.host",
-            "swiftmailer.mailer.__replace__.transport.smtp.username",
-            "swiftmailer.mailer.__replace__.transport.smtp.password",
-            "swiftmailer.mailer.__replace__.transport.smtp.auth_mode",
-            "swiftmailer.mailer.__replace__.transport.smtp.timeout",
-            "swiftmailer.mailer.__replace__.transport.smtp.source_ip",
-            "swiftmailer.spool.__replace__.memory.path",
-            "swiftmailer.mailer.__replace__.spool.enabled",
-            "swiftmailer.mailer.__replace__.plugin.impersonate",
-            "swiftmailer.mailer.__replace__.single_address");
+            "transport.name",
+            "delivery.enabled",
+            "transport.smtp.encryption",
+            "transport.smtp.port",
+            "transport.smtp.host",
+            "transport.smtp.username",
+            "transport.smtp.password",
+            "transport.smtp.auth_mode",
+            "transport.smtp.timeout",
+            "transport.smtp.source_ip",
+            "memory.path",
+            "spool.enabled",
+            "plugin.impersonate",
+            "single_address");
         
-        $mailers = array('default');
-        if ($this->container->hasParameter('mailers')) {
-            $mailers = $this->container->getParameter('mailers');
-        }
+        $mailers = $this->container->get('email_manager')->getMailers();
         
         //aca recorremos los mailers y armamos el arreglo reemplazando el nombre del mailer
         $swiftParameters = array();
         foreach ($mailers as $mailer) {
             foreach ($basicParameters as $parameter){
-                array_push($swiftParameters, str_replace('__replace__', $mailer, $parameter));
+                array_push($swiftParameters, $mailer.".".$parameter);
             }
         }
         

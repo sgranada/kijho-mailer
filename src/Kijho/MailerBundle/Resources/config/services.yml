@@ -1,5 +1,5 @@
 services:
     email_manager:
         class: Kijho\MailerBundle\Services\EmailManager
-        arguments: [@request_stack, @mailer, @service_container, @doctrine.orm.entity_manager]
-        scope: request
+        arguments: [@request_stack, @service_container, @doctrine.orm.entity_manager]
+        #scope: request

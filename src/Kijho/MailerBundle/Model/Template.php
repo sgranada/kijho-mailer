@@ -51,7 +51,7 @@ class Template implements TemplateInterface {
 
     /**
      * @var string
-     * @ORM\Column(name="temp_copy_to", type="string", nullable=true)
+     * @ORM\Column(name="temp_copy_to", type="text", nullable=true)
      * @Assert\Email()
      */
     protected $copyTo;
@@ -67,6 +67,12 @@ class Template implements TemplateInterface {
      * @ORM\Column(name="temp_content_message", type="text", nullable=true)
      */
     protected $contentMessage;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="temp_mailer_settings", type="string", nullable=true)
+     */
+    protected $mailerSettings;
 
     /**
      * @var \DateTime
@@ -129,7 +135,15 @@ class Template implements TemplateInterface {
     function setContentMessage($contentMessage) {
         $this->contentMessage = $contentMessage;
     }
+    
+    /**
+     * @param string $mailerSettings
+     */
+    function setMailerSettings($mailerSettings) {
+        $this->mailerSettings = $mailerSettings;
+    }
 
+    
     /**
      * @param \DateTime $creationDate
      */
@@ -212,6 +226,13 @@ class Template implements TemplateInterface {
      */
     public function getRecipientName() {
         return $this->recipientName;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getMailerSettings() {
+        return $this->mailerSettings;
     }
 
     /**

@@ -9,6 +9,9 @@ use Kijho\MailerBundle\Util\Util;
 
 /*
  * EmailManager
+ * Esta clase implementa metodos generalizados para la construccion y 
+ * envio de correos electronicos en la aplicacion, los cuales pueden ser utilizados
+ * como un servicio
  */
 
 class EmailManager {
@@ -18,15 +21,10 @@ class EmailManager {
     private $container;
     private $em;
 
-    public function __construct(RequestStack $requestStack, $mailer, $container, $em) {
+    public function __construct(RequestStack $requestStack, $container, $em) {
         $this->request = $requestStack->getCurrentRequest();
-        $this->mailer = $mailer;
         $this->container = $container;
         $this->em = $em;
-    }
-
-    public function getExample() {
-        return $this->request->getClientIp();
     }
 
     /**
@@ -36,10 +34,20 @@ class EmailManager {
      */
     public function send(Email $email) {
 
+        $this->mailer = $this->container->get('swiftmailer.mailer');
+
+        $template = $email->getTemplate();
+        if (!empty($template->getMailerSettings()) && $template->getMailerSettings() != 'default') {
+            $parameterName = 'swiftmailer.mailer.' . $template->getMailerSettings() . ".transport.name";
+            if ($this->container->hasParameter($parameterName)) {
+                $this->mailer = $this->container->get('swiftmailer.mailer.' . $template->getMailerSettings());
+            }
+        }
+
         $subject = $email->getSubject();
         $recipientName = $email->getRecipientName();
         $recipientEmail = (array) json_decode($email->getMailTo());
-        $bodyHtml = $email->getTemplate()->getLayout()->getHeader() . $email->getContent() . $email->getTemplate()->getLayout()->getFooter();
+        $bodyHtml = $template->getLayout()->getHeader() . $email->getContent() . $template->getLayout()->getFooter();
         //$bodyText = 'body text..';
 
         /* @var $mailer \Swift_Mailer */
@@ -126,6 +134,19 @@ class EmailManager {
         $email->setSubject($template->getSubject());
 
         return $email;
+    }
+
+    /**
+     * Esta funcion permite obtener los mailers de la aplicacion
+     * @author Cesar Giraldo <cnaranjo@kijho.com> 24/11/2015
+     * @return array[string]
+     */
+    public function getMailers() {
+        $mailers = array();
+        if ($this->container->hasParameter('swiftmailer.mailers')) {
+            $mailers = $this->container->getParameter('swiftmailer.mailers');
+        }
+        return $mailers;
     }
 
 }

@@ -48,20 +48,31 @@ Kijho Mailer requiere el vendor de assets, una vez instalado colocar el nombre d
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [FrontendBundle, MasterUnlockBackendBundle, KijhoMailerBundle]
+    bundles:        [AcmeDemoBundle, KijhoMailerBundle]
 </pre>
 
 Poner en el archivo config.yml las configuraciones propias de almacenamiento del vendor:
 <pre style="font-family: Courier New;">
 kijho_mailer:
-    entity_directories: ["%kernel.root_dir%/../src/MasterUnlock/BackendBundle/Entity/"]
+    entity_directories: ["%kernel.root_dir%/../src/Acme/DemoBundle/Entity/"]
     storage:
-        layout:         "MasterUnlock\BackendBundle\Entity\EmailLayout"
-        template_group: "MasterUnlock\BackendBundle\Entity\EmailTemplateGroup"
-        template:       "MasterUnlock\BackendBundle\Entity\EmailTemplate"
-        settings:       "MasterUnlock\BackendBundle\Entity\EmailSettings"
+        layout:         "Acme\DemoBundle\Entity\EmailLayout"
+        template_group: "Acme\DemoBundle\Entity\EmailTemplateGroup"
+        template:       "Acme\DemoBundle\Entity\EmailTemplate"
+        settings:       "Acme\DemoBundle\Entity\EmailSettings"
+        email:          "Acme\DemoBundle\Entity\Email"
 </pre>
 
+Asegurarse de configurar los parametros del swiftmailer, los parametros van en el archivo parameters.yml:
+
+<pre style="font-family: Courier New;">
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+</pre>
 
 <h3>Creacion de Entidades</h3>
 
@@ -72,7 +83,7 @@ Crear las siguientes entidades en el paquete "Entity" de uno de los bundles del 
 
 <pre>
 
-namespace MasterUnlock\BackendBundle\Entity;
+namespace Acme\DemoBundle\Entity;
 
 use Kijho\MailerBundle\Model\Layout as BaseLayout;
 use Doctrine\ORM\Mapping as ORM;
@@ -102,7 +113,7 @@ class EmailLayout extends BaseLayout {
 
 <pre>
 
-namespace MasterUnlock\BackendBundle\Entity;
+namespace Acme\DemoBundle\Entity;
 
 use Kijho\MailerBundle\Model\TemplateGroup as BaseTemplateGroup;
 use Doctrine\ORM\Mapping as ORM;
@@ -130,7 +141,7 @@ class EmailTemplateGroup extends BaseTemplateGroup {
 <h4>EmailTemplate.php</h4>
 
 <pre>
-namespace MasterUnlock\BackendBundle\Entity;
+namespace Acme\DemoBundle\Entity;
 
 use Kijho\MailerBundle\Model\Template as BaseTemplate;
 use Doctrine\ORM\Mapping as ORM;
@@ -151,14 +162,14 @@ class EmailTemplate extends BaseTemplate {
     
     /**
      * Layout al que esta asociado el template
-     * @ORM\ManyToOne(targetEntity="MasterUnlock\BackendBundle\Entity\EmailLayout")
+     * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\EmailLayout")
      * @ORM\JoinColumn(name="temp_layout", referencedColumnName="layo_id", nullable=true)
      */
     protected $layout;
     
     /**
      * Grupo al que esta asociado el template
-     * @ORM\ManyToOne(targetEntity="MasterUnlock\BackendBundle\Entity\EmailTemplateGroup")
+     * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\EmailTemplateGroup")
      * @ORM\JoinColumn(name="temp_group", referencedColumnName="tgro_id", nullable=true)
      */
     protected $group;
@@ -188,7 +199,7 @@ class EmailTemplate extends BaseTemplate {
 <h4>EmailSettings.php</h4>
 
 <pre>
-namespace MasterUnlock\BackendBundle\Entity;
+namespace Acme\DemoBundle\Entity;
 
 use Kijho\MailerBundle\Model\Settings as BaseSettings;
 use Doctrine\ORM\Mapping as ORM;

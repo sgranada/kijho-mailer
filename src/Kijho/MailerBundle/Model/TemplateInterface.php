@@ -64,5 +64,11 @@ interface TemplateInterface
      * @return \DateTime
      */
     public function getCreationDate();
+    
+    
+    /**
+     * @return string
+     */
+    public function getMailerSettings();
 
 }

@@ -7,7 +7,6 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    #mailers: ['first_mailer', 'second_mailer']
 
 framework:
     #esi:             ~
@@ -86,8 +85,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-
-
 #swiftmailer:
 #    default_mailer: second_mailer
 #    mailers:
@@ -103,7 +100,7 @@ swiftmailer:
 #            username:  "%mailer_user_second%"
 #            password:  "%mailer_password_second%"
 #            spool:     { type: memory }
-    
+#    
     
 kijho_mailer:
     entity_directories: ["%kernel.root_dir%/../src/Kijho/MailerBundle/Entity/"]
