@@ -164,5 +164,60 @@ class EmailManager {
         }
         return $mailers;
     }
+    
+    /**
+     * Esta funcion permite analizar la bolsa de parametros del swiftmailer
+     * y obtener los valores de dichos parametros
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 19/11/2015
+     * @return array[string] arreglo con los parametros del swiftmailer
+     */
+    public function getSwiftMailerSettings() {
+
+        $bag = $this->container->getParameterBag();
+        
+        $basicParameters = array(
+            "transport.name",
+            "delivery.enabled",
+            "transport.smtp.encryption",
+            "transport.smtp.port",
+            "transport.smtp.host",
+            "transport.smtp.username",
+            "transport.smtp.password",
+            "transport.smtp.auth_mode",
+            "transport.smtp.timeout",
+            "transport.smtp.source_ip",
+            "memory.path",
+            "spool.enabled",
+            "plugin.impersonate",
+            "single_address");
+        
+        $mailers = $this->getMailers();
+        
+        //aca recorremos los mailers y armamos el arreglo reemplazando el nombre del mailer
+        $swiftParameters = array();
+        foreach ($mailers as $mailer) {
+            foreach ($basicParameters as $parameter){
+                array_push($swiftParameters, $mailer.".".$parameter);
+            }
+        }
+        
+        $otherParameters = array(
+            "swiftmailer.spool.enabled",
+            "swiftmailer.delivery.enabled",
+            "swiftmailer.single_address",
+            "swiftmailer.mailers",
+            "swiftmailer.default_mailer");
+        
+        $swiftParameters = array_merge($swiftParameters, $otherParameters);
+        
+        $mailerSettings = array();
+        foreach ($swiftParameters as $swiftParameter) {
+            if ($bag->has($swiftParameter)) {
+                $mailerSettings[$swiftParameter] = $bag->get($swiftParameter);
+            }
+        }
+        
+        return $mailerSettings;
+    }
 
 }
