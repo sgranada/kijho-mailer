@@ -34,44 +34,60 @@ class EmailManager {
      */
     public function send(Email $email) {
 
-        $this->mailer = $this->container->get('swiftmailer.mailer');
+        //verificamos que mailer se debe usar para el envio del correo
+        $mailer = 'swiftmailer.mailer';
+        $this->mailer = $this->container->get($mailer);
 
         $template = $email->getTemplate();
         if (!empty($template->getMailerSettings()) && $template->getMailerSettings() != 'default') {
-            $parameterName = 'swiftmailer.mailer.' . $template->getMailerSettings() . ".transport.name";
+
+            $mailer = 'swiftmailer.mailer.' . $template->getMailerSettings();
+            $parameterName = $mailer . ".transport.name";
             if ($this->container->hasParameter($parameterName)) {
-                $this->mailer = $this->container->get('swiftmailer.mailer.' . $template->getMailerSettings());
+                $this->mailer = $this->container->get($mailer);
             }
+        } else {
+            $mailer = 'swiftmailer.mailer.default';
         }
 
+        //instanciamos el mensaje (asunto, destinatario, contenido, etc)
         $subject = $email->getSubject();
         $recipientName = $email->getRecipientName();
         $recipientEmail = (array) json_decode($email->getMailTo());
-        $bodyHtml = $template->getLayout()->getHeader() . $email->getContent() . $template->getLayout()->getFooter();
-        //$bodyText = 'body text..';
+        $bodyHtml = '';
 
-        /* @var $mailer \Swift_Mailer */
+        if ($template->getLayout()) {
+            $bodyHtml = $template->getLayout()->getHeader() . $email->getContent() . $template->getLayout()->getFooter();
+        } else {
+            $bodyHtml = $email->getContent();
+        }
+
         if (!$this->mailer->getTransport()->isStarted()) {
             $this->mailer->getTransport()->start();
         }
 
-        /* @var $message \Swift_Message */
         $message = $this->mailer->createMessage();
         $message->setSubject($subject);
 
-        $message->setBody($bodyHtml, 'text/html');
-        //$message->addPart($bodyText, 'text/plain', 'UTF8');
+        $message->setBody($bodyHtml, 'text/html', 'UTF8');
 
+        //seteamos el o los destinatarios a quin va dirigido el correo
         if (!is_array($recipientEmail)) {
             $message->addTo($recipientEmail, $recipientName);
         } else {
-
             foreach ($recipientEmail as $recipient) {
                 $message->addTo($recipient, $recipientName);
             }
         }
-        $message->setFrom(array($email->getMailFrom() => $email->getFromName()));
+        
+        //verificamos si el template tiene un email from, de lo contrario ponemos el del mailer
+        if (!empty($email->getMailFrom())) {
+            $message->setFrom(array($email->getMailFrom() => $email->getFromName()));
+        } elseif ($this->container->hasParameter($mailer . '.transport.smtp.username')) {
+            $message->setFrom(array($this->container->getParameter($mailer . '.transport.smtp.username') => $email->getFromName()));
+        }
 
+        //enviamos el correo
         $this->mailer->send($message);
         $this->mailer->getTransport()->stop();
 

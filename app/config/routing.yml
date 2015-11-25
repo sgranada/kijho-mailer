@@ -1,3 +1,7 @@
 kijho_mailer:
     resource: "@KijhoMailerBundle/Resources/config/routing.yml"
     prefix:   /{_locale}/
+    
+kijho_mailer_default_index:
+    pattern:  /
+    defaults: { _controller: KijhoMailerBundle:Default:defaultIndex }
