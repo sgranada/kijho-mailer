@@ -53,4 +53,31 @@ $(document).on("keyup", '.input_number', function ()
     }
 });
 
+function showFlashSuccessMessage(msg, hide, timeToHide) {
+    $("#flash-message-success span").html(msg);
+    $("#flash-message-success").show(10, function () {
+        if (hide) {
+            $("#flash-message-success").fadeOut(timeToHide);
+        }
+    });
+}
+
+function showFlashWarningMessage(msg, hide, timeToHide) {
+    $("#flash-message-warning span").html(msg);
+    $("#flash-message-warning").show(10, function () {
+        if (hide) {
+            $("#flash-message-warning").fadeOut(timeToHide);
+        }
+    });
+}
+
+function showFlashErrorMessage(msg, hide, timeToHide) {
+    $("#flash-message-danger span").html(msg);
+    $("#flash-message-danger").show(10, function () {
+        if (hide) {
+            $("#flash-message-danger").fadeOut(timeToHide);
+        }
+    });
+}
+
 

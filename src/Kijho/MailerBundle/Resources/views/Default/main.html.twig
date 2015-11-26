@@ -1,72 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>{% block title %}{{'kijho_mailer.settings.email_settings'|trans}}{% endblock %}</title>     
-    
-    {% block head_style %}
-        {% stylesheets filter='?yui_css,css_url_rewrite'
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>{% block title %}{{'kijho_mailer.settings.email_settings'|trans}}{% endblock %}</title>     
+
+        {% block head_style %}
+            {% stylesheets filter='?yui_css,css_url_rewrite'
             '@KijhoMailerBundle/Resources/public/css/bootstrap.min.css'
             '@KijhoMailerBundle/Resources/public/css/bootstrap-theme.min.css'
             '@KijhoMailerBundle/Resources/public/css/style.css'
             '@KijhoMailerBundle/Resources/public/css/bootstrap-wysihtml5.css'
-        %}
-        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-        {% endstylesheets %}
-    {% endblock %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+            %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+            {% endstylesheets %}
+        {% endblock %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    {#<link rel="shortcut icon" href="{{ asset('bundles/frontend/images/ico/favicon.ico ')}}">#}
-    
-</head><!--/head-->
-<body>
-    {% import 'KijhoMailerBundle:Default:macros.html.twig' as macros  %}
-    {% include 'KijhoMailerBundle:Default:menu.html.twig' %}
-    <section class="container header">
-        {% block header_content %}
-        {% endblock %}
-    </section>
-    
-    <section class="container">
-        {% block main_content %}
-        {% endblock %}
-    </section><!--/#about-us-->
-    
-    <section id="bottom" class="wet-asphalt">
-        <div class="container">
-            <div class="row"><!--/.col-md-3-->
-                {% block bottom_content %}
-                {% endblock %}
+        {#<link rel="shortcut icon" href="{{ asset('bundles/frontend/images/ico/favicon.ico ')}}">#}
+
+    </head><!--/head-->
+    <body>
+        {% import 'KijhoMailerBundle:Default:macros.html.twig' as macros  %}
+        {% include 'KijhoMailerBundle:Default:menu.html.twig' %}
+        <section class="container header">
+            {% block header_content %}
+            {% endblock %}
+            <div class="alert alert-dismissable alert-success col-lg-12 flash-message" id="flash-message-success" style="display: none;">
+                <button data-dismiss="alert" class="close" type="button">x</button>
+                <span></span>
             </div>
-        </div>
-    </section><!--/#bottom-->
+            <div class="alert alert-dismissable alert-warning col-lg-12 flash-message" id="flash-message-warning" style="display: none;">
+                <button data-dismiss="alert" class="close" type="button">x</button>
+                <span></span>
+            </div>
+            <div class="alert alert-dismissable alert-danger col-lg-12 flash-message" id="flash-message-danger" style="display: none;">
+                <button data-dismiss="alert" class="close" type="button">x</button>
+                <span></span>
+            </div>
+        </section>
 
-    
-    {% block javascripts %}
-        {% javascripts
+        <section class="container">
+            {% block main_content %}
+            {% endblock %}
+        </section><!--/#about-us-->
+
+        <section id="bottom" class="wet-asphalt">
+            <div class="container">
+                <div class="row"><!--/.col-md-3-->
+                    {% block bottom_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </section><!--/#bottom-->
+
+
+        {% block javascripts %}
+            {% javascripts
             '@KijhoMailerBundle/Resources/public/js/jquery-2.1.4.min.js'
             '@KijhoMailerBundle/Resources/public/js/bootstrap.min.js'
             '@KijhoMailerBundle/Resources/public/js/wysihtml5-0.3.0.js'
             '@KijhoMailerBundle/Resources/public/js/bootstrap3-wysihtml5.js'
             '@KijhoMailerBundle/Resources/public/js/bootbox.min.js'
             '@KijhoMailerBundle/Resources/public/js/utilities.js'
-        %}
-        <script src="{{ asset_url }}" type="text/javascript"></script>
-    {% endjavascripts %}
-    
-    
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".alert-dismissable button").click(function(){
-                $(this).parent().slideUp();
-            });
-            {% block scripts %}
-            {% endblock %}
-        });
-    </script>
-{% endblock %}
-</body>
+            %}
+            <script src="{{ asset_url }}" type="text/javascript"></script>
+            {% endjavascripts %}
+
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $(".alert-dismissable button").click(function () {
+                        $(this).parent().slideUp();
+                    });
+                    {% block scripts %}
+                    {% endblock %}
+                });
+            </script>
+        {% endblock %}
+    </body>
 </html>

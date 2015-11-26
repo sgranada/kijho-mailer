@@ -13,7 +13,7 @@
     </ol>
 
     {{ macros.showSuccessMessage('messageSuccessTemplate')}}  
-
+    
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -84,11 +84,11 @@
                         if (resp.result == '__OK__') {
                             object.parent().parent().remove();
                         } else {
-                            bootbox.alert(resp.msg);
+                            showFlashErrorMessage(resp.msg, false, 0);
                         }
                     },
                     error: function () {
-                        bootbox.alert('Error, try again')
+                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
                     }
                 });
             }
@@ -121,15 +121,14 @@
                         data: "templateId="+templateId+"&email="+result,
                         success: function (resp)
                         {
-                            console.log(resp);
                             if (resp.result == '__OK__') {
-                                //window.location.reload(true);
+                                showFlashSuccessMessage(resp.msg, true, 4000);
                             } else {
-                                bootbox.alert(resp.msg);
+                                showFlashErrorMessage(resp.msg, false, 0);
                             }
                         },
                         error: function () {
-                            bootbox.alert("{{'kijho_mailer.global.unknown_error'|trans}}")
+                            showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
                         }
                     });
                 } else if (result === ""){

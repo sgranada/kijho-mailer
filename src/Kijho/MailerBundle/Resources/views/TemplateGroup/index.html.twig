@@ -66,11 +66,11 @@
                         if (resp.result == '__OK__') {
                             object.parent().parent().remove();
                         } else {
-                            bootbox.alert(resp.msg);
+                            showFlashErrorMessage(resp.msg, false, 0);
                         }
                     },
                     error: function () {
-                        bootbox.alert('Error, try again')
+                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
                     }
                 });
             }
