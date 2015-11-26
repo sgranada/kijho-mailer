@@ -330,16 +330,23 @@ class TemplateController extends Controller {
         $response = array('result' => '__OK__',
             'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_success'));
 
-        try {
+        //try {
             //creamos el correo y lo almacenamos en base de datos
             $email = $this->get('email_manager')->composeEmail($template, $emailAddress);
             $em->persist($email);
-            $this->get('email_manager')->send($email);
             $em->flush($email);
-        } catch (\Exception $exc) {
-            $response = array('result' => '__KO__',
-                'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_error'));
-        }
+            
+            //verificamos el metodo de envio
+            if ($this->get('email_manager')->isSendInstantaneous()) {
+                $this->get('email_manager')->send($email);
+            } else {
+                $this->get('email_manager')->verifyPendingEmails();
+            }
+            
+        //} catch (\Exception $exc) {
+        //    $response = array('result' => '__KO__',
+        //        'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_error'));
+        //}
 
         return new JsonResponse($response);
     }

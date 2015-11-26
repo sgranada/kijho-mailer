@@ -16,16 +16,9 @@ class SettingsController extends Controller {
      */
     public function editAction() {
 
-        $em = $this->getDoctrine()->getManager();
-
         $settingsStorage = $this->container->getParameter('kijho_mailer.storage')['settings'];
         
-        $settings = $em->getRepository($settingsStorage)->findAll();
-        if (!$settings) {
-            $settings = new $settingsStorage;
-        } else {
-            $settings = $settings[0];
-        }
+        $settings = $this->get('email_manager')->getMailerSettings();
 
         $form = $this->createForm(new EmailSettingsType($settingsStorage, $this->get('translator')), $settings);
 
@@ -51,12 +44,7 @@ class SettingsController extends Controller {
 
         $settingsStorage = $this->container->getParameter('kijho_mailer.storage')['settings'];
 
-        $settings = $em->getRepository($settingsStorage)->findAll();
-        if (!$settings) {
-            $settings = new $settingsStorage;
-        } else {
-            $settings = $settings[0];
-        }
+        $settings = $this->get('email_manager')->getMailerSettings();
 
         $form = $this->createForm(new EmailSettingsType($settingsStorage, $this->get('translator')), $settings);
 

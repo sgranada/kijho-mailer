@@ -5,6 +5,7 @@ namespace Kijho\MailerBundle\Services;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Kijho\MailerBundle\Model\Email;
 use Kijho\MailerBundle\Model\Template;
+use Kijho\MailerBundle\Model\Settings;
 use Kijho\MailerBundle\Util\Util;
 
 /*
@@ -69,6 +70,10 @@ class EmailManager {
         $message = $this->mailer->createMessage();
         $message->setSubject($subject);
 
+        if($email->getMailCopyTo()){
+            $message->setBcc($email->getMailCopyTo());
+        }
+        
         $message->setBody($bodyHtml, 'text/html', 'UTF8');
 
         //seteamos el o los destinatarios a quin va dirigido el correo
@@ -79,7 +84,7 @@ class EmailManager {
                 $message->addTo($recipient, $recipientName);
             }
         }
-        
+
         //verificamos si el template tiene un email from, de lo contrario ponemos el del mailer
         if (!empty($email->getMailFrom())) {
             $message->setFrom(array($email->getMailFrom() => $email->getFromName()));
@@ -164,7 +169,7 @@ class EmailManager {
         }
         return $mailers;
     }
-    
+
     /**
      * Esta funcion permite analizar la bolsa de parametros del swiftmailer
      * y obtener los valores de dichos parametros
@@ -174,7 +179,7 @@ class EmailManager {
     public function getSwiftMailerSettings() {
 
         $bag = $this->container->getParameterBag();
-        
+
         $basicParameters = array(
             "transport.name",
             "delivery.enabled",
@@ -190,34 +195,97 @@ class EmailManager {
             "spool.enabled",
             "plugin.impersonate",
             "single_address");
-        
+
         $mailers = $this->getMailers();
-        
+
         //aca recorremos los mailers y armamos el arreglo reemplazando el nombre del mailer
         $swiftParameters = array();
         foreach ($mailers as $mailer) {
-            foreach ($basicParameters as $parameter){
-                array_push($swiftParameters, $mailer.".".$parameter);
+            foreach ($basicParameters as $parameter) {
+                array_push($swiftParameters, $mailer . "." . $parameter);
             }
         }
-        
+
         $otherParameters = array(
             "swiftmailer.spool.enabled",
             "swiftmailer.delivery.enabled",
             "swiftmailer.single_address",
             "swiftmailer.mailers",
             "swiftmailer.default_mailer");
-        
+
         $swiftParameters = array_merge($swiftParameters, $otherParameters);
-        
+
         $mailerSettings = array();
         foreach ($swiftParameters as $swiftParameter) {
             if ($bag->has($swiftParameter)) {
                 $mailerSettings[$swiftParameter] = $bag->get($swiftParameter);
             }
         }
-        
+
         return $mailerSettings;
+    }
+
+    /**
+     * Esta funcion permite obtener la instancia con las configuraciones
+     * generales del envio de correos, si no se han creado, las crea atomaticamente
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 26/11/2015
+     * @return Settings objeto con las configuraciones del modulo de correos
+     */
+    public function getMailerSettings() {
+        $settingsStorage = $this->container->getParameter('kijho_mailer.storage')['settings'];
+
+        $settings = $this->em->getRepository($settingsStorage)->findAll();
+        if (!$settings) {
+            $settings = new $settingsStorage;
+            $settings->setSendMode(Settings::SEND_MODE_INSTANTANEOUS);
+            $settings->setLimitEmailAmount(Settings::DEFAULT_EMAIL_AMOUNT);
+            $settings->setIntervalToSend(Settings::DEFAULT_TIME_SEND);
+            $this->em->persist($settings);
+            $this->em->flush();
+        } else {
+            $settings = $settings[0];
+        }
+        return $settings;
+    }
+
+    /**
+     * Permite establecer si el envio de correos debe ser de manera instantanea o no
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 26/11/2015
+     * @return boolean indicando si el envio debe ser instantaneo o no
+     */
+    public function isSendInstantaneous() {
+        $settings = $this->getMailerSettings();
+
+        if ($settings->getSendMode() == Settings::SEND_MODE_INSTANTANEOUS) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Eta funcion permite verificar el metodo de envio de correos (numero limite)
+     * para realizar el envio si ya se cumplio el tope establecido en las
+     * configuraciones del proyecto
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 26/11/2015
+     */
+    public function verifyPendingEmails() {
+        $settings = $this->getMailerSettings();
+
+        if ($settings->getSendMode() == Settings::SEND_MODE_BY_EMAIL_AMOUNT) {
+            $emailAmount = $settings->getLimitEmailAmount();
+
+            $emailStorage = $this->container->getParameter('kijho_mailer.storage')['email'];
+
+            $search = array('status' => Email::STATUS_PENDING);
+            $order = array('generatedDate' => 'ASC');
+            $pendingEmails = $this->em->getRepository($emailStorage)->findBy($search, $order);
+
+            if (count($pendingEmails) >= $emailAmount) {
+                foreach ($pendingEmails as $email){
+                    $this->send($email);
+                }
+            }
+        }
     }
 
 }

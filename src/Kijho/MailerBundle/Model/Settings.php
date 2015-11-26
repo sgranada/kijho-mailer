@@ -16,6 +16,16 @@ class Settings implements SettingsInterface {
     const SEND_MODE_BY_EMAIL_AMOUNT = 3;
     
     /**
+     * Constante para definir el numero de correos limite para enviar correos
+     */
+    const DEFAULT_EMAIL_AMOUNT = 5;
+    
+    /**
+     * Constante para definir por defecto el tiempo periodico de envio de correos
+     */
+    const DEFAULT_TIME_SEND = 5;
+    
+    /**
      * @var integer
      * @ORM\Column(name="sett_send_mode", type="integer")
      * @Assert\NotBlank()
@@ -88,21 +98,23 @@ class Settings implements SettingsInterface {
     /**
      * @param integer $sendMode
      */
-    function setSendMode($sendMode) {
+    public function setSendMode($sendMode) {
         $this->sendMode = $sendMode;
     }
 
     /**
      * @param integer $limitEmailAmount
      */
-    function setLimitEmailAmount($limitEmailAmount) {
+    public function setLimitEmailAmount($limitEmailAmount) {
         $this->limitEmailAmount = $limitEmailAmount;
     }
 
     /**
      * @param integer $intervalToSend
      */
-    function setIntervalToSend($intervalToSend) {
+    public function setIntervalToSend($intervalToSend) {
         $this->intervalToSend = $intervalToSend;
     }
+    
+    
 }
