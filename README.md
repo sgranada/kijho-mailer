@@ -61,6 +61,7 @@ kijho_mailer:
         template:       "Acme\DemoBundle\Entity\EmailTemplate"
         settings:       "Acme\DemoBundle\Entity\EmailSettings"
         email:          "Acme\DemoBundle\Entity\Email"
+        email_event:    "Acme\DemoBundle\Entity\EmailEvent"
 </pre>
 
 Asegurarse de configurar los parametros del swiftmailer, los parametros van en el archivo parameters.yml:
@@ -223,6 +224,51 @@ class EmailSettings extends BaseSettings {
     }
 
 }
+</pre>
+
+<h4>EmailEvent.php</h4>
+
+<pre>
+namespace Acme\DemoBundle\Entity;
+
+use Acme\DemoBundle\Model\EmailEvent as BaseEmailEvent;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Email Event
+ * @ORM\Table(name="email_event")
+ * @ORM\Entity
+ */
+class EmailEvent extends BaseEmailEvent {
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="emev_id", type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+    
+    /**
+     * Template al que esta asociado el correo
+     * @ORM\ManyToOne(targetEntity="Acme\DemoBundle\Entity\EmailTemplate")
+     * @ORM\JoinColumn(name="emev_template", referencedColumnName="temp_id")
+     */
+    protected $template;
+    
+    function getId() {
+        return $this->id;
+    }
+    
+    function getTemplate() {
+        return $this->template;
+    }
+
+    function setTemplate($template = null) {
+        $this->template = $template;
+    }
+
+}
+
 </pre>
 
 <h4>composer update</h4>

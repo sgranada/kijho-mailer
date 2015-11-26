@@ -1,0 +1,87 @@
+{% extends 'KijhoMailerBundle:Default:main.html.twig' %}
+{% block title %}{{'kijho_mailer.email_event.email_events'|trans}}{% endblock %}
+{% block header_content %}
+    <h2 class="pull-left">{{'kijho_mailer.email_event.email_events'|trans}}</h2>
+    <div class="btn-group pull-right top-margin" role="group" aria-label="...">
+        <a href="{{path('kijho_mailer_email_event_new')}}" class="btn btn-default">{{'kijho_mailer.email_event.new'|trans}}</a>
+    </div>
+{% endblock %}
+{% block main_content %}
+    <ol class="col-lg-12 breadcrumb">
+        <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
+        <li class="active">{{ 'kijho_mailer.email_event.email_events'|trans }}</li>
+    </ol>
+
+    {{ macros.showSuccessMessage('messageSuccessEmailEvent')}}  
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{{'kijho_mailer.email_event.name'|trans}}</th>
+                <th>{{'kijho_mailer.global.slug'|trans}}</th>
+                <th>{{'kijho_mailer.email_event.template'|trans}}</th>
+                <th>{{'kijho_mailer.template.group'|trans}}</th>
+                <th>{{'kijho_mailer.global.options'|trans}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emailEvent in emailEvents %}
+                <tr>
+                    <td>{{emailEvent.name}}</td>
+                    <td>{{emailEvent.slug}}</td>
+                    <td>{{emailEvent.template}}</td>
+                    <td>
+                        {% if emailEvent.template.group is not empty %}
+                            {{ emailEvent.template.group }}<br>
+                            <strong>{{'kijho_mailer.global.slug'|trans}}</strong>: {{ emailEvent.template.group.slug }}
+                        {% else %}
+                            {{'kijho_mailer.template.no_group'|trans}}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-default btn-sm" title="{{'kijho_mailer.email_event.edit'|trans}}" href='{{path('kijho_mailer_email_event_edit',{'emailEventId':emailEvent.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
+                        &nbsp;<a class="btn btn-default btn-sm delete-email-event" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' email-event-id="{{emailEvent.id}}"><i class="fa fa-close fa-lg"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">{{'kijho_mailer.email_event.empty_list'|trans}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    /** 
+     * Codigo para la eliminacion de email events mediante ajax 
+     */
+    $(".delete-email-event").click(function () {
+        var object = $(this);
+        var emailEventId = object.attr('email-event-id');
+
+        bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
+
+            if (result == true)
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ path('kijho_mailer_email_event_delete')}}",
+                    dataType: 'json',
+                    data: 'emailEventId=' + emailEventId,
+                    success: function (resp) {
+                        console.log(resp);
+                        if (resp.result == '__OK__') {
+                            object.parent().parent().remove();
+                        } else {
+                            showFlashErrorMessage(resp.msg, false, 0);
+                        }
+                    },
+                    error: function () {
+                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+                    }
+                });
+            }
+        });
+    });
+{% endblock %}

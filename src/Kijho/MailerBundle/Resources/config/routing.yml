@@ -17,3 +17,7 @@ kijho_mailer_template_group:
 kijho_mailer_settings:
     resource: "@KijhoMailerBundle/Resources/config/routing/settings.yml"
     prefix:   /settings
+    
+kijho_mailer_email_event:
+    resource: "@KijhoMailerBundle/Resources/config/routing/emailEvent.yml"
+    prefix:   /emailEvents

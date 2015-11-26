@@ -1,0 +1,26 @@
+kijho_mailer_email_event:
+    path:     /
+    defaults: { _controller: KijhoMailerBundle:EmailEvent:index }
+
+kijho_mailer_email_event_new:
+    path:     /new
+    defaults: { _controller: KijhoMailerBundle:EmailEvent:new }
+    
+kijho_mailer_email_event_save:
+    path:     /save
+    defaults: { _controller: KijhoMailerBundle:EmailEvent:save }
+    methods: [POST]
+    
+kijho_mailer_email_event_edit:
+    path:     /{emailEventId}/edit
+    defaults: { _controller: KijhoMailerBundle:EmailEvent:edit }
+    
+kijho_mailer_email_event_update:
+    path:     /{emailEventId}/update
+    defaults: { _controller: KijhoMailerBundle:EmailEvent:update }
+    methods: [POST]
+    
+kijho_mailer_email_event_delete:
+    path:     /delete
+    defaults: { _controller: KijhoMailerBundle:EmailEvent:delete }
+    methods: [POST]

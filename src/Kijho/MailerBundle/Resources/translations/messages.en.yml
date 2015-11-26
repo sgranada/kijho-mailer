@@ -101,5 +101,17 @@ kijho_mailer:
         sent_success: "Email sent successfully"
         sent_error: "Error sending email"
         saving_error: "Error saving email"
+        
+    email_event:
+        email_events: "Email Events"
+        name: "Event name"
+        template: "Template for email"
+        new: "New Event"
+        edit: "Edit Event"
+        delete: "Delete Event"
+        empty_list: "No events"
+        delete_question: "Are you sure you want to delete this email event ?"
+        creation_success_message: "Event created successfully"
+        update_success_message: "Event updated successfully"
        
         

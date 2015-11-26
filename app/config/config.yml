@@ -110,3 +110,4 @@ kijho_mailer:
         template:       "Kijho\MailerBundle\Entity\EmailTemplate"
         settings:       "Kijho\MailerBundle\Entity\EmailSettings"
         email:          "Kijho\MailerBundle\Entity\Email"
+        email_event:    "Kijho\MailerBundle\Entity\EmailEvent"

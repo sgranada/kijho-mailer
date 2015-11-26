@@ -101,7 +101,6 @@ class Layout implements LayoutInterface {
     }
     
     /**
-     * 
      * @param string $name
      */
     function setName($name) {

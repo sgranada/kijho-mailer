@@ -18,7 +18,9 @@
                 <li {% if menu is defined and menu == 'layouts' %}class="active"{% endif %}><a href="{{path('kijho_mailer_layout')}}">{{'kijho_mailer.layout.layouts'|trans}} <span class="sr-only">(current)</span></a></li>
                 <li {% if menu is defined and menu == 'templateGroups' %}class="active"{% endif %}><a href="{{path('kijho_mailer_template_group')}}">{{'kijho_mailer.template_group.template_groups'|trans}} <span class="sr-only">(current)</span></a></li>
                 <li {% if menu is defined and menu == 'templates' %}class="active"{% endif %}><a href="{{path('kijho_mailer_template')}}">{{'kijho_mailer.template.templates'|trans}}</a></li>
+                <li {% if menu is defined and menu == 'emailEvents' %}class="active"{% endif %}><a href="{{path('kijho_mailer_email_event')}}">{{'kijho_mailer.email_event.email_events'|trans}}</a></li>
                 <li {% if menu is defined and menu == 'settings' %}class="active"{% endif %}><a href="{{path('kijho_mailer_settings_edit')}}">{{'kijho_mailer.setting.settings'|trans}}</a></li>
+                
                 {#<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">

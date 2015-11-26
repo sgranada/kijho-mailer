@@ -34,6 +34,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->end()
                         ->scalarNode('settings')->end()
                         ->scalarNode('email')->end()
+                        ->scalarNode('email_event')->end()
                     ->end()
                 ->end()
             ->end()
