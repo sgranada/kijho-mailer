@@ -29,7 +29,13 @@
                 <tr>
                     <td>{{emailEvent.name}}</td>
                     <td>{{emailEvent.slug}}</td>
-                    <td>{{emailEvent.template}}</td>
+                    <td>
+                        {% if emailEvent.template is not empty %}
+                            {{emailEvent.template}}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </td>
                     <td>
                         {% if emailEvent.template.group is not empty %}
                             {{ emailEvent.template.group }}<br>

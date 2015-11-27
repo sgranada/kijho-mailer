@@ -231,4 +231,8 @@ class Email implements EmailInterface {
         }
         return $text;
     }
+    
+    public function __toString() {
+        return $this->subject;
+    }
 }

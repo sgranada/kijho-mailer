@@ -19,5 +19,9 @@
         {% else %}
             no hay entidad asignada
         {% endif %}
+        
+        {% if email.template is not empty %}
+            debe ser una instancia de {{ email.template.entityName }}
+        {% endif %}
     </body>
 </html>
