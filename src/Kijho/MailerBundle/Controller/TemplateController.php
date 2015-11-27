@@ -331,6 +331,7 @@ class TemplateController extends Controller {
             'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_success'));
 
         try {
+            
             //creamos el correo y lo almacenamos en base de datos
             $email = $this->get('email_manager')->composeEmail($template, $emailAddress);
             $em->persist($email);

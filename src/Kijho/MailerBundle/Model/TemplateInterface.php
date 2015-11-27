@@ -70,5 +70,10 @@ interface TemplateInterface
      * @return string
      */
     public function getMailerSettings();
+    
+    /**
+     * @return string
+     */
+    public function getEntityName();
 
 }

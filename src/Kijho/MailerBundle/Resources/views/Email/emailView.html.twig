@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta charset="UTF8"/>
+    </head>
+    <body>
+        {% if email.template.layout is not empty %}
+            {{email.template.layout.header|raw}}
+        {% endif %}
+        
+        {{email.content | raw }}
+        
+        {% if email.template.layout is not empty %}
+            {{email.template.layout.footer|raw}}
+        {% endif %}
+        
+        <br><br>
+        {% if entity is not empty %}
+            la entidad es {{entity}}
+        {% else %}
+            no hay entidad asignada
+        {% endif %}
+    </body>
+</html>

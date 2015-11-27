@@ -73,6 +73,12 @@ class Template implements TemplateInterface {
      * @ORM\Column(name="temp_mailer_settings", type="string", nullable=true)
      */
     protected $mailerSettings;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="temp_entity_name", type="string", nullable=true)
+     */
+    protected $entityName;
 
     /**
      * @var \DateTime
@@ -143,6 +149,12 @@ class Template implements TemplateInterface {
         $this->mailerSettings = $mailerSettings;
     }
 
+    /**
+     * @param string $entityName
+     */
+    function setEntityName($entityName) {
+        $this->entityName = $entityName;
+    }
     
     /**
      * @param \DateTime $creationDate
@@ -233,6 +245,13 @@ class Template implements TemplateInterface {
      */
     public function getMailerSettings() {
         return $this->mailerSettings;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getEntityName() {
+        return $this->entityName;
     }
 
     /**

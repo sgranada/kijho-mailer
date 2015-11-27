@@ -209,10 +209,16 @@ class Email implements EmailInterface {
         $this->status = $status;
     }
 
+    /**
+     * @param string $recipientName
+     */
     function setRecipientName($recipientName) {
         $this->recipientName = $recipientName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getRecipientName() {
         return $this->recipientName;
     }
@@ -225,5 +231,4 @@ class Email implements EmailInterface {
         }
         return $text;
     }
-
 }

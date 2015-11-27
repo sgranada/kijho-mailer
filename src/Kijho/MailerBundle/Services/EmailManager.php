@@ -2,11 +2,13 @@
 
 namespace Kijho\MailerBundle\Services;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Kijho\MailerBundle\Model\Email;
 use Kijho\MailerBundle\Model\Template;
 use Kijho\MailerBundle\Model\Settings;
 use Kijho\MailerBundle\Util\Util;
+
 
 /*
  * EmailManager
@@ -17,15 +19,18 @@ use Kijho\MailerBundle\Util\Util;
 
 class EmailManager {
 
-    private $mailer;
-    private $request;
-    private $container;
-    private $em;
+    protected $mailer;
+    protected $request;
+    protected $container;
+    protected $em;
+    protected $templating;
+    
 
-    public function __construct(RequestStack $requestStack, $container, $em) {
+    public function __construct(RequestStack $requestStack, ContainerInterface $container, $em) {
         $this->request = $requestStack->getCurrentRequest();
         $this->container = $container;
         $this->em = $em;
+        $this->templating = $this->container->get('templating');
     }
 
     /**
@@ -55,14 +60,7 @@ class EmailManager {
         $subject = $email->getSubject();
         $recipientName = $email->getRecipientName();
         $recipientEmail = (array) json_decode($email->getMailTo());
-        $bodyHtml = '';
-
-        if ($template->getLayout()) {
-            $bodyHtml = $template->getLayout()->getHeader() . $email->getContent() . $template->getLayout()->getFooter();
-        } else {
-            $bodyHtml = $email->getContent();
-        }
-
+        
         if (!$this->mailer->getTransport()->isStarted()) {
             $this->mailer->getTransport()->start();
         }
@@ -70,11 +68,11 @@ class EmailManager {
         $message = $this->mailer->createMessage();
         $message->setSubject($subject);
 
-        if($email->getMailCopyTo()){
+        if ($email->getMailCopyTo()) {
             $message->setBcc($email->getMailCopyTo());
         }
-        
-        $message->setBody($bodyHtml, 'text/html', 'UTF8');
+
+        $message->setBody($this->renderEmail($email), 'text/html', 'UTF8');
 
         //seteamos el o los destinatarios a quin va dirigido el correo
         if (!is_array($recipientEmail)) {
@@ -281,11 +279,45 @@ class EmailManager {
             $pendingEmails = $this->em->getRepository($emailStorage)->findBy($search, $order);
 
             if (count($pendingEmails) >= $emailAmount) {
-                foreach ($pendingEmails as $email){
+                foreach ($pendingEmails as $email) {
                     $this->send($email);
                 }
             }
         }
+    }
+
+    /**
+     * Esta funcion permite consultar cualquier evento de emails indicando
+     * su identificador (slug) unico
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 27/11/2015
+     * @param string $slug
+     * @return \Kijho\MailerBundle\Model\EmailEvent instancia del evento de email
+     */
+    public function getEmailEvent($slug) {
+        $emailEventStorage = $this->container->getParameter('kijho_mailer.storage')['email_event'];
+        $emailEvent = $this->em->getRepository($emailEventStorage)->findOneBySlug($slug);
+        return $emailEvent;
+    }
+
+    /**
+     * Esta funcion permite obtener el html del correo electronico que sera enviado
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 27/11/2015
+     * @param Email $email instancia del correo que sera enviado
+     * @param type $entity instancia de la entidad asociada en el correo
+     * @return string texto con el html del correo
+     */
+    public function renderEmail($email, $entity = null) {
+
+        if ($entity) {
+            //hacer la validacion de la entidad con el email
+        }
+
+        $html = $this->templating->render('KijhoMailerBundle:Email:emailView.html.twig', array(
+            'email' => $email,
+            'entity' => $entity
+        ));
+
+        return $html;
     }
 
 }

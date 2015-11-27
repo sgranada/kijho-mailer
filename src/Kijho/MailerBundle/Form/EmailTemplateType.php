@@ -24,7 +24,7 @@ class EmailTemplateType extends AbstractType {
         if (!empty($entities)) {
             $this->entityNames = array();
             foreach ($entities as $entity) {
-                $this->entityNames[strtolower($entity->getShortName())] = $entity->getShortName();
+                $this->entityNames[$entity->getName()] = $entity->getShortName();
             }
         }
     }
@@ -92,8 +92,7 @@ class EmailTemplateType extends AbstractType {
                     'preferred_choices' => array($defaultMailer),
                     'label' => $this->translator->trans('kijho_mailer.template.status'),
                     'attr' => array('class' => 'form-control')))
-                ->add('entityNames', 'choice', array('required' => false,
-                    'mapped' => false,
+                ->add('entityName', 'choice', array('required' => false,
                     'choices' => $this->entityNames,
                     'label' => $this->translator->trans('kijho_mailer.template.select_entity'),
                     'empty_value' => $this->translator->trans('kijho_mailer.global.select'),
