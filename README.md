@@ -64,6 +64,19 @@ kijho_mailer:
         email_event:    "Acme\DemoBundle\Entity\EmailEvent"
 </pre>
 
+Instanciar las siguientes extensiones de twig en la seccion de servicios:
+<pre>
+services:
+    twig.extension.util:
+      class: Twig\Extension\UtilExtension
+      tags:
+          - { name: twig.extension }   
+    twig.extension.evaluate:
+      class: Twig\Extension\EvaluateExtension
+      tags:
+          - { name: twig.extension }
+</pre>
+
 Asegurarse de configurar los parametros del swiftmailer, los parametros van en el archivo parameters.yml:
 
 <pre style="font-family: Courier New;">
