@@ -101,6 +101,9 @@ kijho_mailer:
         sent_success: "Correo enviado exitosamente"
         sent_error: "Error enviando el correo"
         saving_error: "Error almacenando el correo"
+        error_instance_message_1: "El correo requiere una instancia de "
+        developer_warning: "Alerta de Programación"
+        developer_warning_message: "Es necesario proveer las siguientes variables para completar el render del correo"
         
     email_event:
         email_events: "Eventos de Correo"

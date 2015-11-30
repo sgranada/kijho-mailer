@@ -111,3 +111,13 @@ kijho_mailer:
         settings:       "Kijho\MailerBundle\Entity\EmailSettings"
         email:          "Kijho\MailerBundle\Entity\Email"
         email_event:    "Kijho\MailerBundle\Entity\EmailEvent"
+        
+services:
+    twig.extension.util:
+      class: Twig\Extension\UtilExtension
+      tags:
+          - { name: twig.extension }   
+    twig.extension.evaluate:
+      class: Twig\Extension\EvaluateExtension
+      tags:
+          - { name: twig.extension }  

@@ -101,6 +101,9 @@ kijho_mailer:
         sent_success: "Email sent successfully"
         sent_error: "Error sending email"
         saving_error: "Error saving email"
+        error_instance_message_1: "This email requires an instance of "
+        developer_warning: "Developer Warning"
+        developer_warning_message: "You need to provide the following vars to complete the email render"
         
     email_event:
         email_events: "Email Events"

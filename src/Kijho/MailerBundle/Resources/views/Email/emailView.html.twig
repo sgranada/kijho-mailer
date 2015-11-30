@@ -3,25 +3,30 @@
         <meta charset="UTF8"/>
     </head>
     <body>
-        {% if email.template.layout is not empty %}
-            {{email.template.layout.header|raw}}
+        {% if kijhoEmail.template.layout is not empty %}
+            {{kijhoEmail.template.layout.header|raw}}<br>
         {% endif %}
-        
-        {{email.content | raw }}
-        
-        {% if email.template.layout is not empty %}
-            {{email.template.layout.footer|raw}}
-        {% endif %}
-        
-        <br><br>
-        {% if entity is not empty %}
-            la entidad es {{entity}}
+
+        {% if nullVars is empty %}
+            {{ kijhoEmail.content | raw | evaluate }}
         {% else %}
-            no hay entidad asignada
+            {{ kijhoEmail.content | raw }}
+            <div style="margin-top: 20px; border: solid red 1px; border-radius: 3px; padding: 8px; width: auto;">
+                <label style="color: red;">
+                    <strong><br>{{'kijho_mailer.email.developer_warning'|trans}} !</strong><br>
+                    {{'kijho_mailer.email.developer_warning_message'|trans}}:
+                </label><br>
+                <ul>
+                {% for var in nullVars %}
+                    <li>{{'{{'~var~'}}'}}</li>
+                {% endfor %}
+                </ul>
+            </div>
         {% endif %}
-        
-        {% if email.template is not empty %}
-            debe ser una instancia de {{ email.template.entityName }}
+
+        {% if kijhoEmail.template.layout is not empty %}
+            <br>{{kijhoEmail.template.layout.footer|raw}}
         {% endif %}
+
     </body>
 </html>

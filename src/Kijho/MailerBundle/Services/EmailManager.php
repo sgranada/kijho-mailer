@@ -9,7 +9,6 @@ use Kijho\MailerBundle\Model\Template;
 use Kijho\MailerBundle\Model\Settings;
 use Kijho\MailerBundle\Util\Util;
 
-
 /*
  * EmailManager
  * Esta clase implementa metodos generalizados para la construccion y 
@@ -24,7 +23,6 @@ class EmailManager {
     protected $container;
     protected $em;
     protected $templating;
-    
 
     public function __construct(RequestStack $requestStack, ContainerInterface $container, $em) {
         $this->request = $requestStack->getCurrentRequest();
@@ -38,7 +36,7 @@ class EmailManager {
      * @author Cesar Giraldo <cnaranjo@kijho.com> 23/11/2015
      * @param Email $email instancia del correo electronico a enviar
      */
-    public function send(Email $email) {
+    public function send(Email $email, $dataToTemplate = array()) {
 
         //verificamos que mailer se debe usar para el envio del correo
         $mailer = 'swiftmailer.mailer';
@@ -60,7 +58,7 @@ class EmailManager {
         $subject = $email->getSubject();
         $recipientName = $email->getRecipientName();
         $recipientEmail = (array) json_decode($email->getMailTo());
-        
+
         if (!$this->mailer->getTransport()->isStarted()) {
             $this->mailer->getTransport()->start();
         }
@@ -72,7 +70,7 @@ class EmailManager {
             $message->setBcc($email->getMailCopyTo());
         }
 
-        $message->setBody($this->renderEmail($email), 'text/html', 'UTF8');
+        $message->setBody($this->renderEmail($email, $dataToTemplate), 'text/html', 'UTF8');
 
         //seteamos el o los destinatarios a quin va dirigido el correo
         if (!is_array($recipientEmail)) {
@@ -261,7 +259,7 @@ class EmailManager {
     }
 
     /**
-     * Eta funcion permite verificar el metodo de envio de correos (numero limite)
+     * Esta funcion permite verificar el metodo de envio de correos (numero limite)
      * para realizar el envio si ya se cumplio el tope establecido en las
      * configuraciones del proyecto
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 26/11/2015
@@ -303,21 +301,101 @@ class EmailManager {
      * Esta funcion permite obtener el html del correo electronico que sera enviado
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 27/11/2015
      * @param Email $email instancia del correo que sera enviado
-     * @param type $entity instancia de la entidad asociada en el correo
+     * @param array[mixed] $dataToTemplate datos solicitados por el correo
      * @return string texto con el html del correo
      */
-    public function renderEmail($email, $entity = null) {
+    public function renderEmail($email, $dataToTemplate) {
 
-        if ($entity) {
-            //hacer la validacion de la entidad con el email
+        $entity = null;
+        if ($email->getTemplate()) {
+            $entityName = $email->getTemplate()->getEntityName();
+            //validamos que el correo este recibiendo la instancia correcta en entity
+            if ($entityName != '') {
+                $messageException = $this->container->get('translator')->trans('kijho_mailer.email.error_instance_message_1') . $entityName;
+                if (isset($dataToTemplate['entity'])) {
+
+                    $instance = new $entityName;
+                    if ($dataToTemplate['entity'] instanceof $instance) {
+                        $entity = $dataToTemplate['entity'];
+                    } else {
+                        throw new \ErrorException($messageException);
+                    }
+                } else {
+                    throw new \ErrorException($messageException);
+                }
+            }
         }
 
-        $html = $this->templating->render('KijhoMailerBundle:Email:emailView.html.twig', array(
-            'email' => $email,
-            'entity' => $entity
-        ));
+        $dataToTemplate['kijhoEmail'] = $email;
+
+        $nullVars = $this->filterTwigVars($email, $dataToTemplate);
+        $dataToTemplate['nullVars'] = $nullVars;
+
+        $html = $this->templating->render('KijhoMailerBundle:Email:emailView.html.twig', $dataToTemplate);
 
         return $html;
+    }
+
+    /**
+     * Esta funcion permite conocer las variables que se encuentran en el contenido
+     * de los correos electronicos, para luego validar si el usuario proporciona 
+     * o no cada una de las variables a la hora de enviar el correo
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 30/11/2015
+     * @param Email $email
+     * @param array[mixed] $dataToTemplate
+     * @return array[string] arreglo con las variables que faltan por enviar al twig
+     */
+    private function filterTwigVars(Email $email, $dataToTemplate) {
+        $content = $email->getContent();
+        $lastPos = strpos($content, '}}');
+
+        $nullVars = array();
+        if ($lastPos > 0) {
+            $var = trim(Util::getBetween($content, '{{', '}}'));
+            if (!$this->isParameterInData($var, $dataToTemplate)) {
+                array_push($nullVars, $var);
+            }
+
+            $noMoreParameters = false;
+            while (!$noMoreParameters) {
+                $content = substr($content, $lastPos + 2);
+                $lastPos = strpos($content, '}}');
+                if ($lastPos > 0) {
+                    $var = trim(Util::getBetween($content, '{{', '}}'));
+                    if (!$this->isParameterInData($var, $dataToTemplate)) {
+                        array_push($nullVars, $var);
+                    }
+                } else {
+                    $noMoreParameters = true;
+                }
+            }
+        }
+
+        return $nullVars;
+    }
+
+    /**
+     * Esta funcion permite validar si una variable se encuentra declarada
+     * en un conjunto de datos
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 30/11/2015
+     * @param string $var nombre de la variable
+     * @param array[mixed] $dataToTemplate arreglod e datos
+     * @return boolean
+     */
+    private function isParameterInData($var, $dataToTemplate) {
+        if (isset($dataToTemplate[$var])) {
+            return true;
+        } else {
+
+            $items = explode('.', $var);
+            $countItems = count($items);
+
+            if ($countItems > 1 && isset($dataToTemplate[$items[0]])) {
+
+                return true;
+            }
+        }
+        return false;
     }
 
 }

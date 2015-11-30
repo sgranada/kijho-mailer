@@ -133,7 +133,7 @@
     $('.attribute-name').click(function(){
         var object = $(this);
         var attribute = object.attr('attr-name');
-        attribute = "{"+"{ "+attribute+" }"+"}";
+        attribute = "{"+"{"+attribute+"}"+"}";
         $('.form-group iframe').contents().find('body').append(attribute)
     });
 {% endblock %}

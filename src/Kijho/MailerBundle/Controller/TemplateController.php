@@ -254,24 +254,6 @@ class TemplateController extends Controller {
     }
 
     /**
-     * Permite encontrar el trozo de texto que esta entre dos palabras o caracteres
-     * indicados
-     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 17/11/2015
-     * @param string $content texto a analizar
-     * @param string $start deliminador de inicio
-     * @param string $end delimitador final
-     * @return string texto encontrado entre los dos delimitadores
-     */
-    function getBetween($content, $start, $end) {
-        $r = explode($start, $content);
-        if (isset($r[1])) {
-            $r = explode($end, $r[1]);
-            return $r[0];
-        }
-        return '';
-    }
-
-    /**
      * Permite hallar las relaciones que tiene una entidad con otras entidades
      * a partir de la informacion en las anotaciones de sus atributos
      * Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 17/11/2015
@@ -288,9 +270,9 @@ class TemplateController extends Controller {
                 if ($position) {
                     $docComment = substr($docComment, $position);
 
-                    $entityName = $this->getBetween($docComment, 'targetEntity="', '"');
+                    $entityName = Util::getBetween($docComment, 'targetEntity="', '"');
                     if (empty($entityName)) {
-                        $entityName = $this->getBetween($docComment, "targetEntity='", "'");
+                        $entityName = Util::getBetween($docComment, "targetEntity='", "'");
                     }
                     try {
                         $entityNamespace = $this->getEntityNamespace();
@@ -330,20 +312,28 @@ class TemplateController extends Controller {
         $response = array('result' => '__OK__',
             'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_success'));
 
+        //creamos el correo y lo almacenamos en base de datos
+        $email = $this->get('email_manager')->composeEmail($template, $emailAddress);
+        $em->persist($email);
+        $em->flush($email);
+
+        $dataToTemplate = array();
+        if ($template->getEntityName()) {
+            try {
+                $entityName = $template->getEntityName();
+                $dataToTemplate['entity'] = new $entityName;
+            } catch (\Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
+        }
+
         try {
-            
-            //creamos el correo y lo almacenamos en base de datos
-            $email = $this->get('email_manager')->composeEmail($template, $emailAddress);
-            $em->persist($email);
-            $em->flush($email);
-            
             //verificamos el metodo de envio
             if ($this->get('email_manager')->isSendInstantaneous()) {
-                $this->get('email_manager')->send($email);
+                $this->get('email_manager')->send($email, $dataToTemplate);
             } else {
                 $this->get('email_manager')->verifyPendingEmails();
             }
-            
         } catch (\Exception $exc) {
             $response = array('result' => '__KO__',
                 'msg' => $this->get('translator')->trans('kijho_mailer.email.sent_error'));
