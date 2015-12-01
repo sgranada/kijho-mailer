@@ -4,7 +4,7 @@ namespace Kijho\MailerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Kijho\MailerBundle\Model\Template;
 use Doctrine\ORM\EntityRepository;
 
@@ -50,7 +50,7 @@ class EmailTemplateType extends AbstractType {
                     },
                     'label' => $this->translator->trans('kijho_mailer.template.layout'),
                     'required' => false,
-                    'empty_value' => $this->translator->trans('kijho_mailer.template.no_layout'),
+                    'placeholder' => $this->translator->trans('kijho_mailer.template.no_layout'),
                     'attr' => array('class' => 'form-control')))
                 ->add('group', 'entity', array(
                     'class' => $this->container->getParameter('kijho_mailer.storage')['template_group'],
@@ -60,7 +60,7 @@ class EmailTemplateType extends AbstractType {
                     },
                     'label' => $this->translator->trans('kijho_mailer.template.group'),
                     'required' => false,
-                    'empty_value' => $this->translator->trans('kijho_mailer.template.no_group'),
+                    'placeholder' => $this->translator->trans('kijho_mailer.template.no_group'),
                     'attr' => array('class' => 'form-control')))
                 ->add('name', 'text', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.template.name'),
@@ -95,15 +95,12 @@ class EmailTemplateType extends AbstractType {
                 ->add('entityName', 'choice', array('required' => false,
                     'choices' => $this->entityNames,
                     'label' => $this->translator->trans('kijho_mailer.template.select_entity'),
-                    'empty_value' => $this->translator->trans('kijho_mailer.global.select'),
+                    'placeholder' => $this->translator->trans('kijho_mailer.global.select'),
                     'attr' => array('class' => 'form-control')))
         ;
     }
 
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => $this->storageEntity
         ));
