@@ -4,8 +4,7 @@ namespace Kijho\MailerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Kijho\MailerBundle\Model\Layout;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EmailLayoutType extends AbstractType {
 
@@ -35,16 +34,14 @@ class EmailLayoutType extends AbstractType {
                     'label' => $this->translator->trans('kijho_mailer.layout.footer'),
                     'attr' => array('class' => 'form-control')))
                 ->add('languageCode', 'language', array('required' => true,
-                    'empty_value' => $this->translator->trans('kijho_mailer.global.select'),
+                    'placeholder' => $this->translator->trans('kijho_mailer.global.select'),
                     'label' => $this->translator->trans('kijho_mailer.global.language'),
                     'attr' => array('class' => 'form-control')))
         ;
     }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    
+    public function configureOptions(OptionsResolver $resolver) {
+        
         $resolver->setDefaults(array(
             'data_class' => $this->storageEntity
         ));

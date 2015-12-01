@@ -1,4 +1,5 @@
 imports:
+    - { resource: parameters_test.yml }
     - { resource: config_dev.yml }
 
 framework:
@@ -14,3 +15,19 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+    
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host_test%"
+        port:     "%database_port_test%"
+        dbname:   "%database_name_test%"
+        user:     "%database_user_test%"
+        password: "%database_password_test%"
+        charset:  UTF8
+    
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true

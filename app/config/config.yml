@@ -113,10 +113,6 @@ kijho_mailer:
         email_event:    "Kijho\MailerBundle\Entity\EmailEvent"
         
 services:
-    twig.extension.util:
-      class: Twig\Extension\UtilExtension
-      tags:
-          - { name: twig.extension }   
     twig.extension.evaluate:
       class: Twig\Extension\EvaluateExtension
       tags:

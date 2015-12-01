@@ -19,10 +19,13 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         
-        "fkr/cssurlrewrite-bundle" : "*"
+        "fkr/cssurlrewrite-bundle" : "*",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "phpunit/phpunit": "^4.8"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "symfony/phpunit-bridge": "2.7.x@beta"
     },
     "scripts": {
         "post-install-cmd": [
