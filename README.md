@@ -7,7 +7,7 @@
 
 Colocar esta linea en el archivo composer.json del proyecto:
 
-<pre style="font-family: Courier New;">"cesargiraldonaranjo/kijho.mailer": "dev-master"</pre>
+<pre style="font-family: Courier New;">"kijho-technologies/kijho-mailer": "dev-master"</pre>
 
 
 Asegurarse que la versión del bundle sendio/distribution-bundle sea 4.0 o superior:
@@ -67,10 +67,6 @@ kijho_mailer:
 Instanciar las siguientes extensiones de twig en la seccion de servicios:
 <pre>
 services:
-    twig.extension.util:
-      class: Twig\Extension\UtilExtension
-      tags:
-          - { name: twig.extension }   
     twig.extension.evaluate:
       class: Twig\Extension\EvaluateExtension
       tags:
