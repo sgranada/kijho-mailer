@@ -15,5 +15,10 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    mailer_transport_second:  smtp
+    mailer_host_second:       127.0.0.1
+    mailer_user_second:       ~
+    mailer_password_second:   ~
+
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

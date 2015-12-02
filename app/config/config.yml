@@ -78,29 +78,29 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration
-swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
-    spool:     { type: memory }
-
 #swiftmailer:
-#    default_mailer: second_mailer
-#    mailers:
-#        first_mailer:
-#            transport: "%mailer_transport%"
-#            host:      "%mailer_host%"
-#            username:  "%mailer_user%"
-#            password:  "%mailer_password%"
-#            spool:     { type: memory }
-#        second_mailer:
-#            transport: "%mailer_transport_second%"
-#            host:      "%mailer_host_second%"
-#            username:  "%mailer_user_second%"
-#            password:  "%mailer_password_second%"
-#            spool:     { type: memory }
-#    
+#    transport: "%mailer_transport%"
+#    host:      "%mailer_host%"
+#    username:  "%mailer_user%"
+#    password:  "%mailer_password%"
+#    spool:     { type: memory }
+
+swiftmailer:
+    default_mailer: first_mailer
+    mailers:
+        first_mailer:
+            transport: "%mailer_transport%"
+            host:      "%mailer_host%"
+            username:  "%mailer_user%"
+            password:  "%mailer_password%"
+            spool:     { type: memory }
+        second_mailer:
+            transport: "%mailer_transport_second%"
+            host:      "%mailer_host_second%"
+            username:  "%mailer_user_second%"
+            password:  "%mailer_password_second%"
+            spool:     { type: memory }
+    
     
 kijho_mailer:
     entity_directories: ["%kernel.root_dir%/../src/Kijho/MailerBundle/Entity/"]
