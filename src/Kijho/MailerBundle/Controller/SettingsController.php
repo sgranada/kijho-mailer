@@ -20,7 +20,7 @@ class SettingsController extends Controller {
         
         $settings = $this->get('email_manager')->getMailerSettings();
 
-        $form = $this->createForm(new EmailSettingsType($settingsStorage, $this->get('translator')), $settings);
+        $form = $this->createForm(new EmailSettingsType($this->container), $settings);
 
         $swiftMailerSettings = $this->get('email_manager')->getSwiftMailerSettings();
         
@@ -46,7 +46,7 @@ class SettingsController extends Controller {
 
         $settings = $this->get('email_manager')->getMailerSettings();
 
-        $form = $this->createForm(new EmailSettingsType($settingsStorage, $this->get('translator')), $settings);
+        $form = $this->createForm(new EmailSettingsType($this->container), $settings);
 
         $form->handleRequest($request);
 

@@ -22,7 +22,7 @@ class LayoutController extends Controller {
         $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
 
         $layouts = $em->getRepository($layoutStorage)->findAll();
-
+        
         return $this->render('KijhoMailerBundle:Layout:index.html.twig', array(
                     'layouts' => $layouts,
                     'menu' => 'layouts'
@@ -39,7 +39,7 @@ class LayoutController extends Controller {
         $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = new $layoutStorage;
 
-        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
+        $form = $this->createForm(new EmailLayoutType($this->container), $layout);
 
         return $this->render('KijhoMailerBundle:Layout:new.html.twig', array(
                     'layout' => $layout,
@@ -60,7 +60,7 @@ class LayoutController extends Controller {
 
         $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = new $layoutStorage;
-        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
+        $form = $this->createForm(new EmailLayoutType($this->container), $layout);
 
         $form->handleRequest($request);
 
@@ -94,7 +94,7 @@ class LayoutController extends Controller {
 
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
 
-        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
+        $form = $this->createForm(new EmailLayoutType($this->container), $layout);
 
         return $this->render('KijhoMailerBundle:Layout:edit.html.twig', array(
                     'layout' => $layout,
@@ -116,7 +116,7 @@ class LayoutController extends Controller {
 
         $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
         $layout = $em->getRepository($layoutStorage)->find($layoutId);
-        $form = $this->createForm(new EmailLayoutType($layoutStorage, $this->get('translator')), $layout);
+        $form = $this->createForm(new EmailLayoutType($this->container), $layout);
 
         $form->handleRequest($request);
 

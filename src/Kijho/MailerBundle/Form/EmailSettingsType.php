@@ -11,11 +11,12 @@ class EmailSettingsType extends AbstractType {
 
     protected $storageEntity;
     protected $translator;
-    
+    protected $container;
 
-    public function __construct($storageEntity, $translator) {
-        $this->storageEntity = $storageEntity;
-        $this->translator = $translator;
+    public function __construct($container) {
+        $this->container = $container;
+        $this->storageEntity = $this->container->getParameter('kijho_mailer.storage')['settings'];
+        $this->translator = $this->container->get('translator');
     }
 
     /**

@@ -39,7 +39,7 @@ class TemplateGroupController extends Controller {
         $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = new $templateGroupStorage;
 
-        $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
+        $form = $this->createForm(new EmailTemplateGroupType($this->container), $templateGroup);
 
         return $this->render('KijhoMailerBundle:TemplateGroup:new.html.twig', array(
                     'templateGroup' => $templateGroup,
@@ -60,7 +60,7 @@ class TemplateGroupController extends Controller {
 
         $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = new $templateGroupStorage;
-        $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
+        $form = $this->createForm(new EmailTemplateGroupType($this->container), $templateGroup);
 
         $form->handleRequest($request);
 
@@ -100,7 +100,7 @@ class TemplateGroupController extends Controller {
 
         $templateGroup = $em->getRepository($templateGroupStorage)->find($templateGroupId);
 
-        $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
+        $form = $this->createForm(new EmailTemplateGroupType($this->container), $templateGroup);
 
         return $this->render('KijhoMailerBundle:TemplateGroup:edit.html.twig', array(
                     'templateGroup' => $templateGroup,
@@ -122,7 +122,7 @@ class TemplateGroupController extends Controller {
 
         $templateGroupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
         $templateGroup = $em->getRepository($templateGroupStorage)->find($templateGroupId);
-        $form = $this->createForm(new EmailTemplateGroupType($templateGroupStorage, $this->get('translator')), $templateGroup);
+        $form = $this->createForm(new EmailTemplateGroupType($this->container), $templateGroup);
 
         $form->handleRequest($request);
 

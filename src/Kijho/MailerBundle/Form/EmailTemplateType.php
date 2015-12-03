@@ -15,9 +15,9 @@ class EmailTemplateType extends AbstractType {
     protected $translator;
     protected $entityNames;
 
-    public function __construct($storageEntity, $container, $entities = array()) {
-        $this->storageEntity = $storageEntity;
+    public function __construct($container, $entities = array()) {
         $this->container = $container;
+        $this->storageEntity = $this->container->getParameter('kijho_mailer.storage')['template'];
         $this->translator = $this->container->get('translator');
 
         //incluimos en el formulario las entidades que se identificaron en el proyecto

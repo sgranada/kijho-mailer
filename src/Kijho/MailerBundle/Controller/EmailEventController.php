@@ -38,7 +38,7 @@ class EmailEventController extends Controller {
         $emailEventStorage = $this->container->getParameter('kijho_mailer.storage')['email_event'];
         $emailEvent = new $emailEventStorage;
 
-        $form = $this->createForm(new EmailEventType($emailEventStorage, $this->container), $emailEvent);
+        $form = $this->createForm(new EmailEventType($this->container), $emailEvent);
 
         return $this->render('KijhoMailerBundle:EmailEvent:new.html.twig', array(
                     'emailEvent' => $emailEvent,
@@ -60,7 +60,7 @@ class EmailEventController extends Controller {
         $emailEventStorage = $this->container->getParameter('kijho_mailer.storage')['email_event'];
         $emailEvent = new $emailEventStorage;
 
-        $form = $this->createForm(new EmailEventType($emailEventStorage, $this->container), $emailEvent);
+        $form = $this->createForm(new EmailEventType($this->container), $emailEvent);
 
         $form->handleRequest($request);
 
@@ -100,7 +100,7 @@ class EmailEventController extends Controller {
 
         $emailEvent = $em->getRepository($emailEventStorage)->find($emailEventId);
 
-        $form = $this->createForm(new EmailEventType($emailEventStorage, $this->container), $emailEvent);
+        $form = $this->createForm(new EmailEventType($this->container), $emailEvent);
 
         return $this->render('KijhoMailerBundle:EmailEvent:edit.html.twig', array(
                     'emailEvent' => $emailEvent,
@@ -122,7 +122,7 @@ class EmailEventController extends Controller {
 
         $emailEventStorage = $this->container->getParameter('kijho_mailer.storage')['email_event'];
         $emailEvent = $em->getRepository($emailEventStorage)->find($emailEventId);
-        $form = $this->createForm(new EmailEventType($emailEventStorage, $this->container), $emailEvent);
+        $form = $this->createForm(new EmailEventType($this->container), $emailEvent);
 
         $form->handleRequest($request);
 

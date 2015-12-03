@@ -41,7 +41,7 @@ class TemplateController extends Controller {
 
         $entities = $this->getReflectedProjectEntities();
 
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
+        $form = $this->createForm(new EmailTemplateType($this->container, $entities['instances']), $template);
 
         return $this->render('KijhoMailerBundle:Template:new.html.twig', array(
                     'template' => $template,
@@ -65,7 +65,7 @@ class TemplateController extends Controller {
         $template = new $templateStorage;
 
         $entities = $this->getReflectedProjectEntities();
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
+        $form = $this->createForm(new EmailTemplateType($this->container, $entities['instances']), $template);
 
         $form->handleRequest($request);
 
@@ -102,7 +102,7 @@ class TemplateController extends Controller {
 
         $entities = $this->getReflectedProjectEntities();
 
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
+        $form = $this->createForm(new EmailTemplateType($this->container, $entities['instances']), $template);
 
         return $this->render('KijhoMailerBundle:Template:edit.html.twig', array(
                     'template' => $template,
@@ -126,7 +126,7 @@ class TemplateController extends Controller {
         $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = $em->getRepository($templateStorage)->find($templateId);
         $entities = $this->getReflectedProjectEntities();
-        $form = $this->createForm(new EmailTemplateType($templateStorage, $this->container, $entities['instances']), $template);
+        $form = $this->createForm(new EmailTemplateType($this->container, $entities['instances']), $template);
 
         $form->handleRequest($request);
 

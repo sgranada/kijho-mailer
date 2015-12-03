@@ -74,6 +74,7 @@ kijho_mailer:
         select_entity: "Seleccione una entidad"
         select_attributes: "Seleccione los atributos"
         send_example_email: "Enviar correo de ejemplo"
+        not_found: "Plantilla no encontrada"
         
     template_group:
         template_groups: "Grupos de Plantillas"

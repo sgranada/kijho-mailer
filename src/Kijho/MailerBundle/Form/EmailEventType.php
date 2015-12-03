@@ -13,9 +13,9 @@ class EmailEventType extends AbstractType {
     protected $container;
     protected $translator;
 
-    public function __construct($storageEntity, $container) {
-        $this->storageEntity = $storageEntity;
+    public function __construct($container) {
         $this->container = $container;
+        $this->storageEntity = $this->container->getParameter('kijho_mailer.storage')['email_event'];
         $this->translator = $this->container->get('translator');
     }
 

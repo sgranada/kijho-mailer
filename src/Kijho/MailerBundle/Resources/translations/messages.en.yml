@@ -74,6 +74,7 @@ kijho_mailer:
         select_entity: "Select entity"
         select_attributes: "Select attributes"
         send_example_email: "Send example email"
+        not_found: "Template not found"
         
     template_group:
         template_groups: "Template Groups"
