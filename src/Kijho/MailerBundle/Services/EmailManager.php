@@ -298,6 +298,29 @@ class EmailManager {
     }
 
     /**
+     * Esta funcion permite consultar el listado de templates de forma general
+     * o de acuerdo a un grupo especifico
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 3/12/2015
+     * @param string $groupSlug
+     * @return array[Template] listado de templates que coinciden con la busqueda
+     */
+    public function getTemplates($groupSlug = null) {
+        $search = array();
+        if ($groupSlug) {
+            $groupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
+            $group = $this->em->getRepository($groupStorage)->findOneBySlug($groupSlug);
+            if ($group) {
+                $search['group'] = $group->getId();
+            }
+        }
+        $order = array('group' => 'ASC', 'name' => 'ASC');
+
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
+        $templates = $this->em->getRepository($templateStorage)->findBy($search, $order);
+        return $templates;
+    }
+
+    /**
      * Esta funcion permite obtener el html del correo electronico que sera enviado
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 27/11/2015
      * @param Email $email instancia del correo que sera enviado
