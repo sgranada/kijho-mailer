@@ -7,22 +7,7 @@
             {{kijhoEmail.template.layout.header|raw}}<br>
         {% endif %}
 
-        {% if nullVars is empty %}
-            {{ kijhoEmail.content | raw | evaluate }}
-        {% else %}
-            {{ kijhoEmail.content | raw }}
-            <div style="margin-top: 20px; border: solid red 1px; border-radius: 3px; padding: 8px; width: auto;">
-                <label style="color: red;">
-                    <strong><br>{{'kijho_mailer.email.developer_warning'|trans}} !</strong><br>
-                    {{'kijho_mailer.email.developer_warning_message'|trans}}:
-                </label><br>
-                <ul>
-                {% for var in nullVars %}
-                    <li>{{'{{'~var~'}}'}}</li>
-                {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
+        {{ kijhoEmail.content | raw | evaluate }}       
 
         {% if kijhoEmail.template.layout is not empty %}
             <br>{{kijhoEmail.template.layout.footer|raw}}
