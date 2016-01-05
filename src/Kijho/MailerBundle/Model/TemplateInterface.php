@@ -75,5 +75,15 @@ interface TemplateInterface
      * @return string
      */
     public function getEntityName();
+    
+    /**
+     * @return string
+     */
+    public function getLanguageCode();
+    
+    /**
+     * @return string
+     */
+    public function getSlug();
 
 }

@@ -22,6 +22,16 @@
                     {{ form_errors(form.name) }}
                 </div>
                 <div class="form-group">
+                    {{ form_label(form.slug) }}
+                    {{ form_widget(form.slug) }}
+                    {{ form_errors(form.slug) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.languageCode) }}
+                    {{ form_widget(form.languageCode) }}
+                    {{ form_errors(form.languageCode) }}
+                </div>
+                <div class="form-group">
                     {{ form_label(form.layout) }}
                     {{ form_widget(form.layout) }}
                     {{ form_errors(form.layout) }}

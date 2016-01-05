@@ -26,6 +26,7 @@ kijho_mailer:
         send: "Send"
         cancel: "Cancel"
         unknown_error: "Unknown error, try again"
+        smtp: "SMTP"
         
     settings:
         email_settings: "Email Settings"
@@ -75,6 +76,7 @@ kijho_mailer:
         select_attributes: "Select attributes"
         send_example_email: "Send example email"
         not_found: "Template not found"
+        duplicate: "Duplicate Template"
         
     template_group:
         template_groups: "Template Groups"

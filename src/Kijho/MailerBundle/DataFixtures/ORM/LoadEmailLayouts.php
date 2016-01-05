@@ -32,11 +32,11 @@ class LoadMailInfoData extends AbstractFixture implements OrderedFixtureInterfac
             $emailLayout->setCreationDate(Util::getCurrentDate());
             $emailLayout->setHeader('Test Header');
             $emailLayout->setFooter('Test Footer');
-            $emailLayout->setLanguageCode('en');
-            $emailLayout->setName('Test layout 1');
+            $emailLayout->setName('Layout Test 1');
 
-            $this->persist($emailLayout, $manager);
+            $manager->persist($emailLayout, $manager);
         }
+        $manager->flush();
     }
 
     public function getOrder() {

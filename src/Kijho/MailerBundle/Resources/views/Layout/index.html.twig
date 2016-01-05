@@ -20,7 +20,6 @@
             <tr>
                 <th>{{'kijho_mailer.global.name'|trans}}</th>
                 <th>{{'kijho_mailer.global.creation_date'|trans}}</th>
-                <th>{{'kijho_mailer.global.language'|trans}}</th>
                 <th>{{'kijho_mailer.global.options'|trans}}</th>
             </tr>
         </thead>
@@ -29,7 +28,6 @@
                 <tr>
                     <td>{{layout.name}}</td>
                     <td>{{layout.creationDate|date('m/d/Y')}}</td>
-                    <td>{{layout.languageCode}}</td>
                     <td>
                               <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_layout_preview',{'layoutId':layout.id})}}'><i class="fa fa-eye fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_layout_edit',{'layoutId':layout.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
@@ -38,7 +36,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">{{'kijho_mailer.layout.empty_list'|trans}}</td>
+                    <td colspan="3">{{'kijho_mailer.layout.empty_list'|trans}}</td>
                 </tr>
             {% endfor %}
         </tbody>

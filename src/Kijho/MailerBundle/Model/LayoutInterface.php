@@ -21,11 +21,6 @@ interface LayoutInterface
     public function getFooter();
 
     /**
-     * @return string
-     */
-    public function getLanguageCode();
-    
-    /**
      * @return \DateTime
      */
     public function getCreationDate();

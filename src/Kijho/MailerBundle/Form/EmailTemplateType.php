@@ -65,6 +65,9 @@ class EmailTemplateType extends AbstractType {
                 ->add('name', 'text', array('required' => true,
                     'label' => $this->translator->trans('kijho_mailer.template.name'),
                     'attr' => array('class' => 'form-control')))
+                ->add('slug', 'text', array('required' => true,
+                    'label' => $this->translator->trans('kijho_mailer.global.slug'),
+                    'attr' => array('class' => 'form-control')))
                 ->add('fromName', 'text', array('required' => false,
                     'label' => $this->translator->trans('kijho_mailer.template.from_name'),
                     'attr' => array('class' => 'form-control')))
@@ -90,12 +93,16 @@ class EmailTemplateType extends AbstractType {
                 ->add('mailerSettings', 'choice', array('required' => true,
                     'choices' => $mailers,
                     'preferred_choices' => array($defaultMailer),
-                    'label' => $this->translator->trans('kijho_mailer.template.status'),
+                    'label' => $this->translator->trans('kijho_mailer.global.smtp'),
                     'attr' => array('class' => 'form-control')))
                 ->add('entityName', 'choice', array('required' => false,
                     'choices' => $this->entityNames,
                     'label' => $this->translator->trans('kijho_mailer.template.select_entity'),
                     'placeholder' => $this->translator->trans('kijho_mailer.global.select'),
+                    'attr' => array('class' => 'form-control')))
+                ->add('languageCode', 'language', array('required' => true,
+                    'placeholder' => $this->translator->trans('kijho_mailer.global.select'),
+                    'label' => $this->translator->trans('kijho_mailer.global.language'),
                     'attr' => array('class' => 'form-control')))
         ;
     }

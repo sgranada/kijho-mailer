@@ -63,7 +63,7 @@ class LayoutControllerTest extends WebTestCase {
         $form = $crawler->selectButton('Create')->form();
 
         $form['kijho_mailerbundle_layout_type[name]'] = 'Layout by Test';
-        $form['kijho_mailerbundle_layout_type[languageCode]'] = 'es';
+        //$form['kijho_mailerbundle_layout_type[languageCode]'] = 'es';
         $form['kijho_mailerbundle_layout_type[header]'] = 'this is the header ..';
         $form['kijho_mailerbundle_layout_type[footer]'] = 'this is the footer';
 

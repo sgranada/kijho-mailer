@@ -21,18 +21,13 @@
                         {{ form_widget(form.name) }}
                         {{ form_errors(form.name) }}
                     </div>
+                </div>
+                <div class="col-md-12">
                     <div class="form-group">
                         {{ form_label(form.header) }}
                         {{ form_widget(form.header, {'attr':{'style':'height:250px;'}}) }}
                         <p class="help-block">{{'kijho_mailer.layout.header_help'|trans}}</p>
                         {{ form_errors(form.header) }}
-                    </div>
-                </div>
-                <div class="col-md-6" style="padding-left: 30px;">
-                    <div class="form-group">
-                        {{ form_label(form.languageCode) }}
-                        {{ form_widget(form.languageCode) }}
-                        {{ form_errors(form.languageCode) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(form.footer) }}

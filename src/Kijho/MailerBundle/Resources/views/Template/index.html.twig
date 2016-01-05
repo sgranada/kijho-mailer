@@ -18,6 +18,8 @@
         <thead>
             <tr>
                 <th>{{'kijho_mailer.global.name'|trans}}</th>
+                <th>{{'kijho_mailer.global.language'|trans}}</th>
+                <th>{{'kijho_mailer.global.slug'|trans}}</th>
                 <th>{{'kijho_mailer.global.creation_date'|trans}}</th>
                 <th>{{'kijho_mailer.template.layout'|trans}}</th>
                 <th>{{'kijho_mailer.template.group'|trans}}</th>
@@ -29,6 +31,8 @@
             {% for template in templates %}
                 <tr>
                     <td>{{template.name}}</td>
+                    <td>{{template.languageCode}}</td>
+                    <td>{{template.slug}}</td>
                     <td>{{template.creationDate|date('m/d/Y')}}</td>
                     <td>
                         {% if template.layout is not empty %}
@@ -40,7 +44,7 @@
                     <td>
                         {% if template.group is not empty %}
                             {{ template.group }}<br>
-                            <strong>{{'kijho_mailer.global.slug'|trans}}</strong>: {{ template.group.slug }}
+                            {#<strong>{{'kijho_mailer.global.slug'|trans}}</strong>: {{ template.group.slug }}#}
                         {% else %}
                             {{'kijho_mailer.template.no_group'|trans}}
                         {% endif %}
@@ -49,13 +53,14 @@
                     <td>
                               <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_template_preview',{'templateId':template.id})}}'><i class="fa fa-eye fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_template_edit',{'templateId':template.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
+                        &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.template.duplicate'|trans}}" href='{{path('kijho_mailer_template_new',{'templateId':template.id})}}'><i class="fa fa-copy fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm example-email" title="{{'kijho_mailer.template.send_example_email'|trans}}" href='javascript:' template-id="{{template.id}}"><i class="fa fa-send fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm delete-template" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' template-id="{{template.id}}"><i class="fa fa-close fa-lg"></i></a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">{{'kijho_mailer.template.empty_list'|trans}}</td>
+                    <td colspan="8">{{'kijho_mailer.template.empty_list'|trans}}</td>
                 </tr>
             {% endfor %}
         </tbody>

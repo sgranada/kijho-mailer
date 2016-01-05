@@ -35,7 +35,7 @@ class Template implements TemplateInterface {
      * @ORM\Column(name="temp_recipient_name", type="string", nullable=true)
      */
     protected $recipientName;
-    
+
     /**
      * @var string
      * @ORM\Column(name="temp_from_name", type="string", nullable=true)
@@ -67,13 +67,13 @@ class Template implements TemplateInterface {
      * @ORM\Column(name="temp_content_message", type="text", nullable=true)
      */
     protected $contentMessage;
-    
+
     /**
      * @var string
      * @ORM\Column(name="temp_mailer_settings", type="string", nullable=true)
      */
     protected $mailerSettings;
-    
+
     /**
      * @var string
      * @ORM\Column(name="temp_entity_name", type="string", nullable=true)
@@ -85,6 +85,20 @@ class Template implements TemplateInterface {
      * @ORM\Column(name="temp_creation_date", type="datetime")
      */
     protected $creationDate;
+
+    /**
+     * @var string
+     * @ORM\Column(name="layo_language_code", type="string")
+     * @Assert\NotBlank()
+     */
+    protected $languageCode;
+
+    /**
+     * @var string
+     * @ORM\Column(name="layo_slug", type="string")
+     * @Assert\NotBlank()
+     */
+    protected $slug;
 
     /**
      * @param string $name
@@ -106,7 +120,7 @@ class Template implements TemplateInterface {
     function setRecipientName($recipientName) {
         $this->recipientName = $recipientName;
     }
-    
+
     /**
      * @param string $fromName
      */
@@ -141,7 +155,7 @@ class Template implements TemplateInterface {
     function setContentMessage($contentMessage) {
         $this->contentMessage = $contentMessage;
     }
-    
+
     /**
      * @param string $mailerSettings
      */
@@ -155,7 +169,7 @@ class Template implements TemplateInterface {
     function setEntityName($entityName) {
         $this->entityName = $entityName;
     }
-    
+
     /**
      * @param \DateTime $creationDate
      */
@@ -168,6 +182,20 @@ class Template implements TemplateInterface {
      */
     public function getContentMessage() {
         return $this->contentMessage;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLanguageCode() {
+        return $this->languageCode;
+    }
+
+    /**
+     * @param string $languageCode
+     */
+    function setLanguageCode($languageCode) {
+        $this->languageCode = $languageCode;
     }
 
     /**
@@ -204,7 +232,7 @@ class Template implements TemplateInterface {
     public function getLayout() {
         
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -232,26 +260,40 @@ class Template implements TemplateInterface {
     public function getSubject() {
         return $this->subject;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public function getRecipientName() {
         return $this->recipientName;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public function getMailerSettings() {
         return $this->mailerSettings;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public function getEntityName() {
         return $this->entityName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    function getSlug() {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    function setSlug($slug) {
+        $this->slug = $slug;
     }
 
     /**
@@ -277,11 +319,9 @@ class Template implements TemplateInterface {
         }
         return $description;
     }
-    
-    public function __toString() {
-        return $this->getName();
-    }
 
-    
+    public function __toString() {
+        return $this->getName() . " (" . strtoupper($this->getLanguageCode()) . ")";
+    }
 
 }

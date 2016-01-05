@@ -34,10 +34,16 @@ class TemplateController extends Controller {
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 11/11/2015
      * @return Response formulario de creacion del template
      */
-    public function newAction() {
+    public function newAction(Request $request) {
 
         $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $template = new $templateStorage;
+
+        $templateId = $request->get('templateId');
+        if ($templateId) {
+            $em = $this->getDoctrine()->getManager();
+            $template = $em->getRepository($templateStorage)->find($templateId);
+        }
 
         $entities = $this->getReflectedProjectEntities();
 
@@ -47,7 +53,8 @@ class TemplateController extends Controller {
                     'template' => $template,
                     'form' => $form->createView(),
                     'entities' => $entities,
-                    'menu' => 'templates'
+                    'menu' => 'templates',
+                    'templateId' => $templateId
         ));
     }
 

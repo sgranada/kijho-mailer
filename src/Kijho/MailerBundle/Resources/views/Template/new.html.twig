@@ -1,7 +1,19 @@
 {% extends 'KijhoMailerBundle:Default:main.html.twig' %}
-{% block title %}{{'kijho_mailer.template.new'|trans}}{% endblock %}
+{% block title %}
+    {% if templateId > 0 %}
+        {{'kijho_mailer.template.duplicate'|trans}}
+    {% else %}
+        {{'kijho_mailer.template.new'|trans}}
+    {% endif %}
+{% endblock %}
 {% block header_content %}
-    <h2 class="pull-left">{{'kijho_mailer.template.new'|trans}}</h2>
+    <h2 class="pull-left">
+        {% if templateId > 0 %}
+            {{'kijho_mailer.template.duplicate'|trans}}
+        {% else %}
+            {{'kijho_mailer.template.new'|trans}}
+        {% endif %}
+    </h2>
     <div class="btn-group pull-right top-margin" role="group" aria-label="...">
         <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default">{{'kijho_mailer.global.back'|trans}}</a>
     </div>
@@ -10,7 +22,13 @@
     <ol class="col-lg-12 breadcrumb">
         <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
         <li><a href="{{path('kijho_mailer_template')}}">{{'kijho_mailer.template.templates'|trans}}</a></li>
-        <li class="active">{{'kijho_mailer.template.new'|trans}}</li>
+        <li class="active">
+            {% if templateId > 0 %}
+                {{'kijho_mailer.template.duplicate'|trans}}
+            {% else %}
+                {{'kijho_mailer.template.new'|trans}}
+            {% endif %}
+        </li>
     </ol>
 
     <div class="col-lg-12">
@@ -20,6 +38,16 @@
                     {{ form_label(form.name) }}
                     {{ form_widget(form.name) }}
                     {{ form_errors(form.name) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.slug) }}
+                    {{ form_widget(form.slug) }}
+                    {{ form_errors(form.slug) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.languageCode) }}
+                    {{ form_widget(form.languageCode) }}
+                    {{ form_errors(form.languageCode) }}
                 </div>
                 <div class="form-group">
                     {{ form_label(form.layout) }}
@@ -104,6 +132,7 @@
                 
                 <div class="form-group">
                     {{ form_widget(form._token) }} 
+                    <input type="hidden" />
                     <button type="submit" class="btn btn-primary pull-right">{{'kijho_mailer.global.create'|trans}}</button>
                 </div>
             </div>
@@ -137,5 +166,20 @@
         attribute = "{"+"{"+attribute+"}"+"}";
         $('.form-group iframe').contents().find('body').append(attribute)
     });
+    
+    var replace = true;
+    $("#kijho_mailerbundle_template_type_name").keyup(function(){
+        
+        if (replace) {
+            var text = $(this).val();
+            var text = text.replace(/ /g, '_');
+            var text = text.toLowerCase(); 
+            $("#kijho_mailerbundle_template_type_slug").val(text);
+        }
+        {% if templateId > 0 %}
+            replace = false;
+        {% endif %}
+    });
+    $("#kijho_mailerbundle_template_type_name").trigger('keyup');
 
 {% endblock %}

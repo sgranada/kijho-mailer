@@ -26,6 +26,7 @@ kijho_mailer:
         send: "Enviar"
         cancel: "Cancelar"
         unknown_error: "Error desconocido, intentelo de nuevo"
+        smtp: "SMTP"
         
     settings:
         email_settings: "Configuración de Emails"
@@ -75,6 +76,7 @@ kijho_mailer:
         select_attributes: "Seleccione los atributos"
         send_example_email: "Enviar correo de ejemplo"
         not_found: "Plantilla no encontrada"
+        duplicate: "Duplicar Plantilla"
         
     template_group:
         template_groups: "Grupos de Plantillas"
@@ -97,6 +99,7 @@ kijho_mailer:
         update_success_message: "Configuraciones actualizadas exitosamente"
         parameter: "Parametro"
         value: "Valor"
+        
         
     email:
         sent_success: "Correo enviado exitosamente"

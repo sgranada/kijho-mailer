@@ -30,13 +30,6 @@ class Layout implements LayoutInterface {
     protected $footer;
 
     /**
-     * @var string
-     * @ORM\Column(name="layo_language_code", type="string")
-     * @Assert\NotBlank()
-     */
-    protected $languageCode;
-    
-    /**
      * @var \DateTime
      * @ORM\Column(name="layo_creation_date", type="datetime", nullable=true)
      */
@@ -54,13 +47,6 @@ class Layout implements LayoutInterface {
      */
     public function getHeader() {
         return $this->header;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLanguageCode() {
-        return $this->languageCode;
     }
     
     /**
@@ -92,13 +78,6 @@ class Layout implements LayoutInterface {
     function setFooter($footer) {
         $this->footer = $footer;
     }
-
-    /**
-     * @param string $languageCode
-     */
-    function setLanguageCode($languageCode) {
-        $this->languageCode = $languageCode;
-    }
     
     /**
      * @param string $name
@@ -116,6 +95,6 @@ class Layout implements LayoutInterface {
     }
     
     public function __toString() {
-        return $this->getName()." (".strtoupper($this->getLanguageCode()).")";
+        return $this->getName();
     }
 }
