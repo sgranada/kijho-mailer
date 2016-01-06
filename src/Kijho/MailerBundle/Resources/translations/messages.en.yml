@@ -111,7 +111,7 @@ kijho_mailer:
     email_event:
         email_events: "Email Events"
         name: "Event name"
-        template: "Template for email"
+        template: "Templates for email"
         new: "New Event"
         edit: "Edit Event"
         delete: "Delete Event"

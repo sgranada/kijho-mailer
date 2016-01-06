@@ -19,23 +19,8 @@ class EmailEvent extends BaseEmailEvent {
      */
     protected $id;
     
-    /**
-     * Template al que esta asociado el correo
-     * @ORM\ManyToOne(targetEntity="Kijho\MailerBundle\Entity\EmailTemplate")
-     * @ORM\JoinColumn(name="emev_template", referencedColumnName="temp_id")
-     */
-    protected $template;
-    
     function getId() {
         return $this->id;
-    }
-    
-    function getTemplate() {
-        return $this->template;
-    }
-
-    function setTemplate($template = null) {
-        $this->template = $template;
-    }
+    }  
 
 }

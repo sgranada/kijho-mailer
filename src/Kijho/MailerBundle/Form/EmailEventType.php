@@ -31,13 +31,18 @@ class EmailEventType extends AbstractType {
                     'attr' => array('class' => 'form-control')))
                 ->add('template', 'entity', array(
                     'class' => $this->container->getParameter('kijho_mailer.storage')['template'],
+                    'property' => 'slug',
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('t')
+                                ->groupBy('t.slug')
                                 ->orderBy('t.name', 'ASC');
                     },
                     'label' => $this->translator->trans('kijho_mailer.email_event.template'),
                     'required' => true,
-                    'attr' => array('class' => 'form-control')))
+                    'mapped' => false,
+                    'placeholder' => $this->translator->trans('kijho_mailer.global.select'),
+                    'attr' => array('class' => 'form-control')
+                ))
         ;
     }
 
@@ -46,7 +51,7 @@ class EmailEventType extends AbstractType {
             'data_class' => $this->storageEntity
         ));
     }
-    
+
     /**
      * @return string
      */

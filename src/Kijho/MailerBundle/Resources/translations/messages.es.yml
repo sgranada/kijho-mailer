@@ -112,7 +112,7 @@ kijho_mailer:
     email_event:
         email_events: "Eventos de Correo"
         name: "Nombre del evento"
-        template: "Plantilla para el correo"
+        template: "Plantillas para el correo"
         new: "Nuevo Evento"
         edit: "Editar Evento"
         delete: "Eliminar Evento"

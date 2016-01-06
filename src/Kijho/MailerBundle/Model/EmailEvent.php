@@ -22,6 +22,12 @@ class EmailEvent implements EmailEventInterface {
      * @ORM\Column(name="emev_slug", type="string", nullable=true)
      */
     protected $slug;
+    
+    /**
+     * @var string
+     * @ORM\Column(name="emev_template_slug", type="string", nullable=true)
+     */
+    protected $templateSlug;
 
     public function __toString() {
         return $this->getName();
@@ -40,10 +46,6 @@ class EmailEvent implements EmailEventInterface {
     public function getSlug() {
         return $this->slug;
     }
-
-    public function getTemplate() {
-        
-    }
     
     /**
      * @param string $name
@@ -58,4 +60,21 @@ class EmailEvent implements EmailEventInterface {
     function setSlug($slug) {
         $this->slug = $slug;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    function getTemplateSlug() {
+        return $this->templateSlug;
+    }
+
+    /**
+     * 
+     * @param string $templateSlug
+     */
+    function setTemplateSlug($templateSlug) {
+        $this->templateSlug = $templateSlug;
+    }
+
+
 }

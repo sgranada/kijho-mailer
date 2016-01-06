@@ -16,8 +16,8 @@ interface EmailEventInterface
     public function getSlug();
     
     /**
-     * @return Template
+     * @return string
      */
-    public function getTemplate();
+    public function getTemplateSlug();
 
 }

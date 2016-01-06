@@ -65,12 +65,21 @@ class EmailEventController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            
+
+            $parameters = $request->request->get('kijho_mailerbundle_email_event_type');
+            if (isset($parameters['template'])) {
+                $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
+                $template = $em->getRepository($templateStorage)->find($parameters['template']);
+                if ($template) {
+                    $emailEvent->setTemplateSlug($template->getSlug());
+                }
+            }
+
             $em->persist($emailEvent);
             $em->flush();
-            
+
             //Seteamos el slug del evento
-            $slug = trim(strtolower(str_replace(' ', '_', $emailEvent->getName())))."_".$emailEvent->getId();
+            $slug = trim(strtolower(str_replace(' ', '_', $emailEvent->getName()))) . "_" . $emailEvent->getId();
             $emailEvent->setSlug($slug);
             $em->persist($emailEvent);
             $em->flush();
@@ -127,6 +136,16 @@ class EmailEventController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            
+            $parameters = $request->request->get('kijho_mailerbundle_email_event_type');
+            if (isset($parameters['template'])) {
+                $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
+                $template = $em->getRepository($templateStorage)->find($parameters['template']);
+                if ($template) {
+                    $emailEvent->setTemplateSlug($template->getSlug());
+                }
+            }
+            
             $em->persist($emailEvent);
             $em->flush();
 
@@ -140,7 +159,6 @@ class EmailEventController extends Controller {
                     'menu' => 'emailEvents'
         ));
     }
-
 
     /**
      * Permite eliminar un emailEvent del sistema

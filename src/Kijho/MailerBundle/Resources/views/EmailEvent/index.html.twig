@@ -13,14 +13,13 @@
     </ol>
 
     {{ macros.showSuccessMessage('messageSuccessEmailEvent')}}  
-    
+
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>{{'kijho_mailer.email_event.name'|trans}}</th>
                 <th>{{'kijho_mailer.global.slug'|trans}}</th>
                 <th>{{'kijho_mailer.email_event.template'|trans}}</th>
-                <th>{{'kijho_mailer.template.group'|trans}}</th>
                 <th>{{'kijho_mailer.global.options'|trans}}</th>
             </tr>
         </thead>
@@ -30,19 +29,9 @@
                     <td>{{emailEvent.name}}</td>
                     <td>{{emailEvent.slug}}</td>
                     <td>
-                        {% if emailEvent.template is not empty %}
-                            {{emailEvent.template}}
-                        {% else %}
-                            &nbsp;
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if emailEvent.template.group is not empty %}
-                            {{ emailEvent.template.group }}<br>
-                            <strong>{{'kijho_mailer.global.slug'|trans}}</strong>: {{ emailEvent.template.group.slug }}
-                        {% else %}
-                            {{'kijho_mailer.template.no_group'|trans}}
-                        {% endif %}
+                        {% for template in email_manager.getTemplatesBySlug(emailEvent.templateSlug) %}
+                            <p>{{template}}</p>
+                        {% endfor %}
                     </td>
                     <td>
                         <a class="btn btn-default btn-sm" title="{{'kijho_mailer.email_event.edit'|trans}}" href='{{path('kijho_mailer_email_event_edit',{'emailEventId':emailEvent.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
@@ -51,7 +40,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="6">{{'kijho_mailer.email_event.empty_list'|trans}}</td>
+                    <td colspan="4">{{'kijho_mailer.email_event.empty_list'|trans}}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -60,34 +49,34 @@
 
 {% block scripts %}
     /** 
-     * Codigo para la eliminacion de email events mediante ajax 
-     */
+    * Codigo para la eliminacion de email events mediante ajax 
+    */
     $(".delete-email-event").click(function () {
-        var object = $(this);
-        var emailEventId = object.attr('email-event-id');
+    var object = $(this);
+    var emailEventId = object.attr('email-event-id');
 
-        bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
+    bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
 
-            if (result == true)
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ path('kijho_mailer_email_event_delete')}}",
-                    dataType: 'json',
-                    data: 'emailEventId=' + emailEventId,
-                    success: function (resp) {
-                        console.log(resp);
-                        if (resp.result == '__OK__') {
-                            object.parent().parent().remove();
-                        } else {
-                            showFlashErrorMessage(resp.msg, false, 0);
-                        }
-                    },
-                    error: function () {
-                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-                    }
-                });
-            }
-        });
+    if (result == true)
+    {
+    $.ajax({
+    type: 'POST',
+    url: "{{ path('kijho_mailer_email_event_delete')}}",
+    dataType: 'json',
+    data: 'emailEventId=' + emailEventId,
+    success: function (resp) {
+    console.log(resp);
+    if (resp.result == '__OK__') {
+    object.parent().parent().remove();
+    } else {
+    showFlashErrorMessage(resp.msg, false, 0);
+    }
+    },
+    error: function () {
+    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+    }
+    });
+    }
+    });
     });
 {% endblock %}

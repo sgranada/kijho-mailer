@@ -23,13 +23,11 @@ class EmailManager {
     protected $request;
     protected $container;
     protected $em;
-    protected $templating;
 
     public function __construct(RequestStack $requestStack, ContainerInterface $container, $em) {
         $this->request = $requestStack->getCurrentRequest();
         $this->container = $container;
         $this->em = $em;
-        $this->templating = $this->container->get('templating');
     }
 
     /**
@@ -322,6 +320,20 @@ class EmailManager {
     }
 
     /**
+     * Esta funcion permite consultar el listado de templates que coincidan con un slug
+     * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 06/01/2016
+     * @param string $slug
+     * @return array[Template] listado de templates que coinciden con la busqueda
+     */
+    public function getTemplatesBySlug($slug) {
+        $search = array('slug' => $slug);
+        $order = array('languageCode' => 'ASC', 'name' => 'ASC');
+        $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
+        $templates = $this->em->getRepository($templateStorage)->findBy($search, $order);
+        return $templates;
+    }
+
+    /**
      * Esta funcion permite obtener el html del correo electronico que sera enviado
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 27/11/2015
      * @param Email $email instancia del correo que sera enviado
@@ -355,7 +367,7 @@ class EmailManager {
         $nullVars = $this->filterTwigVars($email, $dataToTemplate);
         $dataToTemplate['nullVars'] = $nullVars;
 
-        $html = $this->templating->render('KijhoMailerBundle:Email:emailView.html.twig', $dataToTemplate);
+        $html = $this->container->get('templating')->render('KijhoMailerBundle:Email:emailView.html.twig', $dataToTemplate);
 
         return $html;
     }

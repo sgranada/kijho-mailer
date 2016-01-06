@@ -321,7 +321,7 @@ class Template implements TemplateInterface {
     }
 
     public function __toString() {
-        return $this->getName() . " (" . strtoupper($this->getLanguageCode()) . ")";
+        return " (" . strtoupper($this->getLanguageCode()) . ") ".$this->getName();
     }
 
 }

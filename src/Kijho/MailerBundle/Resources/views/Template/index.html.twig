@@ -46,7 +46,7 @@
                             {{ template.group }}<br>
                             {#<strong>{{'kijho_mailer.global.slug'|trans}}</strong>: {{ template.group.slug }}#}
                         {% else %}
-                            {{'kijho_mailer.template.no_group'|trans}}
+                            <p class="help-block">{{'kijho_mailer.template.no_group'|trans}}</p>
                         {% endif %}
                     </td>
                     <td>{{ template.getStatusDescription()|trans}}</td>
