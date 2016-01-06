@@ -320,17 +320,28 @@ class EmailManager {
     }
 
     /**
-     * Esta funcion permite consultar el listado de templates que coincidan con un slug
+     * Esta funcion permite consultar un template que coincida con un slug 
+     * asignado y con el idioma respectivo
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 06/01/2016
      * @param string $slug
-     * @return array[Template] listado de templates que coinciden con la busqueda
+     * @param string $languageCode
+     * @return array[Template] template que coincide con la busqueda
      */
-    public function getTemplatesBySlug($slug) {
-        $search = array('slug' => $slug, 'languageCode' => $this->request->getLocale());
+    public function getTemplate($slug, $languageCode = null) {
+
+        if (!$languageCode) {
+            $languageCode = $this->request->getLocale();
+        }
+
+        $search = array('slug' => $slug, 'languageCode' => $languageCode);
         $order = array('languageCode' => 'ASC', 'name' => 'ASC');
         $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $templates = $this->em->getRepository($templateStorage)->findBy($search, $order);
-        return $templates;
+
+        if (!empty($templates)) {
+            return $templates[0];
+        }
+        return null;
     }
 
     /**
