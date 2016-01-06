@@ -326,7 +326,7 @@ class EmailManager {
      * @return array[Template] listado de templates que coinciden con la busqueda
      */
     public function getTemplatesBySlug($slug) {
-        $search = array('slug' => $slug);
+        $search = array('slug' => $slug, 'languageCode' => $this->request->getLocale());
         $order = array('languageCode' => 'ASC', 'name' => 'ASC');
         $templateStorage = $this->container->getParameter('kijho_mailer.storage')['template'];
         $templates = $this->em->getRepository($templateStorage)->findBy($search, $order);
