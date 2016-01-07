@@ -6,6 +6,13 @@
         {{'kijho_mailer.template.new'|trans}}
     {% endif %}
 {% endblock %}
+{% block title_iframe %}
+    {% if templateId > 0 %}
+        {{'kijho_mailer.template.duplicate'|trans}}
+    {% else %}
+        {{'kijho_mailer.template.new'|trans}}
+    {% endif %}
+{% endblock%}
 {% block header_content %}
     <h2 class="pull-left">
         {% if templateId > 0 %}

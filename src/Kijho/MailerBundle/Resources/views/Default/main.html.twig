@@ -25,6 +25,7 @@
         {% import 'KijhoMailerBundle:Default:macros.html.twig' as macros  %}
         {% include 'KijhoMailerBundle:Default:menu.html.twig' %}
         <section class="container header">
+            <input type="hidden" value="{% block title_iframe %}{% endblock%}" id="title"/>
             {% block header_content %}
             {% endblock %}
             <div class="alert alert-dismissable alert-success col-lg-12 flash-message" id="flash-message-success" style="display: none;">
@@ -73,6 +74,13 @@
                     $(".alert-dismissable button").click(function () {
                         $(this).parent().slideUp();
                     });
+                    
+                    var frameid = frameElement.id;
+                    var url = window.location.pathname;
+                    frameid = frameid.replace(/[^\d]/g, '');
+                    window.parent.$('.content-tab-' + frameid).html($('#title').val());
+                    window.parent.$('.content-tab-' + frameid).attr("frame-src", url);
+                    window.parent.$('.refresh-' + frameid).attr("frame-src", url);
                     {% block scripts %}
                     {% endblock %}
                 });
