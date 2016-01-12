@@ -75,12 +75,14 @@
                         $(this).parent().slideUp();
                     });
                     
-                    var frameid = frameElement.id;
-                    var url = window.location.pathname;
-                    frameid = frameid.replace(/[^\d]/g, '');
-                    window.parent.$('.content-tab-' + frameid).html($('#title').val());
-                    window.parent.$('.content-tab-' + frameid).attr("frame-src", url);
-                    window.parent.$('.refresh-' + frameid).attr("frame-src", url);
+                    if (frameElement) {
+                        var frameid = frameElement.id;
+                        var url = window.location.pathname;
+                        frameid = frameid.replace(/[^\d]/g, '');
+                        window.parent.$('.content-tab-' + frameid).html($('#title').val());
+                        window.parent.$('.content-tab-' + frameid).attr("frame-src", url);
+                        window.parent.$('.refresh-' + frameid).attr("frame-src", url);
+                    }
                     {% block scripts %}
                     {% endblock %}
                 });
