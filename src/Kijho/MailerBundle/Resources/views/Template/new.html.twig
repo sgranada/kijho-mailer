@@ -185,6 +185,7 @@
         }
         {% if templateId > 0 %}
             replace = false;
+            $("#kijho_mailerbundle_template_type_slug").val("{{template.slug}}");
         {% endif %}
     });
     $("#kijho_mailerbundle_template_type_name").trigger('keyup');
