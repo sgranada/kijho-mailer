@@ -1,7 +1,7 @@
 kijho_mailer:
     global:
         home: "Home"
-        home_message: "This module allow to customize layouts and templates for emails that can be sent from your web application"
+        home_message: "This module allows you to customize layouts and templates for emails that can be sent from your web application"
         welcome: "Welcome"
         success: "Success"
         warning: "Warning"

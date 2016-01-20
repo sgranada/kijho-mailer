@@ -8,7 +8,6 @@ use Kijho\MailerBundle\Model\Email;
 use Kijho\MailerBundle\Model\Template;
 use Kijho\MailerBundle\Model\Settings;
 use Kijho\MailerBundle\Util\Util;
-use Kijho\MailerBundle\Form\EmailTemplateType;
 
 /*
  * EmailManager
