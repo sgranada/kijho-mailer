@@ -8,7 +8,7 @@
     </div>
 {% endblock %}
 {% block main_content %}
-    
+
     <ol class="col-lg-12 breadcrumb">
         <li><a href="{{path('kijho_mailer_homepage')}}">{{'kijho_mailer.global.home'|trans}}</a></li>
         <li class="active">{{ 'kijho_mailer.layout.layouts'|trans }}</li>
@@ -30,9 +30,11 @@
                     <td>{{layout.name}}</td>
                     <td>{{layout.creationDate|date('m/d/Y')}}</td>
                     <td>
-                              <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_layout_preview',{'layoutId':layout.id})}}'><i class="fa fa-eye fa-lg"></i></a>
+                        <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_layout_preview',{'layoutId':layout.id})}}'><i class="fa fa-eye fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_layout_edit',{'layoutId':layout.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
-                        &nbsp;<a class="btn btn-default btn-sm delete-layout" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' layout-id="{{layout.id}}"><i class="fa fa-close fa-lg"></i></a>
+                            {%if layout.isDefault != true %}
+                            &nbsp;<a class="btn btn-default btn-sm delete-layout" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' layout-id="{{layout.id}}"><i class="fa fa-close fa-lg"></i></a>
+                            {%endif%}
                     </td>
                 </tr>
             {% else %}
@@ -46,33 +48,33 @@
 
 {% block scripts %}
     /** 
-     * Codigo para la eliminacion de layouts mediante ajax 
-     */
+    * Codigo para la eliminacion de layouts mediante ajax 
+    */
     $(".delete-layout").click(function () {
-        var object = $(this);
-        var layoutId = object.attr('layout-id');
+    var object = $(this);
+    var layoutId = object.attr('layout-id');
 
-        bootbox.confirm('{{'kijho_mailer.layout.delete_question'|trans}}', function (result) {
+    bootbox.confirm('{{'kijho_mailer.layout.delete_question'|trans}}', function (result) {
 
-            if (result == true)
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ path('kijho_mailer_layout_delete')}}",
-                    dataType: 'json',
-                    data: 'layoutId=' + layoutId,
-                    success: function (resp) {
-                        if (resp.result == '__OK__') {
-                            object.parent().parent().remove();
-                        } else {
-                            showFlashErrorMessage(resp.msg, false, 0);
-                        }
-                    },
-                    error: function () {
-                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-                    }
-                });
-            }
-        });
+    if (result == true)
+    {
+    $.ajax({
+    type: 'POST',
+    url: "{{ path('kijho_mailer_layout_delete')}}",
+    dataType: 'json',
+    data: 'layoutId=' + layoutId,
+    success: function (resp) {
+    if (resp.result == '__OK__') {
+    object.parent().parent().remove();
+    } else {
+    showFlashErrorMessage(resp.msg, false, 0);
+    }
+    },
+    error: function () {
+    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+    }
+    });
+    }
+    });
     });
 {% endblock %}

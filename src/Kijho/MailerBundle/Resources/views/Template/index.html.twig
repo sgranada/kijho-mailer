@@ -14,7 +14,7 @@
     </ol>
 
     {{ macros.showSuccessMessage('messageSuccessTemplate')}}  
-    
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -52,11 +52,13 @@
                     </td>
                     <td>{{ template.getStatusDescription()|trans}}</td>
                     <td>
-                              <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_template_preview',{'templateId':template.id})}}'><i class="fa fa-eye fa-lg"></i></a>
+                        <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.preview'|trans}}" href='{{path('kijho_mailer_template_preview',{'templateId':template.id})}}'><i class="fa fa-eye fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_template_edit',{'templateId':template.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm" title="{{'kijho_mailer.template.duplicate'|trans}}" href='{{path('kijho_mailer_template_new',{'templateId':template.id})}}'><i class="fa fa-copy fa-lg"></i></a>
                         &nbsp;<a class="btn btn-default btn-sm example-email" title="{{'kijho_mailer.template.send_example_email'|trans}}" href='javascript:' template-id="{{template.id}}"><i class="fa fa-send fa-lg"></i></a>
-                        &nbsp;<a class="btn btn-default btn-sm delete-template" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' template-id="{{template.id}}"><i class="fa fa-close fa-lg"></i></a>
+                            {%if template.isDefault != true %}
+                            &nbsp;<a class="btn btn-default btn-sm delete-template" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' template-id="{{template.id}}"><i class="fa fa-close fa-lg"></i></a>
+                            {%endif%}
                     </td>
                 </tr>
             {% else %}
@@ -70,78 +72,78 @@
 
 {% block scripts %}
     /** 
-     * Codigo para la eliminacion de templates mediante ajax 
-     */
+    * Codigo para la eliminacion de templates mediante ajax 
+    */
     $(".delete-template").click(function () {
-        var object = $(this);
-        var templateId = object.attr('template-id');
+    var object = $(this);
+    var templateId = object.attr('template-id');
 
-        bootbox.confirm('{{'kijho_mailer.template.delete_question'|trans}}', function (result) {
+    bootbox.confirm('{{'kijho_mailer.template.delete_question'|trans}}', function (result) {
 
-            if (result == true)
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ path('kijho_mailer_template_delete')}}",
-                    dataType: 'json',
-                    data: 'templateId=' + templateId,
-                    success: function (resp) {
-                        console.log(resp);
-                        if (resp.result == '__OK__') {
-                            object.parent().parent().remove();
-                        } else {
-                            showFlashErrorMessage(resp.msg, false, 0);
-                        }
-                    },
-                    error: function () {
-                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-                    }
-                });
-            }
-        });
+    if (result == true)
+    {
+    $.ajax({
+    type: 'POST',
+    url: "{{ path('kijho_mailer_template_delete')}}",
+    dataType: 'json',
+    data: 'templateId=' + templateId,
+    success: function (resp) {
+    console.log(resp);
+    if (resp.result == '__OK__') {
+    object.parent().parent().remove();
+    } else {
+    showFlashErrorMessage(resp.msg, false, 0);
+    }
+    },
+    error: function () {
+    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+    }
     });
-    
-    
+    }
+    });
+    });
+
+
     /**
-     * Codigo para enviar correos de prueba de un template especifico
-     */
+    * Codigo para enviar correos de prueba de un template especifico
+    */
     $(".example-email").click(function() {
-        var templateId = $(this).attr('template-id');
-        bootbox.prompt({
-            title: "{{'kijho_mailer.template.send_example_email'|trans}}",
-            placeholder: "{{'kijho_mailer.global.email_examples'|trans}}",
-            buttons: {
-                confirm: {
-                    label: "{{'kijho_mailer.global.send'|trans}}"
-                },
-                cancel: {
-                    label: "{{'kijho_mailer.global.cancel'|trans}}"
-                }
-            },
-            callback: function(result) {
-                if (result) {
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ path('kijho_mailer_template_send_example_email')}}",
-                        dataType: 'json',
-                        data: "templateId="+templateId+"&email="+result,
-                        success: function (resp)
-                        {
-                            if (resp.result == '__OK__') {
-                                showFlashSuccessMessage(resp.msg, true, 4000);
-                            } else {
-                                showFlashErrorMessage(resp.msg, false, 0);
-                            }
-                        },
-                        error: function () {
-                            showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-                        }
-                    });
-                } else if (result === ""){
-                    $(".bootbox-input-text").focus();
-                    return false;
-                }
-            }
-        });
+    var templateId = $(this).attr('template-id');
+    bootbox.prompt({
+    title: "{{'kijho_mailer.template.send_example_email'|trans}}",
+    placeholder: "{{'kijho_mailer.global.email_examples'|trans}}",
+    buttons: {
+    confirm: {
+    label: "{{'kijho_mailer.global.send'|trans}}"
+    },
+    cancel: {
+    label: "{{'kijho_mailer.global.cancel'|trans}}"
+    }
+    },
+    callback: function(result) {
+    if (result) {
+    $.ajax({
+    type: 'POST',
+    url: "{{ path('kijho_mailer_template_send_example_email')}}",
+    dataType: 'json',
+    data: "templateId="+templateId+"&email="+result,
+    success: function (resp)
+    {
+    if (resp.result == '__OK__') {
+    showFlashSuccessMessage(resp.msg, true, 4000);
+    } else {
+    showFlashErrorMessage(resp.msg, false, 0);
+    }
+    },
+    error: function () {
+    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+    }
+    });
+    } else if (result === ""){
+    $(".bootbox-input-text").focus();
+    return false;
+    }
+    }
+    });
     });
 {% endblock %}

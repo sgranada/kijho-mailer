@@ -1,5 +1,7 @@
 <?php
+
 namespace Kijho\MailerBundle\Model;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +16,7 @@ class Layout implements LayoutInterface {
      * @Assert\NotBlank()
      */
     protected $name;
-    
+
     /**
      * @var string
      * @ORM\Column(name="layo_header", type="text")
@@ -34,7 +36,13 @@ class Layout implements LayoutInterface {
      * @ORM\Column(name="layo_creation_date", type="datetime", nullable=true)
      */
     protected $creationDate;
-    
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="layo_is_default", type="boolean", nullable=true)
+     */
+    protected $isDefault;
+
     /**
      * {@inheritDoc}
      */
@@ -48,7 +56,7 @@ class Layout implements LayoutInterface {
     public function getHeader() {
         return $this->header;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -61,6 +69,20 @@ class Layout implements LayoutInterface {
      */
     public function getName() {
         return $this->name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    function getIsDefault() {
+        return $this->isDefault;
+    }
+
+    /**
+     * @param boolean $isDefault
+     */
+    function setIsDefault($isDefault) {
+        $this->isDefault = $isDefault;
     }
 
     /**
@@ -78,7 +100,7 @@ class Layout implements LayoutInterface {
     function setFooter($footer) {
         $this->footer = $footer;
     }
-    
+
     /**
      * @param string $name
      */
@@ -93,8 +115,9 @@ class Layout implements LayoutInterface {
     function setCreationDate(\DateTime $creationDate) {
         $this->creationDate = $creationDate;
     }
-    
+
     public function __toString() {
         return $this->getName();
     }
+
 }
