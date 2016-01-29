@@ -33,7 +33,9 @@
                     <td>{{templateGroup.slug}}</td>
                     <td>
                         <a class="btn btn-default btn-sm" title="{{'kijho_mailer.global.edit'|trans}}" href='{{path('kijho_mailer_template_group_edit',{'templateGroupId':templateGroup.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
+                        {%if templateGroup.isDefault != true %}
                         &nbsp;<a class="btn btn-default btn-sm delete-template-group" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' template-group-id="{{templateGroup.id}}"><i class="fa fa-close fa-lg"></i></a>
+                        {%endif%}
                     </td>
                 </tr>
             {% else %}

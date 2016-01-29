@@ -301,9 +301,10 @@ class EmailManager {
      * @author Cesar Giraldo - Kijho Technologies <cnaranjo@kijho.com> 3/12/2015
      * @param string $groupSlug
      * @param string $templateSlug
+     * @param string $entityName
      * @return array[Template] listado de templates que coinciden con la busqueda
      */
-    public function getTemplates($groupSlug = null, $templateSlug = null) {
+    public function getTemplates($groupSlug = null, $templateSlug = null, $entityName = null) {
         $search = array();
         if ($groupSlug) {
             $groupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
@@ -311,6 +312,10 @@ class EmailManager {
             if ($group) {
                 $search['group'] = $group->getId();
             }
+        }
+
+        if ($entityName) {
+            $search['entityName'] = $entityName;
         }
         if ($templateSlug) {
             $search['slug'] = $templateSlug;

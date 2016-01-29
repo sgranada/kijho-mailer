@@ -36,7 +36,9 @@
                     </td>
                     <td>
                         <a class="btn btn-default btn-sm" title="{{'kijho_mailer.email_event.edit'|trans}}" href='{{path('kijho_mailer_email_event_edit',{'emailEventId':emailEvent.id})}}'><i class="fa fa-pencil fa-lg"></i></a>
-                        &nbsp;<a class="btn btn-default btn-sm delete-email-event" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' email-event-id="{{emailEvent.id}}"><i class="fa fa-close fa-lg"></i></a>
+                            {%if emailEvent.isDefault != true %}
+                            &nbsp;<a class="btn btn-default btn-sm delete-email-event" title="{{'kijho_mailer.global.delete'|trans}}" href='javascript:' email-event-id="{{emailEvent.id}}"><i class="fa fa-close fa-lg"></i></a>
+                            {%endif%}
                     </td>
                 </tr>
             {% else %}
@@ -50,34 +52,34 @@
 
 {% block scripts %}
     /** 
-     * Codigo para la eliminacion de email events mediante ajax 
-     */
+    * Codigo para la eliminacion de email events mediante ajax 
+    */
     $(".delete-email-event").click(function () {
-        var object = $(this);
-        var emailEventId = object.attr('email-event-id');
+    var object = $(this);
+    var emailEventId = object.attr('email-event-id');
 
-        bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
+    bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
 
-            if (result == true)
-            {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ path('kijho_mailer_email_event_delete')}}",
-                    dataType: 'json',
-                    data: 'emailEventId=' + emailEventId,
-                    success: function (resp) {
-                        console.log(resp);
-                        if (resp.result == '__OK__') {
-                            object.parent().parent().remove();
-                        } else {
-                            showFlashErrorMessage(resp.msg, false, 0);
-                        }
-                    },
-                    error: function () {
-                        showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-                    }
-                });
-            }
-        });
+    if (result == true)
+    {
+    $.ajax({
+    type: 'POST',
+    url: "{{ path('kijho_mailer_email_event_delete')}}",
+    dataType: 'json',
+    data: 'emailEventId=' + emailEventId,
+    success: function (resp) {
+    console.log(resp);
+    if (resp.result == '__OK__') {
+    object.parent().parent().remove();
+    } else {
+    showFlashErrorMessage(resp.msg, false, 0);
+    }
+    },
+    error: function () {
+    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+    }
+    });
+    }
+    });
     });
 {% endblock %}

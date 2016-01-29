@@ -101,6 +101,12 @@ class Template implements TemplateInterface {
     protected $slug;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="layo_is_default", type="boolean", nullable=true)
+     */
+    protected $isDefault;
+
+    /**
      * @param string $name
      */
     function setName($name) {
@@ -175,6 +181,20 @@ class Template implements TemplateInterface {
      */
     function setCreationDate(\DateTime $creationDate) {
         $this->creationDate = $creationDate;
+    }
+
+    /**
+     * @param boolean $isDefault
+     */
+    function setIsDefault($isDefault) {
+        $this->isDefault = $isDefault;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    function getIsDefault() {
+        return $this->isDefault;
     }
 
     /**
@@ -321,7 +341,7 @@ class Template implements TemplateInterface {
     }
 
     public function __toString() {
-        return " (" . strtoupper($this->getLanguageCode()) . ") ".$this->getName();
+        return " (" . strtoupper($this->getLanguageCode()) . ") " . $this->getName();
     }
 
 }
