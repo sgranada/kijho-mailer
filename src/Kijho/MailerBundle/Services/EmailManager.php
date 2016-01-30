@@ -304,7 +304,7 @@ class EmailManager {
      * @param string $entityName
      * @return array[Template] listado de templates que coinciden con la busqueda
      */
-    public function getTemplates($groupSlug = null, $templateSlug = null, $entityName = null) {
+    public function getTemplates($groupSlug = null, $templateSlug = null, $entityName = null, $languageCode = null) {
         $search = array();
         if ($groupSlug) {
             $groupStorage = $this->container->getParameter('kijho_mailer.storage')['template_group'];
@@ -312,6 +312,10 @@ class EmailManager {
             if ($group) {
                 $search['group'] = $group->getId();
             }
+        }
+
+        if ($languageCode) {
+            $search['languageCode'] = $languageCode;
         }
 
         if ($entityName) {

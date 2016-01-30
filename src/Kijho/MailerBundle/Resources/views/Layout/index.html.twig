@@ -46,35 +46,35 @@
     </table>
 {% endblock %}
 
-{% block scripts %}
-    /** 
-    * Codigo para la eliminacion de layouts mediante ajax 
-    */
-    $(".delete-layout").click(function () {
-    var object = $(this);
-    var layoutId = object.attr('layout-id');
+{% block scripts %}    
+        /** 
+         * Codigo para la eliminacion de layouts mediante ajax 
+         */
+        $(".delete-layout").click(function () {
+            var object = $(this);
+            var layoutId = object.attr('layout-id');
 
-    bootbox.confirm('{{'kijho_mailer.layout.delete_question'|trans}}', function (result) {
+            bootbox.confirm('{{'kijho_mailer.layout.delete_question'|trans}}', function (result) {
 
-    if (result == true)
-    {
-    $.ajax({
-    type: 'POST',
-    url: "{{ path('kijho_mailer_layout_delete')}}",
-    dataType: 'json',
-    data: 'layoutId=' + layoutId,
-    success: function (resp) {
-    if (resp.result == '__OK__') {
-    object.parent().parent().remove();
-    } else {
-    showFlashErrorMessage(resp.msg, false, 0);
-    }
-    },
-    error: function () {
-    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-    }
-    });
-    }
-    });
-    });
-{% endblock %}
+                if (result == true)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ path('kijho_mailer_layout_delete')}}",
+                        dataType: 'json',
+                        data: 'layoutId=' + layoutId,
+                        success: function (resp) {
+                            if (resp.result == '__OK__') {
+                                object.parent().parent().remove();
+                            } else {
+                                showFlashErrorMessage(resp.msg, false, 0);
+                            }
+                        },
+                        error: function () {
+                            showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+                        }
+                    });
+                }
+            });
+        });
+    {% endblock %}
