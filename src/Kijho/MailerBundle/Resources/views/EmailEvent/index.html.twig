@@ -51,35 +51,35 @@
 {% endblock %}
 
 {% block scripts %}
-    /** 
-    * Codigo para la eliminacion de email events mediante ajax 
-    */
-    $(".delete-email-event").click(function () {
-    var object = $(this);
-    var emailEventId = object.attr('email-event-id');
+        /** 
+         * Codigo para la eliminacion de email events mediante ajax 
+         */
+        $(".delete-email-event").click(function () {
+            var object = $(this);
+            var emailEventId = object.attr('email-event-id');
 
-    bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
+            bootbox.confirm('{{'kijho_mailer.email_event.delete_question'|trans}}', function (result) {
 
-    if (result == true)
-    {
-    $.ajax({
-    type: 'POST',
-    url: "{{ path('kijho_mailer_email_event_delete')}}",
-    dataType: 'json',
-    data: 'emailEventId=' + emailEventId,
-    success: function (resp) {
-    console.log(resp);
-    if (resp.result == '__OK__') {
-    object.parent().parent().remove();
-    } else {
-    showFlashErrorMessage(resp.msg, false, 0);
-    }
-    },
-    error: function () {
-    showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
-    }
-    });
-    }
-    });
-    });
-{% endblock %}
+                if (result == true)
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ path('kijho_mailer_email_event_delete')}}",
+                        dataType: 'json',
+                        data: 'emailEventId=' + emailEventId,
+                        success: function (resp) {
+                            console.log(resp);
+                            if (resp.result == '__OK__') {
+                                object.parent().parent().remove();
+                            } else {
+                                showFlashErrorMessage(resp.msg, false, 0);
+                            }
+                        },
+                        error: function () {
+                            showFlashErrorMessage("{{'kijho_mailer.global.unknown_error'|trans}}", false, 0);
+                        }
+                    });
+                }
+            });
+        });
+    {% endblock %}
