@@ -235,6 +235,8 @@ class TemplateController extends Controller {
                 //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
                 foreach ($entities as $entity) {
                     $path = $entityNamespace . $entity;
+                    var_dump($path);
+                    die();
                     try {
                         $instance = new \ReflectionClass(new $path);
                         array_push($instances, $instance);
@@ -253,10 +255,7 @@ class TemplateController extends Controller {
 
     private function getEntityNamespace() {
         //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
-        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
-        $search = 'Entity\\';
-        $position = strpos($layoutStorage, $search);
-        $entityNamespace = substr($layoutStorage, 0, $position) . $search;
+        $entityNamespace = $this->container->getParameter('kijho_mailer.entity_namespace')."\\";
         return $entityNamespace;
     }
 
