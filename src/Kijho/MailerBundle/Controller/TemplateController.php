@@ -235,8 +235,6 @@ class TemplateController extends Controller {
                 //instanciamos cada una de las entidades y le aplicamos Reflection para conocer su estructura
                 foreach ($entities as $entity) {
                     $path = $entityNamespace . $entity;
-                    var_dump($path);
-                    die();
                     try {
                         $instance = new \ReflectionClass(new $path);
                         array_push($instances, $instance);
