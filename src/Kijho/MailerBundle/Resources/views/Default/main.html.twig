@@ -69,6 +69,9 @@
             
             <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
+            <script type="text/javascript" src="{{ asset('bundles/kijhomailer/js/js-webshim/minified/polyfiller.js') }}"></script>
+
+            
             <script type="text/javascript">
                 $(document).ready(function () {
                     $(".alert-dismissable button").click(function () {
@@ -83,6 +86,8 @@
                         window.parent.$('.content-tab-' + frameid).attr("frame-src", url);
                         window.parent.$('.refresh-' + frameid).attr("frame-src", url);
                     }
+                    
+                    webshims.polyfill();
                     {% block scripts %}
                     {% endblock %}
                 });
