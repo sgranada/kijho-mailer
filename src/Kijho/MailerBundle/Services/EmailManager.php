@@ -68,8 +68,11 @@ class EmailManager {
             $message->setBcc($email->getMailCopyTo());
         }
 
-        $message->setBody($this->renderEmail($email, $dataToTemplate), 'text/html', 'UTF8');
-
+        $html = $this->renderEmail($email, $dataToTemplate);
+        $message->setBody($html, 'text/html', 'UTF8');
+        $email->setContent($html);
+        
+        
         //seteamos el o los destinatarios a quin va dirigido el correo
         if (!is_array($recipientEmail)) {
             $message->addTo($recipientEmail, $recipientName);
