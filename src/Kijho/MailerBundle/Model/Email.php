@@ -77,6 +77,12 @@ class Email implements EmailInterface {
     protected $status;
 
     /**
+     * @var string
+     * @ORM\Column(name="emai_user_id", type="text", nullable=true)
+     */
+    protected $userId;
+
+    /**
      * {@inheritDoc}
      */
     public function getContent() {
@@ -144,6 +150,22 @@ class Email implements EmailInterface {
      */
     public function getTemplate() {
         
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    function getUserId() {
+        return $this->userId;
+    }
+
+    /**
+     * 
+     * @param string $userId
+     */
+    function setUserId($userId) {
+        $this->userId = $userId;
     }
 
     /**

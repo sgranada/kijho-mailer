@@ -34,7 +34,7 @@ class EmailManager {
      * @author Cesar Giraldo <cnaranjo@kijho.com> 23/11/2015
      * @param Email $email instancia del correo electronico a enviar
      */
-    public function send(Email $email, $dataToTemplate = array()) {
+    public function send(Email $email, $dataToTemplate = array(), $userId = null) {
 
         //verificamos que mailer se debe usar para el envio del correo
         $mailer = 'swiftmailer.mailer';
@@ -93,6 +93,11 @@ class EmailManager {
         //marcamos el correo como enviado
         $email->setStatus(Email::STATUS_SENT);
         $email->setSentDate(Util::getCurrentDate());
+
+        if($userId){
+         $email->setUserId($userId);
+        }
+
         $this->em->persist($email);
         $this->em->flush();
     }
