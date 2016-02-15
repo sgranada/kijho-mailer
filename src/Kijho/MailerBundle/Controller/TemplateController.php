@@ -253,10 +253,7 @@ class TemplateController extends Controller {
 
     private function getEntityNamespace() {
         //encontramos el namespace del paquete de entidades a partir de uno de los parametros de strorage
-        $layoutStorage = $this->container->getParameter('kijho_mailer.storage')['layout'];
-        $search = 'Entity\\';
-        $position = strpos($layoutStorage, $search);
-        $entityNamespace = substr($layoutStorage, 0, $position) . $search;
+        $entityNamespace = $this->container->getParameter('kijho_mailer.entity_namespace')."\\";
         return $entityNamespace;
     }
 

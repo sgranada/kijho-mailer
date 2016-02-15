@@ -106,6 +106,7 @@ swiftmailer:
     
 kijho_mailer:
     entity_directories: ["%kernel.root_dir%/../src/Kijho/MailerBundle/Entity/"]
+    entity_namespace: "Kijho\MailerBundle\Entity"
     storage:
         layout:         "Kijho\MailerBundle\Entity\EmailLayout"
         template_group: "Kijho\MailerBundle\Entity\EmailTemplateGroup"
